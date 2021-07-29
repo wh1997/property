@@ -1,0 +1,19 @@
+package com.tianjian.property.management.service;
+
+
+import com.tianjian.property.bean.LockAuthCode;
+import com.tianjian.property.bean.vo.LockBaseInfoVo;
+
+import java.util.List;
+import java.util.Map;
+
+public interface EquipmentService {
+    //添加蓝牙门锁
+    Map addBluetooth (Map lockBaseInfo, Map lockAuthCode, String hardwareVersion, String softwareVersion, Integer doorid, String addpeople) throws Exception;
+    //设备列表
+    List selectList(Integer equipmentType, Integer propertyid,Integer pageNum,Integer pageSize);
+    //设备详情
+    Object selectEquipment(Integer equipmentType, Integer equipmentId);
+    //模糊搜素设备
+    Object fuzzySearch(Integer propertyId,Integer equipmentType, String KeyWord,Integer pageNum,Integer pageSize);
+}
