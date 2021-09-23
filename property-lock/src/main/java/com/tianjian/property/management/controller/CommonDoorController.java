@@ -29,10 +29,10 @@ public class CommonDoorController {
     * @Date: 2021/5/27
     */
     @PostMapping("/add")
-    public LockResult addCommonDoor(@RequestBody Door door ,@RequestHeader String token){
+    public LockResult addCommonDoor(@RequestBody Door door , @RequestHeader String token){
         try {
-            Double appUID = TokenUtil.getAppUID(token);
-            door.setCreateperson(appUID.toString());
+            Integer appUID = TokenUtil.getAppUID(token);
+            door.setCreatePerson(appUID.toString());
             int i= commonDoorService.addCommonDoor(door);
             if (i==200) {
                 return new LockResult(false, "已添加请勿重复添加", 200, null);

@@ -43,7 +43,7 @@ public class LockBaseInfoServiceImpl implements LockBaseInfoService {
     @Override
     public Map openLock(String lockId, Integer lockUserId, Integer doorID) {
       Door door= doorDao.selectById(doorID);
-        Integer doortype = door.getDoortype();
+        Integer doortype = door.getDoorType();
         if(doortype!=0){
             HashMap<String, Object> datamap = new HashMap<>();
             //是	string 门锁id

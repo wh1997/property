@@ -1,10 +1,10 @@
 package com.tianjian.property.management.service.impl;
 
 import com.google.gson.Gson;
+import com.tianjian.property.management.dao.BaiWeiIdDao;
 import com.tianjian.property.management.dao.NetworkCardDao;
 import com.tianjian.property.management.service.NetworkCardService;
 import com.tianjian.property.utils.HttpClientUtil;
-import com.tianjian.property.utils.HttpUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -20,9 +20,11 @@ import java.util.Map;
  * @time: 2021/6/22
  */
 @Service
-public class NetworkCardServiceImpl implements NetworkCardService {
+public class NetworkCardServiceImpl extends CardHttpService implements NetworkCardService {
     @Autowired
     private NetworkCardDao networkCardDao;
+    @Autowired
+    private BaiWeiIdDao baiWeiIdDao;
     @Value("${baiwei.BWLockURL}")
     private  String BWLockURL;
     @Override
@@ -33,35 +35,28 @@ public class NetworkCardServiceImpl implements NetworkCardService {
 
     @Override
     public List selectEquipment(Integer pid) {
-        Gson gson = new Gson();
+       Integer oldId= baiWeiIdDao.selectByPropertyId(pid);
         HashMap<String, String> map = new HashMap<>();
-        map.put("Pid",pid.toString());
-        String JSON = gson.toJson(map);
-        String s = HttpClientUtil.doPostJson(BWLockURL+"/EquipmentQuery.ashx", JSON);
-        List list = gson.fromJson(s, List.class);
-        return list;
+        map.put("Pid",oldId.toString());
+        List resultMap = (List) postResult(BWLockURL + "/EquipmentQuery.ashx", map);
+        return resultMap;
     }
     @Override
     public Map selectEquipmentStatus(String Imei) {
-        Gson gson = new Gson();
         HashMap<String, String> map = new HashMap<>();
         map.put("imei",Imei);
-        String JSON = gson.toJson(map);
-        String s = HttpClientUtil.doPostJson(BWLockURL+"/EquipmentStatus.ashx", JSON);
-        Map list = gson.fromJson(s, Map.class);
-        return list;
+        Map resultMap = (Map) postResult(BWLockURL+"/EquipmentStatus.ashx", map);
+        return resultMap;
     }
 
     @Override
     public Map openLock(String imei, String userid, String pid) {
-        Gson gson = new Gson();
+        Integer oldId= baiWeiIdDao.selectByPropertyId(Integer.valueOf(pid));
         HashMap<String, String> map = new HashMap<>();
         map.put("imei",imei);
         map.put("userid",userid);
-        map.put("Pid",pid);
-        String JSON = gson.toJson(map);
-        String s = HttpClientUtil.doPostJson(BWLockURL+"/Open.ashx", JSON);
-        Map list = gson.fromJson(s, Map.class);
-        return list;
+        map.put("Pid",oldId.toString());
+        Map resultMap = (Map) postResult(BWLockURL+"/EquipmentStatus.ashx", map);
+        return resultMap;
     }
 }

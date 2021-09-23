@@ -19,19 +19,19 @@ public interface RoleDao {
     @Insert({"<script>" +
             " INSERT INTO tj_role" +
             "<trim prefix=\"(\" suffix=\")\" suffixOverrides=\",\">"+
-            " <if test='userid != null'>user_id ,</if> " +
+            " <if test='userId != null'>user_id ,</if> " +
             " <if test='role != null'>role ,</if> " +
-            " <if test='propertyid != null'>property_id ,</if> " +
-            " <if test='addtime != null'>addtime ,</if> " +
-            " <if test='updatetime != null'>updatetime ,</if> " +
+            " <if test='propertyId != null'>property_id ,</if> " +
+            " <if test='addTime != null'>addtime ,</if> " +
+            " <if test='updateTime != null'>updatetime ,</if> " +
             " <if test='remark != null'>remark </if> " +
             "</trim>"+
             "<trim prefix=\"values (\" suffix=\")\" suffixOverrides=\",\">"+
-            " <if test='userid  != null'> #{userid}, </if> " +
+            " <if test='userId  != null'> #{userId}, </if> " +
             " <if test='role  != null'> #{role}, </if>" +
-            " <if test='propertyid  != null'> #{propertyid},</if> " +
-            " <if test='addtime   != null'>#{addtime}, </if> " +
-            " <if test='updatetime  != null'>#{updatetime} ,</if> " +
+            " <if test='propertyId  != null'> #{propertyId},</if> " +
+            " <if test='addTime   != null'>#{addTime}, </if> " +
+            " <if test='updateTime  != null'>#{updateTime} ,</if> " +
             " <if test='remark != null'>#{remark} </if> " +
             "</trim>"+
             "</script>"})
@@ -40,5 +40,5 @@ public interface RoleDao {
             " SELECT role ,property_id " +
             "FROM tj_role WHERE user_id = #{userId} AND 1 = 1"+
             "</script>"})
-    Map selectByUserId(Double userId);
+    Map selectByUserId(Integer userId);
 }

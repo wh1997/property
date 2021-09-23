@@ -151,7 +151,7 @@ public class RoomDoorController {
    @PostMapping("/add")
     public LockResult addDoor(@RequestBody Map map, @RequestHeader String token)  {
         try {
-            Double appUID = TokenUtil.getAppUID(token);
+            Integer appUID = TokenUtil.getAppUID(token);
             List<Map> door = (List<Map>) map.get("list");
             Map resultMap = roomDoorService.addDoor(door,appUID);
             Integer code = (Integer) resultMap.get("code");

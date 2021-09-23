@@ -16,5 +16,5 @@ public interface NetworkCardService {
     //查询设备状态
     Map selectEquipmentStatus(String Imei);
 
-    Map openLock(String imei, String String, String pid);
+    Map openLock(String imei, String userid, String pid);
 }

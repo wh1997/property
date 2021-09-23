@@ -55,7 +55,7 @@ public class CommonDoorServiceImpl implements CommonDoorService {
                    for (int i = 0; i <list.size() ; i++) {
                        Door door = list.get(i);
                        //判断楼栋下门锁信息
-                       if (Bulidingname.equals(door.getBulidingname())){
+                       if (Bulidingname.equals(door.getBuildingName())){
                            doors.add(door);
                        }
                    }
@@ -74,8 +74,7 @@ public class CommonDoorServiceImpl implements CommonDoorService {
         List<Door> list=doorDao.fuzzyQueryCommonDoor("%"+doorName+"%",doorType);
         PageInfo<Door> doorPageInfo = new PageInfo<>(list);
         List<Door> doorList = doorPageInfo.getList();
-        System.out.println(list);
-        return list;
+        return doorList;
     }
 
     @Override

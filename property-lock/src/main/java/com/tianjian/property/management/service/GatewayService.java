@@ -11,6 +11,8 @@ public interface GatewayService {
     String getApartment();
     //接口公共类
     Map  bindinggateway (String method, Map<String,Object> data);
+    //删除网关公共类
+    int  deleteGateway (String gatewayId);
     //绑定网关
     Map gatewayBind(Integer project,String gatewaySeq) throws InterruptedException;
     //门锁绑定网关

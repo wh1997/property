@@ -60,6 +60,7 @@ public class RoomDoorServiceImpl implements RoomDoorService {
         //        }
         //        Map<String, List<DoorVo>> doorVoMap = new LinkedHashMap<>();
         //        for (int k = 0; k <siteList.size() ; k++) {
+
         //            String site = siteList.get(k);
         //            ArrayList<DoorVo> doorVos = new ArrayList<>();
         //            for (int l = 0; l <list.size() ; l++) {
@@ -106,7 +107,7 @@ public class RoomDoorServiceImpl implements RoomDoorService {
                     ArrayList<DoorVo> doorVos = new ArrayList<>();
                     for (int l = 0; l <list.size() ; l++) {
                         DoorVo doorVo = list.get(l);
-                        String siteall= doorVo.getBulidingname()+"-"+doorVo.getUnitname();
+                        String siteall= doorVo.getBuildingname()+"-"+doorVo.getUnitName();
                         if (site.equals(siteall)){
                             doorVos.add(doorVo);
                         }
@@ -133,7 +134,7 @@ public class RoomDoorServiceImpl implements RoomDoorService {
         List<DoorVo> list = doorVoPageInfo.getList();
         if (all.size()>0){
             DoorVo doorVo = all.get(0);
-            String s = doorVo.getBulidingname() + "-" + doorVo.getUnitname();
+            String s = doorVo.getBuildingname() + "-" + doorVo.getUnitName();
             Map<String, List<DoorVo>> map = new HashMap<>();
             map.put(s,list);
             return map;
@@ -157,9 +158,9 @@ public class RoomDoorServiceImpl implements RoomDoorService {
             //获取到门锁设备
             Lock lock = list.get(0);
             //获取门锁设备类型  0网关  1网卡
-            Integer facilitytype = lock.getFacilitytype();
+            Integer facilitytype = lock.getFacilityType();
             //获取到设备id
-            Integer lockfacilityid = lock.getLockfacilityid();
+            Integer lockfacilityid = lock.getLockFacilityId();
             Map<String, String> map=null;
             if(1==facilitytype){
                 //查询网卡设备表中的网卡设备信息
@@ -168,7 +169,7 @@ public class RoomDoorServiceImpl implements RoomDoorService {
                 //根据设备id查门锁lock_mac信息
                 String lock_mac = lockBaseInfoDao.findById(lockfacilityid);
                 //获取到网关设备id
-                Integer lockgatewayid = lock.getLockgatewayid();
+                Integer lockgatewayid = lock.getLockGatewayId();
                 map = gatewayDao.findById(lockgatewayid);
                 map.put("lock_mac",lock_mac);
             }
@@ -189,17 +190,17 @@ public class RoomDoorServiceImpl implements RoomDoorService {
 
     @Override
     @Transactional
-    public Map addDoor(List<Map> door,Double appUID) throws Exception {
+    public Map addDoor(List<Map> door,Integer appUID) throws Exception {
         HashMap<String, Object> map = new HashMap<>();
         List<Door> doors = new ArrayList<>();
         for (int i = 0; i< door.size(); i++) {
             Map doorMap =door.get(i);
             Door bean = BeanChangeUtils.mapToBean(doorMap, Door.class);
-            bean.setCreateperson(appUID.toString());
+            bean.setCreatePerson(appUID.toString());
             Integer doorList = doorDao.selectRepetition(bean);
             if (doorList!=null){
                 map.put("code",200);
-                map.put("error",bean.getNumname()+bean.getBulidingname()+bean.getUnitname()+bean.getRoomno());
+                map.put("error",bean.getNumName()+bean.getBuildingName()+bean.getUnitName()+bean.getRoomNo());
                 return map;
             }
             doors.add(bean);

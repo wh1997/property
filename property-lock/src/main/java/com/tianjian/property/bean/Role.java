@@ -18,19 +18,19 @@ public class Role implements Serializable {
     private Long Id;
     //用户id
     @Column(name = "user_id")
-    private Double userid;
+    private Integer userId;
     //角色
     @Column(name = "Role")
     private Integer role;
     //管理项目
     @Column(name = "property_id")
-    private Integer propertyid;
+    private Integer propertyId;
     //添加时间
     @Column(name = "addtime")
-    private String addtime;
+    private String addTime;
     //修改设备时间
     @Column(name = "updatetime")
-    private String updatetime;
+    private String updateTime;
     //备注
     @Column(name = "remark")
     private String remark;
@@ -39,13 +39,13 @@ public class Role implements Serializable {
         super();
     }
 
-    public Role(Long id, Double userid, Integer role, Integer propertyid, String addtime, String updatetime, String remark) {
+    public Role(Long id, Integer userId, Integer role, Integer propertyId, String addTime, String updateTime, String remark) {
         Id = id;
-        this.userid = userid;
+        this.userId = userId;
         this.role = role;
-        this.propertyid = propertyid;
-        this.addtime = addtime;
-        this.updatetime = updatetime;
+        this.propertyId = propertyId;
+        this.addTime = addTime;
+        this.updateTime = updateTime;
         this.remark = remark;
     }
 
@@ -57,48 +57,50 @@ public class Role implements Serializable {
         Id = id;
     }
 
-    public Double getUserid() {
-        return userid;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setUserid(Double userid) {
-        this.userid = userid;
-    }
-
-    public Integer getRole() {
-        return role;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
     public void setRole(Integer role) {
         this.role = role;
     }
 
-    public Integer getPropertyid() {
-        return propertyid;
+    public Integer getPropertyId() {
+        return propertyId;
     }
 
-    public void setPropertyid(Integer propertyid) {
-        this.propertyid = propertyid;
+    public void setPropertyId(Integer propertyId) {
+        this.propertyId = propertyId;
     }
 
-    public String getAddtime() {
+    public void setAddTime(String addTime) {
+        this.addTime = addTime;
+    }
+
+    public String getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(String updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    public Integer getRole() {
+        return role;
+    }
+
+
+    public String getAddTime() {
         Date date = new Date();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String format = simpleDateFormat.format(date);
         return format;
     }
 
-    public void setAddtime(String addtime) {
-        this.addtime = addtime;
-    }
-
-    public String getUpdatetime() {
-        return updatetime;
-    }
-
-    public void setUpdatetime(String updatetime) {
-        this.updatetime = updatetime;
-    }
 
     public String getRemark() {
         return remark;
@@ -112,11 +114,11 @@ public class Role implements Serializable {
     public String toString() {
         return "Role{" +
                 "Id=" + Id +
-                ", userid=" + userid +
+                ", userId=" + userId +
                 ", role=" + role +
-                ", propertyid=" + propertyid +
-                ", addtime=" + addtime +
-                ", updatetime=" + updatetime +
+                ", propertyId=" + propertyId +
+                ", addTime='" + addTime + '\'' +
+                ", updateTime='" + updateTime + '\'' +
                 ", remark='" + remark + '\'' +
                 '}';
     }

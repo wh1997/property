@@ -18,47 +18,51 @@ public class NetworkCard implements Serializable {
     private Integer Id;
     //设备名称
     @Column(name = "network_name")
-    private String network_name;
+    private String networkName;
     //设备唯一码
     @Column(name = "deviceflag")
-    private String deviceflag;
+    private String deviceFlag;
     //设备厂商
     @Column(name = "network_vendor")
-    private String network_vendor;
+    private String networkVendor;
     //设备使用时间
     @Column(name = "addtime")
-    private String addtime;
+    private String addTime;
     //修改设备时间
     @Column(name = "updatetime")
-    private String updatetime;
+    private String updateTime;
     //设备状态
     @Column(name = "network_status")
-    private Integer network_status;
+    private Integer networkStatus;
     //百为同步的设备id
-    @Column(name = "propert_id")
-    private Integer Property_id;
+    @Column(name = "property_id")
+    private Integer PropertyId;
     //设备添加人
     @Column(name = "add_user")
-    private Integer add_user;
+    private Integer addUser;
     //绑定的手机号
     @Column(name = "network_phone")
-    private Integer network_phone;
+    private String networkPhone;
     //备注
     @Column(name = "remark")
     private String remark;
 
-    public NetworkCard(Integer id, String network_name, String deviceflag, String network_vendor, String addtime, String updatetime, Integer network_status, Integer property_id, Integer add_user, Integer network_phone, String remark) {
+    public NetworkCard(Integer id, String networkName, String deviceFlag, String networkVendor, String addTime, String updateTime, Integer networkStatus, Integer propertyId, Integer addUser, String networkPhone, String remark) {
         Id = id;
-        this.network_name = network_name;
-        this.deviceflag = deviceflag;
-        this.network_vendor = network_vendor;
-        this.addtime = addtime;
-        this.updatetime = updatetime;
-        this.network_status = network_status;
-        Property_id = property_id;
-        this.add_user = add_user;
-        this.network_phone = network_phone;
+        this.networkName = networkName;
+        this.deviceFlag = deviceFlag;
+        this.networkVendor = networkVendor;
+        this.addTime = addTime;
+        this.updateTime = updateTime;
+        this.networkStatus = networkStatus;
+        PropertyId = propertyId;
+        this.addUser = addUser;
+        this.networkPhone = networkPhone;
         this.remark = remark;
+    }
+
+    public NetworkCard() {
+        super();
     }
 
     public Integer getId() {
@@ -69,79 +73,79 @@ public class NetworkCard implements Serializable {
         Id = id;
     }
 
-    public String getNetwork_name() {
-        return network_name;
+    public String getNetworkName() {
+        return networkName;
     }
 
-    public void setNetwork_name(String network_name) {
-        this.network_name = network_name;
+    public void setNetworkName(String networkName) {
+        this.networkName = networkName;
     }
 
-    public String getDeviceflag() {
-        return deviceflag;
+    public String getDeviceFlag() {
+        return deviceFlag;
     }
 
-    public void setDeviceflag(String deviceflag) {
-        this.deviceflag = deviceflag;
+    public void setDeviceFlag(String deviceFlag) {
+        this.deviceFlag = deviceFlag;
     }
 
-    public String getNetwork_vendor() {
-        return network_vendor;
+    public String getNetworkVendor() {
+        return networkVendor;
     }
 
-    public void setNetwork_vendor(String network_vendor) {
-        this.network_vendor = network_vendor;
+    public void setNetworkVendor(String networkVendor) {
+        this.networkVendor = networkVendor;
     }
 
-    public String getAddtime() {
+    public String getAddTime() {
         Date date = new Date();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String format = simpleDateFormat.format(date);
         return format;
     }
 
-    public void setAddtime(String addtime) {
-        this.addtime = addtime;
+    public void setAddTime(String addTime) {
+        this.addTime = addTime;
     }
 
-    public String getUpdatetime() {
-        return updatetime;
+    public String getUpdateTime() {
+        return updateTime;
     }
 
-    public void setUpdatetime(String updatetime) {
-        this.updatetime = updatetime;
+    public void setUpdateTime(String updateTime) {
+        this.updateTime = updateTime;
     }
 
-    public Integer getNetwork_status() {
-        return network_status;
+    public Integer getNetworkStatus() {
+        return networkStatus;
     }
 
-    public void setNetwork_status(Integer network_status) {
-        this.network_status = network_status;
+    public void setNetworkStatus(Integer networkStatus) {
+        this.networkStatus = networkStatus;
     }
 
-    public Integer getProperty_id() {
-        return Property_id;
+    public Integer getPropertyId() {
+        return PropertyId;
     }
 
-    public void setProperty_id(Integer property_id) {
-        Property_id = property_id;
+    public void setPropertyId(Integer propertyId) {
+        PropertyId = propertyId;
     }
 
-    public Integer getAdd_user() {
-        return add_user;
+    public Integer getAddUser() {
+        return addUser;
     }
 
-    public void setAdd_user(Integer add_user) {
-        this.add_user = add_user;
+    public void setAddUser(Integer addUser) {
+        this.addUser = addUser;
     }
 
-    public Integer getNetwork_phone() {
-        return network_phone;
+    public String getNetworkPhone() {
+        return networkPhone;
     }
 
-    public void setNetwork_phone(Integer network_phone) {
-        this.network_phone = network_phone;
+    public void setNetworkPhone(String networkPhone) {
+        this.networkPhone = networkPhone;
     }
 
     public String getRemark() {
@@ -156,15 +160,15 @@ public class NetworkCard implements Serializable {
     public String toString() {
         return "NetworkCard{" +
                 "Id=" + Id +
-                ", network_name='" + network_name + '\'' +
-                ", deviceflag='" + deviceflag + '\'' +
-                ", network_vendor='" + network_vendor + '\'' +
-                ", addtime=" + addtime +
-                ", updatetime=" + updatetime +
-                ", network_status=" + network_status +
-                ", Property_id=" + Property_id +
-                ", add_user=" + add_user +
-                ", network_phone=" + network_phone +
+                ", networkName='" + networkName + '\'' +
+                ", deviceFlag='" + deviceFlag + '\'' +
+                ", networkVendor='" + networkVendor + '\'' +
+                ", addTime='" + addTime + '\'' +
+                ", updateTime='" + updateTime + '\'' +
+                ", networkStatus=" + networkStatus +
+                ", PropertyId=" + PropertyId +
+                ", addUser=" + addUser +
+                ", networkPhone=" + networkPhone +
                 ", remark='" + remark + '\'' +
                 '}';
     }

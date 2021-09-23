@@ -22,10 +22,10 @@ public class DoorType implements Serializable {
     private Integer id;
     //城市id
     @Column(name = "door_type")
-    private String doortype ;
+    private String doorType ;
     //城市名称
     @Column(name = "addtime")
-    private String addtime ;
+    private String addTime ;
     //区域id
     @Column(name = "remark")
     private String remark	;
@@ -34,10 +34,10 @@ public class DoorType implements Serializable {
         super();
     }
 
-    public DoorType(Integer id, String doortype, String addtime, String remark) {
+    public DoorType(Integer id, String doorType, String addTime, String remark) {
         this.id = id;
-        this.doortype = doortype;
-        this.addtime = addtime;
+        this.doorType = doorType;
+        this.addTime = addTime;
         this.remark = remark;
     }
 
@@ -49,25 +49,24 @@ public class DoorType implements Serializable {
         this.id = id;
     }
 
-    public String getDoortype() {
-        return doortype;
+    public String getDoorType() {
+        return doorType;
     }
 
-    public void setDoortype(String doortype) {
-        this.doortype = doortype;
+    public void setDoorType(String doorType) {
+        this.doorType = doorType;
     }
 
-    public String getAddtime() {
+    public String getAddTime() {
         Date date = new Date();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String format = simpleDateFormat.format(date);
         return format;
     }
 
-    public void setAddtime(String addtime) {
-        this.addtime = addtime;
+    public void setAddTime(String addTime) {
+        this.addTime = addTime;
     }
-
     public String getRemark() {
         return remark;
     }
@@ -80,8 +79,8 @@ public class DoorType implements Serializable {
     public String toString() {
         return "DoorType{" +
                 "id=" + id +
-                ", doortype=" + doortype +
-                ", addtime=" + addtime +
+                ", doorType='" + doorType + '\'' +
+                ", addTime='" + addTime + '\'' +
                 ", remark='" + remark + '\'' +
                 '}';
     }

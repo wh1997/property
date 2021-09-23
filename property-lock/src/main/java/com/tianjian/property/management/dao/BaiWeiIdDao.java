@@ -16,8 +16,13 @@ import java.util.List;
 @Repository
 public interface BaiWeiIdDao {
     @Select({"<script>" +
-            " SELECT id,bw_property_id,tj_oldProperty_id,property_name,remark " +
-            "FROM tj_baiwei_old_id"+
+            " SELECT id,bw_property_id,tj_oldProperty_id,property_name,branch_id,remark " +
+            " FROM tj_baiwei_old_id WHERE status=0 "+
             "</script>"})
     List<BaiWeiId> selectAll();
+    @Select({"<script>" +
+            " SELECT tj_oldProperty_id " +
+            " FROM tj_baiwei_old_id WHERE bw_property_id = #{pid}"+
+            "</script>"})
+    int selectByPropertyId(Integer pid);
 }

@@ -19,7 +19,7 @@ public interface NetworkCardDao {
     Map<String,String> selectById(Integer lockfacilityid);
     @Select({"<script>" +
             " SELECT *  " +
-            "FROM tj_network_card WHERE propert_id = #{propertyId}  AND network_status != 1"+
+            "FROM tj_network_card WHERE property_id = #{propertyId}  AND network_status != 1"+
             "</script>"})
     List<NetworkCard> findByPropertyId(Integer propertyId);
     @Select({"<script>" +
@@ -39,7 +39,7 @@ public interface NetworkCardDao {
             " WHERE " +
             " network_name LIKE #{keyWord}  " +
             " OR deviceflag LIKE #{keyWord}  " +
-            " AND propert_id = #{propertyId}   " +
+            " AND property_id = #{propertyId}   " +
             " AND network_status != 1"+
             "</script>"})
     List<NetworkCard> fuzzySearch(Integer propertyId,String keyWord);

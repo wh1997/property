@@ -14,6 +14,7 @@
             绝对路径（如：d:\\ehcache）
         查看路径方法：String tmpDir = System.getProperty("java.io.tmpdir");
      -->
+    <diskStore path="E:\\ehcache" />
 <!--    <diskStore path="e:ehcache"/>
        <cache
            name="ehcache"/>-->
@@ -29,9 +30,9 @@
         就算有访问，也只会存活600秒。
      -->
     <defaultCache maxElementsInMemory="10000000" eternal="false"
-                  timeToIdleSeconds="86400" timeToLiveSeconds="518400" overflowToDisk="true"/>
+                  timeToIdleSeconds="86400" timeToLiveSeconds="518400" overflowToDisk="true" memoryStoreEvictionPolicy="LRU"/>
 
     <cache name="myCache" maxElementsInMemory="10000000" eternal="false"
-           timeToIdleSeconds="86400" timeToLiveSeconds="518400" overflowToDisk="true"/>
+           timeToIdleSeconds="86400" timeToLiveSeconds="518400" overflowToDisk="true" memoryStoreEvictionPolicy="LRU"/>
 
 </ehcache>

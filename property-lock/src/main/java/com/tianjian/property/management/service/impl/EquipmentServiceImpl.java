@@ -4,10 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.tianjian.property.bean.*;
 import com.tianjian.property.bean.vo.LockBaseInfoVo;
-import com.tianjian.property.management.dao.GatewayDao;
-import com.tianjian.property.management.dao.LockBaseInfoDao;
-import com.tianjian.property.management.dao.LockDao;
-import com.tianjian.property.management.dao.NetworkCardDao;
+import com.tianjian.property.management.dao.*;
 import com.tianjian.property.management.service.EquipmentService;
 import com.tianjian.property.management.service.GatewayService;
 import com.tianjian.property.utils.BeanChangeUtils;
@@ -48,7 +45,6 @@ private String  addBluetooth;
         //是	string 蓝牙模块的软件版本号 ,可以通过小程序插件、APP的SDK添加门锁时获取到
         datamap.put("softwareVersion",softwareVersion);
         Map result = gatewayService.bindinggateway(addBluetooth, datamap);
-        System.out.println(result);
         Integer resultCode = (Integer) result.get("resultCode");
         Map data = (Map) result.get("data");
         //门锁id
@@ -92,6 +88,7 @@ private String  addBluetooth;
             List<NetworkCard> list =NetworkCardDao.findByPropertyId(propertyId);
             PageInfo<NetworkCard> pageInfo=new PageInfo<>(list);
             List<NetworkCard> pageList = pageInfo.getList();
+            System.out.println(pageList);
             return pageList;
         }
     }

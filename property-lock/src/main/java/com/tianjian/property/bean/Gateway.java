@@ -17,31 +17,31 @@ public class Gateway implements Serializable {
     private Integer id;
     //网关id
     @Column(name = "gateway_id")
-    private String gatewayid;
+    private String gatewayId;
     //网关序列号
     @Column(name = "deviceseq")
     private String deviceseq;
     //网关名称
     @Column(name = "gateway_name")
-    private String gatewayname;
+    private String gatewayName;
     //网关MAC
     @Column(name = "gateway_mac")
-    private String gatewaymac;
+    private String gatewayMac;
     //网关类型
     @Column(name = "gateway_type")
-    private Integer gatewaytype;
+    private Integer gatewayType;
     //硬件版本号
     @Column(name = "hardwareversion")
-    private String hardwareversion;
+    private String hardwareVersion;
     //软件版本号
     @Column(name = "softwareversion")
-    private String softwareversion;
+    private String softwareVersion;
     //创建时间
     @Column(name = "createtime")
-    private String createtime;
+    private String createTime;
     //废弃时间
     @Column(name = "discardtime")
-    private String discardtime;
+    private String discardTime;
     //网关状态  3在线4离线5废弃
     @Column(name = "status")
     private Integer status;
@@ -59,17 +59,17 @@ public class Gateway implements Serializable {
         super();
     }
 
-    public Gateway(Integer id, String gatewayid, String deviceseq, String gatewayname, String gatewaymac, Integer gatewaytype, String hardwareversion, String softwareversion, String createtime, String discardtime, Integer status, Integer project, String vendor, String remark) {
+    public Gateway(Integer id, String gatewayId, String deviceseq, String gatewayName, String gatewayMac, Integer gatewayType, String hardwareVersion, String softwareVersion, String createTime, String discardTime, Integer status, Integer project, String vendor, String remark) {
         this.id = id;
-        this.gatewayid = gatewayid;
+        this.gatewayId = gatewayId;
         this.deviceseq = deviceseq;
-        this.gatewayname = gatewayname;
-        this.gatewaymac = gatewaymac;
-        this.gatewaytype = gatewaytype;
-        this.hardwareversion = hardwareversion;
-        this.softwareversion = softwareversion;
-        this.createtime = createtime;
-        this.discardtime = discardtime;
+        this.gatewayName = gatewayName;
+        this.gatewayMac = gatewayMac;
+        this.gatewayType = gatewayType;
+        this.hardwareVersion = hardwareVersion;
+        this.softwareVersion = softwareVersion;
+        this.createTime = createTime;
+        this.discardTime = discardTime;
         this.status = status;
         this.project = project;
         this.vendor = vendor;
@@ -84,12 +84,12 @@ public class Gateway implements Serializable {
         this.id = id;
     }
 
-    public String getGatewayid() {
-        return gatewayid;
+    public String getGatewayId() {
+        return gatewayId;
     }
 
-    public void setGatewayid(String gatewayid) {
-        this.gatewayid = gatewayid;
+    public void setGatewayId(String gatewayId) {
+        this.gatewayId = gatewayId;
     }
 
     public String getDeviceseq() {
@@ -100,65 +100,64 @@ public class Gateway implements Serializable {
         this.deviceseq = deviceseq;
     }
 
-    public String getGatewayname() {
-        return gatewayname;
+    public String getGatewayName() {
+        return gatewayName;
     }
 
-    public void setGatewayname(String gatewayname) {
-        this.gatewayname = gatewayname;
+    public void setGatewayName(String gatewayName) {
+        this.gatewayName = gatewayName;
     }
 
-    public String getGatewaymac() {
-        return gatewaymac;
+    public String getGatewayMac() {
+        return gatewayMac;
     }
 
-    public void setGatewaymac(String gatewaymac) {
-        this.gatewaymac = gatewaymac;
+    public void setGatewayMac(String gatewayMac) {
+        this.gatewayMac = gatewayMac;
     }
 
-    public Integer getGatewaytype() {
-        return gatewaytype;
+    public Integer getGatewayType() {
+        return gatewayType;
     }
 
-    public void setGatewaytype(Integer gatewaytype) {
-        this.gatewaytype = gatewaytype;
+    public void setGatewayType(Integer gatewayType) {
+        this.gatewayType = gatewayType;
     }
 
-    public String getHardwareversion() {
-        return hardwareversion;
+    public void setCreateTime(String createTime) {
+        this.createTime = createTime;
     }
 
-    public void setHardwareversion(String hardwareversion) {
-        this.hardwareversion = hardwareversion;
+    public String getDiscardTime() {
+        return discardTime;
     }
 
-    public String getSoftwareversion() {
-        return softwareversion;
+    public void setDiscardTime(String discardTime) {
+        this.discardTime = discardTime;
     }
 
-    public void setSoftwareversion(String softwareversion) {
-        this.softwareversion = softwareversion;
+    public String getHardwareVersion() {
+        return hardwareVersion;
     }
 
-    public String getCreatetime() {
+    public void setHardwareVersion(String hardwareVersion) {
+        this.hardwareVersion = hardwareVersion;
+    }
+
+    public String getSoftwareVersion() {
+        return softwareVersion;
+    }
+
+    public void setSoftwareVersion(String softwareVersion) {
+        this.softwareVersion = softwareVersion;
+    }
+
+    public String getCreateTime() {
         Date date = new Date();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String format = simpleDateFormat.format(date);
         return format;
     }
-
-    public void setCreatetime(String createtime) {
-        this.createtime = createtime;
-    }
-
-    public String getDiscardtime() {
-        return discardtime;
-    }
-
-    public void setDiscardtime(String discardtime) {
-        this.discardtime = discardtime;
-    }
-
     public Integer getStatus() {
         return status;
     }
@@ -191,24 +190,5 @@ public class Gateway implements Serializable {
         this.remark = remark;
     }
 
-    @Override
-    public String toString() {
-        return "Gateway{" +
-                "id=" + id +
-                ", gatewayid='" + gatewayid + '\'' +
-                ", deviceseq='" + deviceseq + '\'' +
-                ", gatewayname='" + gatewayname + '\'' +
-                ", gatewaymac='" + gatewaymac + '\'' +
-                ", gatewaytype=" + gatewaytype +
-                ", hardwareversion='" + hardwareversion + '\'' +
-                ", softwareversion='" + softwareversion + '\'' +
-                ", createtime='" + createtime + '\'' +
-                ", discardtime='" + discardtime + '\'' +
-                ", status=" + status +
-                ", project=" + project +
-                ", vendor='" + vendor + '\'' +
-                ", remark='" + remark + '\'' +
-                '}';
-    }
 }
 

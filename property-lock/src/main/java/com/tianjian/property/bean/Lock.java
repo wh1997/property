@@ -18,25 +18,25 @@ public class Lock implements Serializable {
     private Integer id;
     //对应的门id
     @Column(name = "door_id")
-    private Integer doorid;
+    private Integer doorId;
     //锁的状态
     @Column(name = "lock_status")
-    private Integer lockstatus;
+    private Integer lockStatus;
     //锁设备id
     @Column(name = "lock_facility_id")
-    private Integer lockfacilityid;
+    private Integer lockFacilityId;
     //对应的网关id
     @Column(name = "Lock_gateway_id")
-    private Integer lockgatewayid;
+    private Integer lockGatewayId;
     //设备类型
     @Column(name = "facility_type")
-    private Integer facilitytype;
+    private Integer facilityType;
     //添加时间
     @Column(name = "addtime")
-    private String addtime;
+    private String addTime;
     //修改时间
     @Column(name = "updatetime")
-    private String updatetime ;
+    private String updateTime ;
     //备注
     @Column(name = "remark")
     private String remark ;
@@ -45,15 +45,15 @@ public class Lock implements Serializable {
         super();
     }
 
-    public Lock(Integer id, Integer doorid, Integer lockstatus, Integer lockfacilityid, Integer lockgatewayid, Integer facilitytype, String addtime, String updatetime, String remark) {
+    public Lock(Integer id, Integer doorId, Integer lockStatus, Integer lockFacilityId, Integer lockGatewayId, Integer facilityType, String addTime, String updateTime, String remark) {
         this.id = id;
-        this.doorid = doorid;
-        this.lockstatus = lockstatus;
-        this.lockfacilityid = lockfacilityid;
-        this.lockgatewayid = lockgatewayid;
-        this.facilitytype = facilitytype;
-        this.addtime = addtime;
-        this.updatetime = updatetime;
+        this.doorId = doorId;
+        this.lockStatus = lockStatus;
+        this.lockFacilityId = lockFacilityId;
+        this.lockGatewayId = lockGatewayId;
+        this.facilityType = facilityType;
+        this.addTime = addTime;
+        this.updateTime = updateTime;
         this.remark = remark;
     }
 
@@ -65,63 +65,20 @@ public class Lock implements Serializable {
         this.id = id;
     }
 
-    public Integer getDoorid() {
-        return doorid;
+    public Integer getDoorId() {
+        return doorId;
     }
 
-    public void setDoorid(Integer doorid) {
-        this.doorid = doorid;
+    public void setDoorId(Integer doorId) {
+        this.doorId = doorId;
     }
 
-    public Integer getLockstatus() {
-        return lockstatus;
-    }
-
-    public void setLockstatus(Integer lockstatus) {
-        this.lockstatus = lockstatus;
-    }
-
-    public Integer getLockfacilityid() {
-        return lockfacilityid;
-    }
-
-    public void setLockfacilityid(Integer lockfacilityid) {
-        this.lockfacilityid = lockfacilityid;
-    }
-
-    public Integer getLockgatewayid() {
-        return lockgatewayid;
-    }
-
-    public void setLockgatewayid(Integer lockgatewayid) {
-        this.lockgatewayid = lockgatewayid;
-    }
-
-    public Integer getFacilitytype() {
-        return facilitytype;
-    }
-
-    public void setFacilitytype(Integer facilitytype) {
-        this.facilitytype = facilitytype;
-    }
-    public String getAddtime() {
+    public String getAddTime() {
         Date date = new Date();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String format = simpleDateFormat.format(date);
         return format;
     }
-    public void setAddtime(String addtime) {
-        this.addtime = addtime;
-    }
-
-    public String getUpdatetime() {
-        return updatetime;
-    }
-
-    public void setUpdatetime(String updatetime) {
-        this.updatetime = updatetime;
-    }
-
     public String getRemark() {
         return remark;
     }
@@ -130,17 +87,61 @@ public class Lock implements Serializable {
         this.remark = remark;
     }
 
+    public Integer getLockStatus() {
+        return lockStatus;
+    }
+
+    public void setLockStatus(Integer lockStatus) {
+        this.lockStatus = lockStatus;
+    }
+
+    public Integer getLockFacilityId() {
+        return lockFacilityId;
+    }
+
+    public void setLockFacilityId(Integer lockFacilityId) {
+        this.lockFacilityId = lockFacilityId;
+    }
+
+    public Integer getLockGatewayId() {
+        return lockGatewayId;
+    }
+
+    public void setLockGatewayId(Integer lockGatewayId) {
+        this.lockGatewayId = lockGatewayId;
+    }
+
+    public Integer getFacilityType() {
+        return facilityType;
+    }
+
+    public void setFacilityType(Integer facilityType) {
+        this.facilityType = facilityType;
+    }
+
+    public void setAddTime(String addTime) {
+        this.addTime = addTime;
+    }
+
+    public String getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(String updateTime) {
+        this.updateTime = updateTime;
+    }
+
     @Override
     public String toString() {
         return "Lock{" +
                 "id=" + id +
-                ", doorid=" + doorid +
-                ", lockstatus=" + lockstatus +
-                ", lockfacilityid=" + lockfacilityid +
-                ", lockgatewayid=" + lockgatewayid +
-                ", facilitytype=" + facilitytype +
-                ", addtime='" + addtime + '\'' +
-                ", updatetime='" + updatetime + '\'' +
+                ", doorId=" + doorId +
+                ", lockStatus=" + lockStatus +
+                ", lockFacilityId=" + lockFacilityId +
+                ", lockGatewayId=" + lockGatewayId +
+                ", facilityType=" + facilityType +
+                ", addTime='" + addTime + '\'' +
+                ", updateTime='" + updateTime + '\'' +
                 ", remark='" + remark + '\'' +
                 '}';
     }

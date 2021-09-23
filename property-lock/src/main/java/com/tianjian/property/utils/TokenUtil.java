@@ -20,15 +20,15 @@ public class TokenUtil {
 	 * JWT生成Token.<br/>
 	 * JWT构成: header, payload, signature
 	 *
-	 * @param user_id 登录成功后用户user_id, 参数user_id不可传空
+	 * @param userId 登录成功后用户user_id, 参数user_id不可传空
 	 */
-	public static String createToken(Double user_id) throws Exception {
+	public static String createToken(Integer userId) throws Exception {
 		Key key = new AesKey(SECRET.getBytes());
 		JsonWebEncryption jwe = new JsonWebEncryption();
 		jwe.setAlgorithmHeaderValue(KeyManagementAlgorithmIdentifiers.A128KW);
 		jwe.setEncryptionMethodHeaderParameter(ContentEncryptionAlgorithmIdentifiers.AES_128_CBC_HMAC_SHA_256);
 		jwe.setKey(key);
-		jwe.setPayload(user_id.toString());
+		jwe.setPayload(userId.toString());
 		String token = jwe.getCompactSerialization();
 		return token;
 	}
@@ -38,14 +38,14 @@ public class TokenUtil {
 	 * @param token
 	 * @return user_id
 	 */
-	public static Double getAppUID(String token) throws JoseException {
+	public static Integer getAppUID(String token) throws JoseException {
 		Key key = new AesKey(SECRET.getBytes());
 		JsonWebEncryption jwe2 = new JsonWebEncryption();
 		jwe2.setKey(key);
 		jwe2.setCompactSerialization(token);
 
 		final String payload = jwe2.getPayload();
-		return Double.valueOf(payload);
+		return Integer.valueOf(payload);
 	}
 
 	public static void main(String[] args) throws Exception {

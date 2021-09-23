@@ -15,7 +15,7 @@ import java.util.Map;
 public interface GatewayDao {
     @Select({"<script>" +
             " SELECT gateway_name, gateway_mac,deviceseq " +
-            "FROM tj_gateway WHERE id = #{id}"+
+            "FROM tj_gateway WHERE id = #{id} AND status != 5"+
             "</script>"})
     Map<String,String> findById(Integer id);
     @Select({"<script>" +
@@ -29,34 +29,34 @@ public interface GatewayDao {
             "</script>"})
     Gateway selectById(Integer equipmentId);
    @Insert({"<script>" +
-           " INSERT INTO tj_lock" +
+           " INSERT INTO tj_gateway" +
            "<trim prefix=\"(\" suffix=\")\" suffixOverrides=\",\">"+
-           " <if test='gatewayid != null'>gateway_id ,</if> " +
+           " <if test='gatewayId != null'>gateway_id ,</if> " +
            " <if test='deviceseq != null'>deviceseq,</if> " +
-           " <if test='gatewayname != null'>gateway_name ,</if> " +
-           " <if test='gatewaymac != null'>gateway_mac ,</if> " +
-           " <if test='gatewaytype != null'>gateway_type ,</if> " +
-           " <if test='hardwareversion != null'>hardwareversion ,</if> " +
-           " <if test='softwareversion != null'>softwareversion ,</if> " +
-           " <if test='project != null'>Project </if> " +
-           " <if test='vendor != null'>vendor </if> " +
-           " <if test='createtime != null'>createtime </if> " +
-           " <if test='discardtime != null'>discardtime </if> " +
-           " <if test='status != null'>status </if> " +
-           " <if test='remark != null'>remark </if> " +
+           " <if test='gatewayName != null'>gateway_name ,</if> " +
+           " <if test='gatewayMac != null'>gateway_mac ,</if> " +
+           " <if test='gatewayType != null'>gateway_type ,</if> " +
+           " <if test='hardwareVersion != null'>hardwareversion ,</if> " +
+           " <if test='softwareVersion != null'>softwareversion ,</if> " +
+           " <if test='project != null'>Project, </if> " +
+           " <if test='vendor != null'>vendor, </if> " +
+           " <if test='createTime != null'>createtime, </if> " +
+           " <if test='discardTime != null'>discardtime ,</if> " +
+           " <if test='status != null'>status, </if> " +
+           " <if test='remark != null'>remark, </if> " +
            "</trim>"+
            "<trim prefix=\"values (\" suffix=\")\" suffixOverrides=\",\">"+
-           " <if test='gatewayid  != null'> #{gatewayid}, </if> " +
+           " <if test='gatewayId  != null'> #{gatewayId}, </if> " +
            " <if test='deviceseq  != null'> #{deviceseq}, </if>" +
-           " <if test='gatewayname  != null'> #{gatewayname},</if> " +
-           " <if test='gatewaymac   != null'>#{gatewaymac}, </if> " +
-           " <if test='gatewaytype  != null'>#{gatewaytype} ,</if> " +
-           " <if test='hardwareversion != null'>#{hardwareversion} ,</if> " +
-           " <if test='softwareversion  != null'>#{softwareversion} ,</if> " +
+           " <if test='gatewayName  != null'> #{gatewayName},</if> " +
+           " <if test='gatewayMac   != null'>#{gatewayMac}, </if> " +
+           " <if test='gatewayType  != null'>#{gatewayType} ,</if> " +
+           " <if test='hardwareVersion != null'>#{hardwareVersion} ,</if> " +
+           " <if test='softwareVersion  != null'>#{softwareVersion} ,</if> " +
            " <if test='project != null'> #{project} ,</if> " +
            " <if test='vendor != null'> #{vendor} ,</if> " +
-           " <if test='createtime != null'> #{createtime} ,</if> " +
-           " <if test='discardtime != null'> #{discardtime} ,</if> " +
+           " <if test='createTime != null'> #{createTime} ,</if> " +
+           " <if test='discardTime != null'> #{discardTime} ,</if> " +
            " <if test='status != null'> #{status} ,</if> " +
            " <if test='remark != null'> #{remark} ,</if> " +
            "</trim>"+
@@ -77,4 +77,6 @@ public interface GatewayDao {
             " AND status != 5"+
             "</script>"})
     List<Gateway> fuzzySearch(Integer propertyId,String keyWord);
+    @Update({"UPDATE tj_gateway SET `status`= 5 WHERE gateway_id = #{gatewayId}"})
+    int updateByGatewayId(String gatewayId);
 }

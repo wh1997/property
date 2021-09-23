@@ -25,22 +25,20 @@ public class PropertyServiceImpl implements PropertyService {
     private String url;
     @Override
     public List getBuildings(Integer parkId) {
-        String credentialId="6807674967AAVC64T";
+        String credentialId="6811833670T5FHF9N";
         String header="BuildingId,ParkId,Term,BuildingNo,Name";
-        String s = HttpClientUtil.BWdoGet(url + "/Buildings/parkId:" + parkId + "?page=0",credentialId,header);
-        Gson gson = new Gson();
-        List map = gson.fromJson(s, List.class);
-        return map;
+        Map resultMap = HttpClientUtil.BWdoGet(url + "/Buildings/parkId:" + parkId + "?page=0", credentialId, header);
+        List result = (List) resultMap.get("result");
+        return result;
     }
   //DOTO
     @Override
     public List getApartments(Integer buildingId) {
-        String credentialId="6807674967AAVC64T";
+        String credentialId="6811833670T5FHF9N";
         String header="ApartmentId,BuildingId,ApartmentNo,DoorNo";
-        String s = HttpClientUtil.BWdoGet(url + "/Apartments/buildingId:" + buildingId + "?page=0",credentialId,header);
-        Gson gson = new Gson();
-        List map = gson.fromJson(s, List.class);
-        return map;
+        Map resultMap = HttpClientUtil.BWdoGet(url + "/Apartments/buildingId:" + buildingId + "?page=0", credentialId, header);
+        List result = (List) resultMap.get("result");
+        return result;
     }
 
     @Override

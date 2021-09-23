@@ -11,6 +11,8 @@ apartment :
   gatewayBind: hxjGatewayBind
   #  门锁绑定网关
   bindingGateway: hxjLockBindingGateway
+  #  删除网关
+  DelGateway: hxjDelGateway
   #  远程开锁业务能力
   theRemoteUnlock: hxjOpenDoorLock
   #添加卡片钥匙业务能力

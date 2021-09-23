@@ -19,52 +19,52 @@ public class Door implements Serializable {
     private Integer id;
     //小区id
     @Column(name = "property_id")
-    private Integer propertyid	;
+    private Integer propertyId	;
     //小区名称
     @Column(name = "property_name")
-    private String propertyname;
+    private String propertyName;
     //期数id
     @Column(name = "num_id")
-    private Integer numid;
+    private Integer numId;
     //期数名称
     @Column(name = "num_name")
-    private String numname;
+    private String numName;
     //楼栋id
-    @Column(name = "buliding_id")
-    private Integer bulidingid;
+    @Column(name = "building_id")
+    private Integer buildingId;
     //楼栋名称
-    @Column(name = "buliding_name")
-    private String bulidingname;
+    @Column(name = "building_name")
+    private String buildingName;
     //单元号
     @Column(name = "unit_no")
-    private Integer unitno;
+    private Integer unitNo;
     //单元名称
     @Column(name = "unit_name")
-    private String unitname;
+    private String unitName;
     //楼层
     @Column(name = "floor_no")
-    private Integer floorno;
+    private Integer floorNo;
     //房号
     @Column(name = "room_no")
-    private String roomno;
+    private String roomNo;
     //门名称
     @Column(name = "door_name")
-    private String doorname;
+    private String doorName;
     //门类型    0大门 1楼栋门 2单元门 3公寓门
     @Column(name = "door_type")
-    private Integer doortype;
+    private Integer doorType;
     //使用状态   0在住  1闲置   2到期
     @Column(name = "status")
     private Integer status;
     //添加时间
     @Column(name = "addtime")
-    private String  addtime;
+    private String  addTime;
     //修改时间
     @Column(name = "updatetime")
-    private String updatetime;
+    private String updateTime;
     //创建人
     @Column(name = "create_person")
-    private String createperson;
+    private String createPerson;
     //备注
     @Column(name = "remark")
     private String remark;
@@ -73,24 +73,24 @@ public class Door implements Serializable {
         super();
     }
 
-    public Door(Integer id, Integer propertyid, String propertyname, Integer numid, String numname, Integer bulidingid, String bulidingname, Integer unitno, String unitname, Integer floorno, String roomno, String doorname, Integer doortype, Integer status, String addtime, String updatetime, String createperson, String remark) {
+    public Door(Integer id, Integer propertyId, String propertyName, Integer numId, String numName, Integer buildingId, String buildingName, Integer unitNo, String unitName, Integer floorNo, String roomNo, String doorName, Integer doorType, Integer status, String addTime, String updateTime, String createPerson, String remark) {
         this.id = id;
-        this.propertyid = propertyid;
-        this.propertyname = propertyname;
-        this.numid = numid;
-        this.numname = numname;
-        this.bulidingid = bulidingid;
-        this.bulidingname = bulidingname;
-        this.unitno = unitno;
-        this.unitname = unitname;
-        this.floorno = floorno;
-        this.roomno = roomno;
-        this.doorname = doorname;
-        this.doortype = doortype;
+        this.propertyId = propertyId;
+        this.propertyName = propertyName;
+        this.numId = numId;
+        this.numName = numName;
+        this.buildingId = buildingId;
+        this.buildingName = buildingName;
+        this.unitNo = unitNo;
+        this.unitName = unitName;
+        this.floorNo = floorNo;
+        this.roomNo = roomNo;
+        this.doorName = doorName;
+        this.doorType = doorType;
         this.status = status;
-        this.addtime = addtime;
-        this.updatetime = updatetime;
-        this.createperson = createperson;
+        this.addTime = addTime;
+        this.updateTime = updateTime;
+        this.createPerson = createPerson;
         this.remark = remark;
     }
 
@@ -102,100 +102,100 @@ public class Door implements Serializable {
         this.id = id;
     }
 
-    public Integer getPropertyid() {
-        return propertyid;
+    public Integer getBuildingId() {
+        return buildingId;
     }
 
-    public void setPropertyid(Integer propertyid) {
-        this.propertyid = propertyid;
+    public void setBuildingId(Integer buildingId) {
+        this.buildingId = buildingId;
     }
 
-    public String getPropertyname() {
-        return propertyname;
+    public String getBuildingName() {
+        return buildingName;
     }
 
-    public void setPropertyname(String propertyname) {
-        this.propertyname = propertyname;
+    public void setBuildingName(String buildingName) {
+        this.buildingName = buildingName;
     }
 
-    public Integer getNumid() {
-        return numid;
+    public Integer getPropertyId() {
+        return propertyId;
     }
 
-    public void setNumid(Integer numid) {
-        this.numid = numid;
+    public void setPropertyId(Integer propertyId) {
+        this.propertyId = propertyId;
     }
 
-    public String getNumname() {
-        return numname;
+    public String getPropertyName() {
+        return propertyName;
     }
 
-    public void setNumname(String numname) {
-        this.numname = numname;
+    public void setPropertyName(String propertyName) {
+        this.propertyName = propertyName;
     }
 
-    public Integer getBulidingid() {
-        return bulidingid;
+    public Integer getNumId() {
+        return numId;
     }
 
-    public void setBulidingid(Integer bulidingid) {
-        this.bulidingid = bulidingid;
+    public void setNumId(Integer numId) {
+        this.numId = numId;
     }
 
-    public String getBulidingname() {
-        return bulidingname;
+    public String getNumName() {
+        return numName;
     }
 
-    public void setBulidingname(String bulidingname) {
-        this.bulidingname = bulidingname;
+    public void setNumName(String numName) {
+        this.numName = numName;
     }
 
-    public Integer getUnitno() {
-        return unitno;
+    public Integer getUnitNo() {
+        return unitNo;
     }
 
-    public void setUnitno(Integer unitno) {
-        this.unitno = unitno;
+    public void setUnitNo(Integer unitNo) {
+        this.unitNo = unitNo;
     }
 
-    public String getUnitname() {
-        return unitname;
+    public String getUnitName() {
+        return unitName;
     }
 
-    public void setUnitname(String unitname) {
-        this.unitname = unitname;
+    public void setUnitName(String unitName) {
+        this.unitName = unitName;
     }
 
-    public Integer getFloorno() {
-        return floorno;
+    public Integer getFloorNo() {
+        return floorNo;
     }
 
-    public void setFloorno(Integer floorno) {
-        this.floorno = floorno;
+    public void setFloorNo(Integer floorNo) {
+        this.floorNo = floorNo;
     }
 
-    public String getRoomno() {
-        return roomno;
+    public String getRoomNo() {
+        return roomNo;
     }
 
-    public void setRoomno(String roomno) {
-        this.roomno = roomno;
+    public void setRoomNo(String roomNo) {
+        this.roomNo = roomNo;
     }
 
-    public String getDoorname() {
-        return doorname;
+    public String getDoorName() {
+        return doorName;
     }
 
-    public void setDoorname(String doorname) {
-        this.doorname = doorname;
+    public void setDoorName(String doorName) {
+        this.doorName = doorName;
     }
 
-    public Integer getDoortype() {
-        return doortype;
+    public Integer getDoorType() {
+        return doorType;
     }
 
-    public void setDoortype(Integer doortype) {
-        this.doortype = doortype;
+    public void setDoorType(Integer doorType) {
+        this.doorType = doorType;
     }
 
     public Integer getStatus() {
@@ -206,31 +206,31 @@ public class Door implements Serializable {
         this.status = status;
     }
 
-    public String getAddtime() {
+    public String getAddTime() {
         Date date = new Date();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String format = simpleDateFormat.format(date);
         return format;
     }
 
-    public void setAddtime(String addtime) {
-        this.addtime = addtime;
+    public void setAddTime(String addTime) {
+        this.addTime = addTime;
     }
 
-    public String getUpdatetime() {
-        return updatetime;
+    public String getUpdateTime() {
+        return updateTime;
     }
 
-    public void setUpdatetime(String updatetime) {
-        this.updatetime = updatetime;
+    public void setUpdateTime(String updateTime) {
+        this.updateTime = updateTime;
     }
 
-    public String getCreateperson() {
-        return createperson;
+    public String getCreatePerson() {
+        return createPerson;
     }
 
-    public void setCreateperson(String createperson) {
-        this.createperson = createperson;
+    public void setCreatePerson(String createPerson) {
+        this.createPerson = createPerson;
     }
 
     public String getRemark() {
@@ -245,22 +245,22 @@ public class Door implements Serializable {
     public String toString() {
         return "Door{" +
                 "id=" + id +
-                ", propertyid=" + propertyid +
-                ", propertyname='" + propertyname + '\'' +
-                ", numid=" + numid +
-                ", numname='" + numname + '\'' +
-                ", bulidingid=" + bulidingid +
-                ", bulidingname='" + bulidingname + '\'' +
-                ", unitno=" + unitno +
-                ", unitname='" + unitname + '\'' +
-                ", floorno=" + floorno +
-                ", roomno='" + roomno + '\'' +
-                ", doorname='" + doorname + '\'' +
-                ", doortype=" + doortype +
+                ", propertyId=" + propertyId +
+                ", propertyName='" + propertyName + '\'' +
+                ", numId=" + numId +
+                ", numName='" + numName + '\'' +
+                ", buildingId=" + buildingId +
+                ", buildingName='" + buildingName + '\'' +
+                ", unitNo=" + unitNo +
+                ", unitName='" + unitName + '\'' +
+                ", floorNo=" + floorNo +
+                ", roomNo='" + roomNo + '\'' +
+                ", doorName='" + doorName + '\'' +
+                ", doorType=" + doorType +
                 ", status=" + status +
-                ", addtime='" + addtime + '\'' +
-                ", updatetime='" + updatetime + '\'' +
-                ", createperson='" + createperson + '\'' +
+                ", addTime='" + addTime + '\'' +
+                ", updateTime='" + updateTime + '\'' +
+                ", createPerson='" + createPerson + '\'' +
                 ", remark='" + remark + '\'' +
                 '}';
     }

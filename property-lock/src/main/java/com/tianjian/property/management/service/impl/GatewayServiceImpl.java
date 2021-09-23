@@ -2,20 +2,19 @@ package com.tianjian.property.management.service.impl;
 
 import com.alibaba.druid.support.json.JSONUtils;
 
-import com.alibaba.fastjson.JSON;
-import com.google.gson.Gson;
 import com.tianjian.property.bean.Gateway;
 import com.tianjian.property.bean.Lock;
 import com.tianjian.property.management.dao.GatewayDao;
 import com.tianjian.property.management.dao.LockBaseInfoDao;
 import com.tianjian.property.management.dao.LockDao;
 import com.tianjian.property.management.service.GatewayService;
-import com.tianjian.property.utils.HttpClientUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,7 +25,8 @@ import java.util.Map;
 
 @Service
 //EH缓存注解
-public class GatewayServiceImpl implements GatewayService {
+@CacheConfig(cacheNames = "myCache")
+public class GatewayServiceImpl extends HttpService implements GatewayService  {
     private static final Logger logger = LoggerFactory.getLogger(PhoneLoginServiceImpl.class);
     //门锁参数
     @Value("${apartment.appKey}")
@@ -43,6 +43,9 @@ public class GatewayServiceImpl implements GatewayService {
     //绑定网关请求
     @Value("${apartment.gatewayBind}")
     private  String gatewayBind;
+    //删除网关请求
+    @Value("${apartment.DelGateway}")
+    private  String DelGateway;
     //  #添加蓝牙锁请求
     @Value("${apartment.addBluetooth}")
     private  String addBluetooth;
@@ -58,8 +61,10 @@ public class GatewayServiceImpl implements GatewayService {
     private GatewayDao gatewayDao;
     @Autowired
     private LockBaseInfoDao lockBaseInfoDao;
+    @Autowired
+    private RedisTemplate redisTemplate;
     //绑定网关
-    @Cacheable(value = "myCache")
+    @Cacheable
     public  String getApartment(){
         //存储请求体
         HashMap<String, Object> map = new HashMap<>();
@@ -69,13 +74,8 @@ public class GatewayServiceImpl implements GatewayService {
         map2.put("appSecret",appsecret);
         map.put("method",methodlogin);
         map.put("data",map2);
-        //转换请求数据格式
-        String s = JSONUtils.toJSONString(map);
-        //发送数据请求
-        String s1 = HttpClientUtil.doPostJson(apartmenturl, s);
-        Gson gson = new Gson();
-        Map s2 = gson.fromJson(s1, Map.class);
-        Map<String,String> data = (Map<String,String>)s2.get("data");
+        Map result = (Map) postResult(apartmenturl, map);
+        Map<String,String> data = (Map<String,String>)result.get("data");
         String tokenId = data.get("tokenId");
         logger.info("获取到的门锁API token:"+tokenId);
         System.out.println("没走缓存");
@@ -89,11 +89,25 @@ public class GatewayServiceImpl implements GatewayService {
         map.put("method", method);
         map.put("data", data);
         map.put("tokenId", tokenid);
-        String s = JSONUtils.toJSONString(map);
-        String s1 = HttpClientUtil.doPostJson(apartmenturl, s);
-        Map json = (Map) JSON.parse(s1);
-        return json;
+        Map result = (Map) postResult(apartmenturl, map);
+        return result;
     }
+
+    @Override
+    @Transactional
+    public int deleteGateway(String gatewayId) {
+        HashMap<String, Object> datamap = new HashMap<>();
+        datamap.put("gatewayId",gatewayId);
+        Map resutl = bindinggateway(DelGateway, datamap);
+        int resultCode = (int) resutl.get("resultCode");
+        if (resultCode==0){
+            int update = gatewayDao.updateByGatewayId(gatewayId);
+            return update;
+        }else {
+            return 0;
+        }
+    }
+
     /**
     * @Description: 绑定网关
     * @Param:  
@@ -139,10 +153,10 @@ public class GatewayServiceImpl implements GatewayService {
         Integer gatewayType = (Integer) gatewayInfoMap.get("gatewayType");
         //网关状态3在线 4离线
         Integer state = (Integer) gatewayInfoMap.get("state");
-        //网关ip
+   /*     //网关ip
         String gatewayIp = (String) gatewayInfoMap.get("gatewayIp");
         //更新时间
-        String updateTime = (String) gatewayInfoMap.get("updateTime");
+        String updateTime = (String) gatewayInfoMap.get("updateTime");*/
         Gateway gateway = new Gateway(null, gatewayId, gatewaySeq, gatewayName, gatewayMac, gatewayType, hardwareVersion, softwareVersion, null, null, state, project, "慧享佳", null);
         gatewayDao.inster(gateway);
         return bindinggateway;

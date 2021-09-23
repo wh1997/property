@@ -39,7 +39,7 @@ public class GatewayController {
             String gatewaySeq = (String) map.get("gatewaySeq");
             Map result = gatewayService.gatewayBind(project, gatewaySeq);
             Integer resultCode = (Integer) result.get("resultCode");
-            Integer reason = (Integer) result.get("reason");
+            String reason = (String) result.get("reason");
             if(resultCode==0){
                 return new LockResult(true, ErrorEnum.SUCCESS.getErrorMsg(),ErrorEnum.SUCCESS.getCode(),result);
             }
@@ -50,7 +50,29 @@ public class GatewayController {
         }
 
     }
-    
+    @PostMapping("/hxjDelete")
+
+    /**
+    * @Description: 删除网关
+    * @Param: [map]
+    * @return: com.tianjian.property.utils.LockResult
+    * @Date: 2021/7/1
+    */
+    public LockResult deleteGateway(@RequestBody Map map){
+        try {
+            String gatewayId = (String) map.get("gatewayId");
+            int resultMap=gatewayService.deleteGateway(gatewayId);
+            if(resultMap>=0){
+                return new LockResult(true, ErrorEnum.SUCCESS.getErrorMsg(),ErrorEnum.SUCCESS.getCode(),resultMap);
+            }
+            return new LockResult(false,"删除失败",ErrorEnum.OPERATION_ERROR.getCode(),"");
+        }catch (Exception e){
+            e.printStackTrace();
+            return new LockResult(false, ErrorEnum.SYSTEM_ERROR.getErrorMsg(),ErrorEnum.SYSTEM_ERROR.getCode(),null);
+        }
+
+    }
+
     @PostMapping("/lock/gateway")
     
     /** 
@@ -66,14 +88,14 @@ public class GatewayController {
             //网关id
             String gatewayId = (String) map.get("gatewayId");
             //门id
-            Integer doorID = (Integer) map.get("doorID");
+            Integer doorID = (Integer) map.get("doorId");
             //网关设备id
             Integer gateway = (Integer) map.get("gateway");
             //蓝牙锁设备id
             Integer lock = (Integer) map.get("lock");
             Map result = gatewayService.LockBindingGateway(lockId, gatewayId,doorID,gateway,lock);
             Integer resultCode = (Integer) result.get("resultCode");
-            Integer reason = (Integer) result.get("reason");
+            String reason = (String) result.get("reason");
             if(resultCode==0){
                 return new LockResult(true,ErrorEnum.SUCCESS.getErrorMsg(),ErrorEnum.SUCCESS.getCode(),result);
             }
@@ -96,12 +118,13 @@ public class GatewayController {
         try {
             //门锁id
             String lockId = (String) map.get("lockId");
-            //蓝牙锁设备id
+            //锁id
             Integer lock = (Integer) map.get("lock_id");
+            //蓝牙锁设备id
             Integer bluetoothLockId = (Integer) map.get("bluetoothLockId");
             Map result = gatewayService.LockUnBindingGateway(lockId,lock,bluetoothLockId);
             Integer resultCode = (Integer) result.get("resultCode");
-            Integer reason = (Integer) result.get("reason");
+            String reason = (String) result.get("reason");
             if(resultCode==0){
                 return new LockResult(true,ErrorEnum.SUCCESS.getErrorMsg(),ErrorEnum.SUCCESS.getCode(),result);
             }
@@ -138,4 +161,10 @@ public class GatewayController {
         }
 
     }
+/*    @PostMapping("/tests")
+    public LockResult test(@RequestBody Map map){
+        String apartment = gatewayService.getApartment();
+        System.out.println(apartment);
+        return null;
+    }*/
 }

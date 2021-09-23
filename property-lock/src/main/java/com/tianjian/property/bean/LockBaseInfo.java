@@ -17,49 +17,49 @@ public class LockBaseInfo implements Serializable {
     private Integer id;
     //维护版本 对应小程序DNA信息的initFlag
     @Column(name = "lock_id")
-    private String lockid;
+    private String lockId;
     //维护版本 对应小程序DNA信息的initFlag
     @Column(name = "lock_tag")
-    private String locktag;
+    private String lockTag;
     //门锁MAC
     @Column(name = "lock_mac")
-    private String lockmac;
+    private String lockMac;
     //硬件版本号
-    @Column(name = "hardwareversion")
-    private String hardwareversion;
+    @Column(name = "hardwareersion")
+    private String hardwareVersion;
     //软件版本 对应小程序DNA信息的firmwareVersion
     @Column(name = "softwareversion")
-    private String softwareversion;
+    private String softwareVersion;
     //门锁类型
     @Column(name = "lock_type")
-    private Integer locktype;
+    private Integer lockType;
     //初始化状态标识   0~1,0—门锁为初始化状态; 1—非初始状态,已经添加了管理钥匙
     @Column(name = "initstatus")
-    private Integer initstatus;
+    private Integer initStatus;
     //最大音量
     @Column(name = "maxvolume")
-    private Integer maxvolume;
+    private Integer maxVolume;
     //最大用户数
     @Column(name = "maxuser")
-    private Integer maxuser;
+    private Integer maxUser;
     //蓝牙锁支持的命令版本号对应小程序DNA信息的bleProtocolVersion
     @Column(name = "bleprotocolver")
-    private Integer bleprotocolver;
+    private Integer bleproTocolver;
     //无线模组类型
     @Column(name = "rfmoduletype")
-    private Integer rfmoduletype;
+    private Integer rfmoduleType;
     //联网模块的MAC   带433模块必填
     @Column(name = "rfmodulemac")
-    private String rfmodulemac;
+    private String rfmoduleMac;
     //创建时间
     @Column(name = "createtime")
-    private String createtime;
+    private String createTime;
     //修改时间
     @Column(name = "updatetime")
-    private String updatetime;
+    private String updateTime;
     //设备添加人
     @Column(name = "addpeople")
-    private String addpeople;
+    private String addPeople;
     //厂商
     @Column(name = "vendor")
     private String vendor;
@@ -74,23 +74,23 @@ public class LockBaseInfo implements Serializable {
         super();
     }
 
-    public LockBaseInfo(Integer id, String lockid, String locktag, String lockmac, String hardwareversion, String softwareversion, Integer locktype, Integer initstatus, Integer maxvolume, Integer maxuser, Integer bleprotocolver, Integer rfmoduletype, String rfmodulemac,  String createtime, String updatetime, String addpeople, String vendor, Integer status, String remark) {
+    public LockBaseInfo(Integer id, String lockId, String lockTag, String lockMac, String hardwareVersion, String softwareVersion, Integer lockType, Integer initStatus, Integer maxVolume, Integer maxUser, Integer bleproTocolver, Integer rfmoduleType, String rfmoduleMac, String createTime, String updateTime, String addPeople, String vendor, Integer status, String remark) {
         this.id = id;
-        this.lockid = lockid;
-        this.locktag = locktag;
-        this.lockmac = lockmac;
-        this.hardwareversion = hardwareversion;
-        this.softwareversion = softwareversion;
-        this.locktype = locktype;
-        this.initstatus = initstatus;
-        this.maxvolume = maxvolume;
-        this.maxuser = maxuser;
-        this.bleprotocolver = bleprotocolver;
-        this.rfmoduletype = rfmoduletype;
-        this.rfmodulemac = rfmodulemac;
-        this.createtime = createtime;
-        this.updatetime = updatetime;
-        this.addpeople = addpeople;
+        this.lockId = lockId;
+        this.lockTag = lockTag;
+        this.lockMac = lockMac;
+        this.hardwareVersion = hardwareVersion;
+        this.softwareVersion = softwareVersion;
+        this.lockType = lockType;
+        this.initStatus = initStatus;
+        this.maxVolume = maxVolume;
+        this.maxUser = maxUser;
+        this.bleproTocolver = bleproTocolver;
+        this.rfmoduleType = rfmoduleType;
+        this.rfmoduleMac = rfmoduleMac;
+        this.createTime = createTime;
+        this.updateTime = updateTime;
+        this.addPeople = addPeople;
         this.vendor = vendor;
         this.status = status;
         this.remark = remark;
@@ -104,127 +104,128 @@ public class LockBaseInfo implements Serializable {
         this.id = id;
     }
 
-    public String getLockid() {
-        return lockid;
-    }
 
-    public void setLockid(String lockid) {
-        this.lockid = lockid;
-    }
-
-    public String getLocktag() {
-        return locktag;
-    }
-
-    public void setLocktag(String locktag) {
-        this.locktag = locktag;
-    }
-
-    public String getLockmac() {
-        return lockmac;
-    }
-
-    public void setLockmac(String lockmac) {
-        this.lockmac = lockmac;
-    }
-
-    public String getHardwareversion() {
-        return hardwareversion;
-    }
-
-    public void setHardwareversion(String hardwareversion) {
-        this.hardwareversion = hardwareversion;
-    }
-
-    public String getSoftwareversion() {
-        return softwareversion;
-    }
-
-    public void setSoftwareversion(String softwareversion) {
-        this.softwareversion = softwareversion;
-    }
-
-    public Integer getLocktype() {
-        return locktype;
-    }
-
-    public void setLocktype(Integer locktype) {
-        this.locktype = locktype;
-    }
-
-    public Integer getInitstatus() {
-        return initstatus;
-    }
-
-    public void setInitstatus(Integer initstatus) {
-        this.initstatus = initstatus;
-    }
-
-    public Integer getMaxvolume() {
-        return maxvolume;
-    }
-
-    public void setMaxvolume(Integer maxvolume) {
-        this.maxvolume = maxvolume;
-    }
-
-    public Integer getMaxuser() {
-        return maxuser;
-    }
-
-    public void setMaxuser(Integer maxuser) {
-        this.maxuser = maxuser;
-    }
-
-    public Integer getBleprotocolver() {
-        return bleprotocolver;
-    }
-
-    public void setBleprotocolver(Integer bleprotocolver) {
-        this.bleprotocolver = bleprotocolver;
-    }
-
-    public Integer getRfmoduletype() {
-        return rfmoduletype;
-    }
-
-    public void setRfmoduletype(Integer rfmoduletype) {
-        this.rfmoduletype = rfmoduletype;
-    }
-
-    public String getRfmodulemac() {
-        return rfmodulemac;
-    }
-
-    public void setRfmodulemac(String rfmodulemac) {
-        this.rfmodulemac = rfmodulemac;
-    }
-
-    public String getCreatetime() {
+    public String getCreateTime() {
         Date date = new Date();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String format = simpleDateFormat.format(date);
         return format;
     }
 
-    public void setCreatetime(String createtime) {
-        this.createtime = createtime;
+    public String getLockId() {
+        return lockId;
     }
 
-    public String getUpdatetime() {
-        return updatetime;
+    public void setLockId(String lockId) {
+        this.lockId = lockId;
     }
 
-    public void setUpdatetime(String updatetime) {
-        this.updatetime = updatetime;
+    public String getLockTag() {
+        return lockTag;
     }
 
-    public String getAddpeople() {
-        return addpeople;
+    public void setLockTag(String lockTag) {
+        this.lockTag = lockTag;
     }
 
-    public void setAddpeople(String addpeople) {
-        this.addpeople = addpeople;
+    public String getLockMac() {
+        return lockMac;
+    }
+
+    public void setLockMac(String lockMac) {
+        this.lockMac = lockMac;
+    }
+
+    public String getHardwareVersion() {
+        return hardwareVersion;
+    }
+
+    public void setHardwareVersion(String hardwareVersion) {
+        this.hardwareVersion = hardwareVersion;
+    }
+
+    public String getSoftwareVersion() {
+        return softwareVersion;
+    }
+
+    public void setSoftwareVersion(String softwareVersion) {
+        this.softwareVersion = softwareVersion;
+    }
+
+    public Integer getLockType() {
+        return lockType;
+    }
+
+    public void setLockType(Integer lockType) {
+        this.lockType = lockType;
+    }
+
+    public Integer getInitStatus() {
+        return initStatus;
+    }
+
+    public void setInitStatus(Integer initStatus) {
+        this.initStatus = initStatus;
+    }
+
+    public Integer getMaxVolume() {
+        return maxVolume;
+    }
+
+    public void setMaxVolume(Integer maxVolume) {
+        this.maxVolume = maxVolume;
+    }
+
+    public Integer getMaxUser() {
+        return maxUser;
+    }
+
+    public void setMaxUser(Integer maxUser) {
+        this.maxUser = maxUser;
+    }
+
+    public Integer getBleproTocolver() {
+        return bleproTocolver;
+    }
+
+    public void setBleproTocolver(Integer bleproTocolver) {
+        this.bleproTocolver = bleproTocolver;
+    }
+
+    public Integer getRfmoduleType() {
+        return rfmoduleType;
+    }
+
+    public void setRfmoduleType(Integer rfmodueType) {
+        this.rfmoduleType = rfmodueType;
+    }
+
+    public String getRfmoduleMac() {
+        return rfmoduleMac;
+    }
+
+    public void setRfmoduleMac(String rfmoduleMac) {
+        this.rfmoduleMac = rfmoduleMac;
+    }
+
+    public void setCreateTime(String createTime) {
+        this.createTime = createTime;
+    }
+
+    public String getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(String updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    public String getAddPeople() {
+        return addPeople;
+    }
+
+    public void setAddPeople(String addPeople) {
+        this.addPeople = addPeople;
     }
 
     public String getVendor() {
@@ -255,21 +256,21 @@ public class LockBaseInfo implements Serializable {
     public String toString() {
         return "LockBaseInfo{" +
                 "id=" + id +
-                ", lockid='" + lockid + '\'' +
-                ", locktag='" + locktag + '\'' +
-                ", lockmac='" + lockmac + '\'' +
-                ", hardwareversion='" + hardwareversion + '\'' +
-                ", softwareversion='" + softwareversion + '\'' +
-                ", locktype=" + locktype +
-                ", initstatus=" + initstatus +
-                ", maxvolume=" + maxvolume +
-                ", maxuser=" + maxuser +
-                ", bleprotocolver=" + bleprotocolver +
-                ", rfmoduletype=" + rfmoduletype +
-                ", rfmodulemac='" + rfmodulemac + '\'' +
-                ", createtime='" + createtime + '\'' +
-                ", updatetime='" + updatetime + '\'' +
-                ", addpeople='" + addpeople + '\'' +
+                ", lockId='" + lockId + '\'' +
+                ", lockTag='" + lockTag + '\'' +
+                ", lockMac='" + lockMac + '\'' +
+                ", hardwareVersion='" + hardwareVersion + '\'' +
+                ", softwareVersion='" + softwareVersion + '\'' +
+                ", lockType=" + lockType +
+                ", initStatus=" + initStatus +
+                ", maxVolume=" + maxVolume +
+                ", maxUser=" + maxUser +
+                ", bleproTocolver=" + bleproTocolver +
+                ", rfmodueType=" + rfmoduleType +
+                ", rfmoduleMac='" + rfmoduleMac + '\'' +
+                ", createTime='" + createTime + '\'' +
+                ", updateTime='" + updateTime + '\'' +
+                ", addPeople='" + addPeople + '\'' +
                 ", vendor='" + vendor + '\'' +
                 ", status=" + status +
                 ", remark='" + remark + '\'' +

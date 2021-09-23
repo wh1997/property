@@ -2,38 +2,42 @@ package com.tianjian.property.bean.vo;
 
 public class DoorVo {
     private  Integer id;
-    private Integer numid;
+    private Integer numId;
     //期数名称
-    private String numname;
+    private String numName;
     //楼栋id
-    private Integer bulidingid;
+    private Integer buildingId;
     //楼栋名称
-    private String bulidingname;
+    private String buildingname;
     //楼层
-    private Integer floorno;
+    private Integer floorNo;
     //房号
-    private String roomno;
+    private String roomNo;
     //门名称
-    private String doorname;
+    private String doorName;
     //使用状态
     private Integer status;
     //单元号
-    private Integer unitno;
+    private Integer unitNo;
     //单元名称
-    private String unitname;
+    private String unitName;
 
-    public DoorVo(Integer id, Integer numid, String numname, Integer bulidingid, String bulidingname, Integer floorno, String roomno, String doorname, Integer status, Integer unitno, String unitname) {
+    public DoorVo() {
+        super();
+    }
+
+    public DoorVo(Integer id, Integer numId, String numName, Integer buildingId, String buildingname, Integer floorNo, String roomNo, String doorName, Integer status, Integer unitNo, String unitName) {
         this.id = id;
-        this.numid = numid;
-        this.numname = numname;
-        this.bulidingid = bulidingid;
-        this.bulidingname = bulidingname;
-        this.floorno = floorno;
-        this.roomno = roomno;
-        this.doorname = doorname;
+        this.numId = numId;
+        this.numName = numName;
+        this.buildingId = buildingId;
+        this.buildingname = buildingname;
+        this.floorNo = floorNo;
+        this.roomNo = roomNo;
+        this.doorName = doorName;
         this.status = status;
-        this.unitno = unitno;
-        this.unitname = unitname;
+        this.unitNo = unitNo;
+        this.unitName = unitName;
     }
 
     public Integer getId() {
@@ -44,60 +48,60 @@ public class DoorVo {
         this.id = id;
     }
 
-    public Integer getNumid() {
-        return numid;
+    public Integer getNumId() {
+        return numId;
     }
 
-    public void setNumid(Integer numid) {
-        this.numid = numid;
+    public void setNumId(Integer numId) {
+        this.numId = numId;
     }
 
-    public String getNumname() {
-        return numname;
+    public String getNumName() {
+        return numName;
     }
 
-    public void setNumname(String numname) {
-        this.numname = numname;
+    public void setNumName(String numName) {
+        this.numName = numName;
     }
 
-    public Integer getBulidingid() {
-        return bulidingid;
+    public Integer getBuildingId() {
+        return buildingId;
     }
 
-    public void setBulidingid(Integer bulidingid) {
-        this.bulidingid = bulidingid;
+    public void setBuildingId(Integer buildingId) {
+        this.buildingId = buildingId;
     }
 
-    public String getBulidingname() {
-        return bulidingname;
+    public String getBuildingname() {
+        return buildingname;
     }
 
-    public void setBulidingname(String bulidingname) {
-        this.bulidingname = bulidingname;
+    public void setBuildingname(String buildingname) {
+        this.buildingname = buildingname;
     }
 
-    public Integer getFloorno() {
-        return floorno;
+    public Integer getFloorNo() {
+        return floorNo;
     }
 
-    public void setFloorno(Integer floorno) {
-        this.floorno = floorno;
+    public void setFloorNo(Integer floorNo) {
+        this.floorNo = floorNo;
     }
 
-    public String getRoomno() {
-        return roomno;
+    public String getRoomNo() {
+        return roomNo;
     }
 
-    public void setRoomno(String roomno) {
-        this.roomno = roomno;
+    public void setRoomNo(String roomNo) {
+        this.roomNo = roomNo;
     }
 
-    public String getDoorname() {
-        return doorname;
+    public String getDoorName() {
+        return doorName;
     }
 
-    public void setDoorname(String doorname) {
-        this.doorname = doorname;
+    public void setDoorName(String doorName) {
+        this.doorName = doorName;
     }
 
     public Integer getStatus() {
@@ -108,36 +112,36 @@ public class DoorVo {
         this.status = status;
     }
 
-    public Integer getUnitno() {
-        return unitno;
+    public Integer getUnitNo() {
+        return unitNo;
     }
 
-    public void setUnitno(Integer unitno) {
-        this.unitno = unitno;
+    public void setUnitNo(Integer unitNo) {
+        this.unitNo = unitNo;
     }
 
-    public String getUnitname() {
-        return unitname;
+    public String getUnitName() {
+        return unitName;
     }
 
-    public void setUnitname(String unitname) {
-        this.unitname = unitname;
+    public void setUnitName(String unitName) {
+        this.unitName = unitName;
     }
 
     @Override
     public String toString() {
         return "DoorVo{" +
                 "id=" + id +
-                ", numid=" + numid +
-                ", numname='" + numname + '\'' +
-                ", bulidingid=" + bulidingid +
-                ", bulidingname='" + bulidingname + '\'' +
-                ", floorno=" + floorno +
-                ", roomno='" + roomno + '\'' +
-                ", doorname='" + doorname + '\'' +
+                ", numId=" + numId +
+                ", numName='" + numName + '\'' +
+                ", buildingId=" + buildingId +
+                ", buildingname='" + buildingname + '\'' +
+                ", floorNo=" + floorNo +
+                ", roomNo='" + roomNo + '\'' +
+                ", doorName='" + doorName + '\'' +
                 ", status=" + status +
-                ", unitno=" + unitno +
-                ", unitname='" + unitname + '\'' +
+                ", unitNo=" + unitNo +
+                ", unitName='" + unitName + '\'' +
                 '}';
     }
 }

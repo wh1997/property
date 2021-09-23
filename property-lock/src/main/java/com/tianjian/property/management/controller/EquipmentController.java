@@ -38,7 +38,7 @@ public class EquipmentController {
             String hardwareVersion = (String) map.get("hardwareVersion");
             String softwareVersion = (String) map.get("softwareVersion");
             Integer doorid = (Integer) map.get("doorid");
-            Double appUID = TokenUtil.getAppUID(token);
+            Integer appUID = TokenUtil.getAppUID(token);
             Map result = equipmentService.addBluetooth(lockInfoBaseMap, lockAuthCodeMap, hardwareVersion, softwareVersion,doorid,appUID.toString());
             Integer resultCode = (Integer) result.get("resultCode");
             String reason = (String) result.get("reason");
@@ -65,11 +65,11 @@ public class EquipmentController {
             //获取设备的类型 1蓝牙锁 2网关  3网卡
             Integer equipmentType = (Integer) map.get("equipmentType");
             //设备所在项目的id
-            Integer propertyid = (Integer) map.get("propertyid");
+            Integer propertyId = (Integer) map.get("propertyid");
             Integer pageNum = (Integer) map.get("pageNum");
             Integer pageSize = (Integer) map.get("pageSize");
-            List resultList= equipmentService.selectList( equipmentType, propertyid, pageNum, pageSize);
-            if(resultList==null){
+            List resultList= equipmentService.selectList( equipmentType, propertyId, pageNum, pageSize);
+            if(resultList==null || resultList.size()==0){
                 return new LockResult(true,"查询成功没有数据",ErrorEnum.SUCCESS.getCode(),null);
             }
             return new LockResult(true,ErrorEnum.SUCCESS.getErrorMsg(),ErrorEnum.SUCCESS.getCode(),resultList);

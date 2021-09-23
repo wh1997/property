@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -13,12 +14,15 @@ import java.util.Date;
  * @time: 2021/7/5
  */
 @Table(name = "tj_baiwei_old_id")
-public class BaiWeiId {
+public class BaiWeiId implements Serializable {
     //主键id
     @Id
     @Column(name = "id", insertable = false)
     @GeneratedValue(generator = "JDBC")
     private Integer id;
+    //百为项目区域id
+    @Column(name = "branch_id")
+    private Integer branchId;
     //百为项目id
     @Column(name = "bw_property_id")
     private Integer bwPropertyId;
@@ -34,6 +38,9 @@ public class BaiWeiId {
     //更新时间
     @Column(name = "update_time")
     private String usdateTime;
+    //是否启用
+    @Column(name = "status")
+    private String status;
     //备注
     @Column(name = "remark")
     private String remark;
@@ -42,15 +49,6 @@ public class BaiWeiId {
         super();
     }
 
-    public BaiWeiId(Integer id, Integer bwPropertyId, Integer tjOldPropertyId, String propertyName, String addTime, String usdateTime, String remark) {
-        this.id = id;
-        this.bwPropertyId = bwPropertyId;
-        this.tjOldPropertyId = tjOldPropertyId;
-        this.propertyName = propertyName;
-        this.addTime = addTime;
-        this.usdateTime = usdateTime;
-        this.remark = remark;
-    }
 
     public Integer getId() {
         return id;
@@ -111,15 +109,33 @@ public class BaiWeiId {
         this.remark = remark;
     }
 
+    public Integer getBranchId() {
+        return branchId;
+    }
+
+    public void setBranchId(Integer branchId) {
+        this.branchId = branchId;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     @Override
     public String toString() {
         return "BaiWeiId{" +
                 "id=" + id +
+                ", branchId=" + branchId +
                 ", bwPropertyId=" + bwPropertyId +
                 ", tjOldPropertyId=" + tjOldPropertyId +
                 ", propertyName='" + propertyName + '\'' +
                 ", addTime='" + addTime + '\'' +
                 ", usdateTime='" + usdateTime + '\'' +
+                ", status='" + status + '\'' +
                 ", remark='" + remark + '\'' +
                 '}';
     }

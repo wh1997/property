@@ -36,39 +36,39 @@ public interface DoorDao {
    @Insert({"<script>" +
            " INSERT INTO tj_door" +
            "<trim prefix=\"(\" suffix=\")\" suffixOverrides=\",\">"+
-           " <if test='propertyid != null'>property_id ,</if> " +
-           " <if test='propertyname != null'>property_name ,</if> " +
-           " <if test='numid != null'>num_id ,</if> " +
-           " <if test='numname != null'>num_name ,</if> " +
-           " <if test='bulidingid != null'>buliding_id ,</if> " +
-           " <if test='bulidingname != null'>buliding_name ,</if> " +
-           " <if test='unitno != null'>unit_no ,</if> " +
-           " <if test='unitname != null'>unit_name ,</if> " +
-           " <if test='floorno != null'> floor_no ,</if> " +
-           " <if test='roomno != null'> room_no ,</if> " +
-           " <if test='doortype != null'>door_type ,</if> " +
-           " <if test='doorname != null'>door_name ,</if> " +
-           " <if test='addtime != null'>addtime ,</if> " +
+           " <if test='propertyId != null'>property_id ,</if> " +
+           " <if test='propertyName != null'>property_name ,</if> " +
+           " <if test='numId != null'>num_id ,</if> " +
+           " <if test='numName != null'>num_name ,</if> " +
+           " <if test='buildingId != null'>buliding_id ,</if> " +
+           " <if test='buildingName != null'>buliding_name ,</if> " +
+           " <if test='unitNo != null'>unit_no ,</if> " +
+           " <if test='unitName != null'>unit_name ,</if> " +
+           " <if test='floorNo != null'> floor_no ,</if> " +
+           " <if test='roomNo != null'> room_no ,</if> " +
+           " <if test='doorType != null'>door_type ,</if> " +
+           " <if test='doorName != null'>door_name ,</if> " +
+           " <if test='addTime != null'>addtime ,</if> " +
            " <if test='status != null'>status ,</if> " +
-           " <if test='createperson != null'>create_person ,</if> " +
+           " <if test='createPerson != null'>create_person ,</if> " +
            " <if test='remark != null'>remark </if> " +
            "</trim>"+
            "<trim prefix=\"values (\" suffix=\")\" suffixOverrides=\",\">"+
-           " <if test='propertyid  != null'>#{propertyid} ,</if> " +
-           " <if test='propertyname != null'>#{propertyname} ,</if> " +
-           " <if test='numid  != null'>#{numid} ,</if> " +
-           " <if test='numname != null'> #{numname} ,</if> " +
-           " <if test='bulidingid != null'> #{bulidingid} ,</if> " +
-           " <if test='bulidingname != null'> #{bulidingname} ,</if> " +
-           " <if test='unitno != null'> #{unitno} ,</if> " +
-           " <if test='unitname != null'> #{unitname} ,</if> " +
-           " <if test='floorno != null'> #{floorno} ,</if> " +
-           " <if test='roomno != null'> #{roomno} ,</if> " +
-           " <if test='doortype != null'> #{doortype} ,</if> " +
-           " <if test='doorname != null'> #{doorname} ,</if> " +
-           " <if test='addtime != null'> #{addtime} ,</if> " +
+           " <if test='propertyId  != null'>#{propertyId} ,</if> " +
+           " <if test='propertyName != null'>#{propertyName} ,</if> " +
+           " <if test='numId  != null'>#{numId} ,</if> " +
+           " <if test='numName != null'> #{numName} ,</if> " +
+           " <if test='buildingId != null'> #{buildingId} ,</if> " +
+           " <if test='buildingName != null'> #{buildingName} ,</if> " +
+           " <if test='unitNo != null'> #{unitNo} ,</if> " +
+           " <if test='unitName != null'> #{unitName} ,</if> " +
+           " <if test='floorNo != null'> #{floorNo} ,</if> " +
+           " <if test='roomNo != null'> #{roomNo} ,</if> " +
+           " <if test='doorType != null'> #{doorType} ,</if> " +
+           " <if test='doorName != null'> #{doorName} ,</if> " +
+           " <if test='addTime != null'> #{addTime} ,</if> " +
            " <if test='status != null'> #{status} ,</if> " +
-           " <if test='createperson != null'> #{createperson} ,</if> " +
+           " <if test='createPerson != null'> #{createPerson} ,</if> " +
            " <if test='remark != null'> #{remark} </if> " +
            "</trim>"+
            "</script>"})
@@ -76,13 +76,13 @@ public interface DoorDao {
     @Select({"<script>" +
             " SELECT id  " +
             "FROM tj_door WHERE " +
-            "<if test='propertyid !=null'> property_id = #{propertyid} </if>" +
-            "<if test='numid !=null'>AND num_id = #{numid} </if>" +
-            "<if test='bulidingid !=null'>AND buliding_id = #{bulidingid} </if>" +
-            "<if test='unitno !=null'>AND unit_no = #{unitno} </if>" +
-            "<if test='unitname !=null'>AND unit_name = #{unitname} </if>" +
-            "<if test='floorno !=null'>AND floor_no = #{floorno} </if>" +
-            "<if test='roomno !=null'>AND room_no = #{roomno} </if>" +
+            "<if test='propertyId !=null'> property_id = #{propertyId} </if>" +
+            "<if test='numId !=null'>AND num_id = #{numId} </if>" +
+            "<if test='buildingId !=null'>AND buliding_id = #{buildingId} </if>" +
+            "<if test='unitNo !=null'>AND unit_no = #{unitNo} </if>" +
+            "<if test='unitName !=null'>AND unit_name = #{unitName} </if>" +
+            "<if test='floorNo !=null'>AND floor_no = #{floorNo} </if>" +
+            "<if test='roomNo !=null'>AND room_no = #{roomNo} </if>" +
             "</script>"})
    Integer selectRepetition(Door door);
     @Select({"<script>" +
@@ -139,10 +139,10 @@ public interface DoorDao {
            "(property_id ,property_name,num_id,num_name,buliding_id,buliding_name,unit_no,unit_name,floor_no,room_no,door_name," +
            "door_type,status,addtime,updatetime,create_person,remark) values "+
            " <foreach collection=\"list\" item=\"door\" index=\"index\"  separator=\",\"> " +
-           "(#{door.propertyid},#{door.propertyname},#{door.numid},#{door.numname},#{door.bulidingid}" +
-           ",#{door.bulidingname},#{door.unitno},#{door.unitname},#{door.floorno},#{door.roomno}" +
-           ",#{door.doorname},#{door.doortype},#{door.status},#{door.addtime},#{door.updatetime}" +
-           ",#{door.createperson},#{door.remark})" +
+           "(#{door.propertyId},#{door.propertyName},#{door.numId},#{door.numName},#{door.buildingId}" +
+           ",#{door.buildingName},#{door.unitNo},#{door.unitName},#{door.floorNo},#{door.roomNo}" +
+           ",#{door.doorName},#{door.doorType},#{door.status},#{door.addTime},#{door.updateTime}" +
+           ",#{door.createPerson},#{door.remark})" +
            "</foreach>"+
            "</script>"})
     void addDoor(List<Door> list);

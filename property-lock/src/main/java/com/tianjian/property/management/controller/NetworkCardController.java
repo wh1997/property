@@ -2,13 +2,12 @@ package com.tianjian.property.management.controller;
 
 import com.tianjian.property.management.service.NetworkCardService;
 import com.tianjian.property.utils.LockResult;
+import com.tianjian.property.utils.TokenUtil;
 import com.tianjian.property.utils.error.ErrorEnum;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.xml.ws.spi.http.HttpHandler;
 import java.util.List;
 import java.util.Map;
 
@@ -53,7 +52,7 @@ public class NetworkCardController {
     public LockResult selectEquipment(@RequestBody Map  map){
         try {
             //小区编号
-            Integer Pid = (Integer) map.get("Pid");
+            Integer Pid = (Integer) map.get("propertyId");
             List resultMap= networkCardService.selectEquipment(Pid);
             return new LockResult(true, ErrorEnum.SUCCESS.getErrorMsg(),ErrorEnum.SUCCESS.getCode(),resultMap);
         }catch (Exception e){
@@ -68,22 +67,26 @@ public class NetworkCardController {
     * @return:
     * @Date: 2021/7/2
     */
-    public LockResult openLock(@RequestBody Map  map){
+    public LockResult openLock(@RequestBody Map  map ,@RequestHeader String token){
         try {
             //设备IMEI号码
             String imei = (String) map.get("imei");
-            //请求用户的编号
-            String userid = (String) map.get("userid");
+            Integer appUID = TokenUtil.getAppUID(token);
             //请求用户所属的物业编号
-            String Pid = (String) map.get("pid");
-            Map resultMap= networkCardService.openLock(imei,userid,Pid);
-            return new LockResult(true, ErrorEnum.SUCCESS.getErrorMsg(),ErrorEnum.SUCCESS.getCode(),resultMap);
+            Integer Pid = (Integer) map.get("propertyId");
+            Map resultMap= networkCardService.openLock(imei,appUID.toString(),Pid.toString());
+            if ("TRUE".equals(resultMap.get("status"))){
+                return new LockResult(true, ErrorEnum.SUCCESS.getErrorMsg(),ErrorEnum.SUCCESS.getCode(),resultMap);
+            }else {
+                return new LockResult(false, "开锁失败",10,"");
+            }
+
         }catch (Exception e){
             e.printStackTrace();
             return new LockResult(false, ErrorEnum.SYSTEM_ERROR.getErrorMsg(),ErrorEnum.SYSTEM_ERROR.getCode(),null);
         }
     }
-  @PostMapping("/equipment/status")
+  @PostMapping("/equipment/status") //TODO  接口存在错误
     /**
     * @Description:  查询设备状态
     * @Param:
