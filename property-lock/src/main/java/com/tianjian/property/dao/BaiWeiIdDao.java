@@ -19,7 +19,7 @@ public interface BaiWeiIdDao extends BaseDao<BaiWeiId> {
             " SELECT id,bw_property_id,tj_oldProperty_id,property_name,branch_id,remark " +
             " FROM tj_baiwei_old_id WHERE status=0 "+
             "</script>"})
-    List<BaiWeiId> selectAll();
+    List<BaiWeiId> selectByuserId(Integer appUID);
     @Select({"<script>" +
             " SELECT tj_oldProperty_id " +
             " FROM tj_baiwei_old_id WHERE bw_property_id = #{pid}"+

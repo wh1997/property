@@ -53,8 +53,8 @@ public class CommonDoorController {
     */
     public LockResult showCommonDoor(@RequestBody Map map){
       try {
-          Integer propertyid = (Integer) map.get("propertyid");
-          Integer doortype = (Integer) map.get("doortype");
+          Integer propertyid = (Integer) map.get("propertyId");
+          Integer doortype = (Integer) map.get("doorType");
           Integer pageNum = (Integer) map.get("pageNum");
           Integer pageSize = (Integer) map.get("pageSize");
           List<Map<String,List<Door>>> result= commonDoorService.selectCommonDoor(propertyid,doortype,pageNum,pageSize);
@@ -78,7 +78,7 @@ public class CommonDoorController {
     public LockResult fuzzyQueryCommonDoor(@RequestBody Map map){
         try{
             String doorName = (String) map.get("doorName");//门名称
-            Integer doorType = (Integer) map.get("doortype");//门类型
+            Integer doorType = (Integer) map.get("doorType");//门类型
             Integer pageNum = (Integer) map.get("pageNum");//门类型
             Integer pageSize = (Integer) map.get("pageSize");//门类型
             List<Door> result=commonDoorService.fuzzyQueryCommonDoor(doorName,doorType, pageNum, pageSize);

@@ -104,12 +104,8 @@ public class LockBaseInfo implements Serializable {
         this.id = id;
     }
 
-
     public String getCreateTime() {
-        Date date = new Date();
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String format = simpleDateFormat.format(date);
-        return format;
+        return createTime;
     }
 
     public String getLockId() {

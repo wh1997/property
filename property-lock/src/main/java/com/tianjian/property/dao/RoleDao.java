@@ -1,7 +1,6 @@
 package com.tianjian.property.dao;
 
-import com.tianjian.property.bean.TjUser;
-import com.tianjian.property.dao.BaseDao;
+import com.tianjian.property.bean.User;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -16,7 +15,7 @@ import java.util.Map;
  */
 @Mapper
 @Repository
-public interface RoleDao extends BaseDao<TjUser> {
+public interface RoleDao extends BaseDao<User> {
     @Insert({"<script>" +
             " INSERT INTO tj_user" +
             "<trim prefix=\"(\" suffix=\")\" suffixOverrides=\",\">"+
@@ -34,7 +33,7 @@ public interface RoleDao extends BaseDao<TjUser> {
             " <if test='remark != null'>#{remark} </if> " +
             "</trim>"+
             "</script>"})
-    int insert(TjUser role);
+    int insert(User role);
     @Select({"<script>" +
             " SELECT role  " +
             "FROM tj_user WHERE user_id = #{userId} AND 1 = 1"+

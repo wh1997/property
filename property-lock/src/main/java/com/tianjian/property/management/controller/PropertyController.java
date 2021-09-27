@@ -2,6 +2,7 @@ package com.tianjian.property.management.controller;
 
 import com.tianjian.property.management.service.PropertyService;
 import com.tianjian.property.utils.LockResult;
+import com.tianjian.property.utils.TokenUtil;
 import com.tianjian.property.utils.error.ErrorEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -28,9 +29,10 @@ public class PropertyController {
     * @return: com.tianjian.property.utils.LockResult 
     * @Date: 2021/7/5 
     */
-    public LockResult getProperty(){
+    public LockResult getProperty(@RequestHeader String token){
         try {
-            List resultList = propertyService.getProperty();
+            Integer appUID = TokenUtil.getAppUID(token);
+            List resultList = propertyService.getProperty(appUID);
             return new LockResult(true,"成功",ErrorEnum.SUCCESS.getCode(),resultList);
         }catch (Exception e){
             e.printStackTrace();

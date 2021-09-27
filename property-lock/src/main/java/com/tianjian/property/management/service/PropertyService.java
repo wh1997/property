@@ -13,5 +13,5 @@ public interface PropertyService {
 
     List getApartments(Integer buildingId);
 
-    List getProperty();
+    List getProperty(Integer appUID);
 }

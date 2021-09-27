@@ -96,7 +96,7 @@ public class NetworkCardController {
     public LockResult selectEquipmentStatus(@RequestBody Map  map){
         try {
             //设备IMEI号码
-            String Imei = (String) map.get("Imei");
+            String Imei = (String) map.get("imei");
             Map resultMap= networkCardService.selectEquipmentStatus(Imei);
             return new LockResult(true, ErrorEnum.SUCCESS.getErrorMsg(),ErrorEnum.SUCCESS.getCode(),resultMap);
         }catch (Exception e){

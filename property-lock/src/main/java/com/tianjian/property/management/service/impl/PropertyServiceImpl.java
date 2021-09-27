@@ -21,6 +21,7 @@ public class PropertyServiceImpl implements PropertyService {
     private BaiWeiIdDao baiWeiIdDao;
     @Value("${baiwei.url}")
     private String url;
+    //TODO 小程序端直接对接
     @Override
     public List getBuildings(Integer parkId) {
         String credentialId="6811833670T5FHF9N";
@@ -29,7 +30,7 @@ public class PropertyServiceImpl implements PropertyService {
         List result = (List) resultMap.get("result");
         return result;
     }
-  //DOTO
+  //TODO 小程序端直接对接
     @Override
     public List getApartments(Integer buildingId) {
         String credentialId="6811833670T5FHF9N";
@@ -40,7 +41,7 @@ public class PropertyServiceImpl implements PropertyService {
     }
 
     @Override
-    public List getProperty() {
-        return   baiWeiIdDao.selectAll();
+    public List getProperty(Integer appUID) {
+        return   baiWeiIdDao.selectByuserId(appUID);
     }
 }

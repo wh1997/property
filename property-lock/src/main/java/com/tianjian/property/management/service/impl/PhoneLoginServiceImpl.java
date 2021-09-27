@@ -1,7 +1,7 @@
 package com.tianjian.property.management.service.impl;
 
 import com.google.gson.Gson;
-import com.tianjian.property.bean.TjUser;
+import com.tianjian.property.bean.User;
 import com.tianjian.property.dao.RoleDao;
 import com.tianjian.property.management.service.PhoneLoginService;
 import com.tianjian.property.utils.HttpUtils;
@@ -54,7 +54,7 @@ public class PhoneLoginServiceImpl extends HttpService implements PhoneLoginServ
             Integer userId = (Integer) fromJson.get("UserId");
             if(null!=userId){
             //往角色表里添加角色
-                TjUser role = new TjUser();
+                User role = new User();
                 role.setUserId(userId);
                 role.setRole(2);
                 //往角色表里面添加数据
@@ -80,7 +80,7 @@ public class PhoneLoginServiceImpl extends HttpService implements PhoneLoginServ
         roletype=roleDao.selectByUserId(userId);
         HashMap<String, Object> roleMap = new HashMap<>();
         if (roletype==null){
-            TjUser newrole = new TjUser();
+            User newrole = new User();
             newrole.setUserId(userId);
             newrole.setRole(2);
             //往角色表里面添加数据

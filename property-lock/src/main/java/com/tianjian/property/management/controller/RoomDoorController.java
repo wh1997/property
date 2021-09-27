@@ -59,8 +59,8 @@ public class RoomDoorController {
     @PostMapping("/roomno")
     public LockResult findBypropertynameOrRoomno(@RequestBody Map map){
         try {
-            Integer propertyid = (Integer) map.get("propertyid");
-            String roomno = (String) map.get("roomno");
+            Integer propertyid = (Integer) map.get("propertyId");
+            String roomno = (String) map.get("roomNo");
             Integer pageNum = (Integer) map.get("pageNum");
             Integer pageSize = (Integer) map.get("pageSize");
             Map<String, List<DoorVo>> doors  = roomDoorService.selsctRoomnoAndPropertyname(propertyid,roomno,pageNum,pageSize);
@@ -74,18 +74,18 @@ public class RoomDoorController {
             return new LockResult(false,ErrorEnum.SYSTEM_ERROR.getErrorMsg(),ErrorEnum.SYSTEM_ERROR.getCode(),null);
         }
     }
-    /**
+  /*  *//**TODO 弃用  与all接口重复
     * @Description:根据小区,楼栋,单元名称搜索房间
     * @Param: [cityid 城市id, areaid  区域id, propertyid   小区id, bulidingid  楼栋id , unitname   单元名称]
     * @return: com.tagen.lock.utils.LockResult
     * @Date: 2021/5/25
-    */
+    *//*
     @PostMapping("/screendoor")
     public LockResult screenRoomDoor(@RequestBody Map map){
         try {
-            Integer propertyid = (Integer) map.get("propertyid");
-            Integer bulidingid = (Integer) map.get("bulidingid");
-            String unitname = (String) map.get("unitname");
+            Integer propertyid = (Integer) map.get("propertyId");
+            Integer bulidingid = (Integer) map.get("bulidingId");
+            String unitname = (String) map.get("unitName");
             Integer pageNum = (Integer) map.get("pageNum");
             Integer pageSize = (Integer) map.get("pageSize");
             Map<String, List<DoorVo>>  doors  = roomDoorService.screenRoomDoor(propertyid,bulidingid,unitname, pageNum, pageSize);
@@ -99,7 +99,7 @@ public class RoomDoorController {
             return new LockResult(false,ErrorEnum.SYSTEM_ERROR.getErrorMsg(),ErrorEnum.SYSTEM_ERROR.getCode(),null);
         }
 
-    }
+    }*/
 
     @PostMapping("/Search")
     /**
@@ -111,7 +111,7 @@ public class RoomDoorController {
     public  LockResult fuzzySearch(@RequestBody Map map){
         try {
             //项目id
-            Integer propertyid = (Integer) map.get("propertyid");
+            Integer propertyid = (Integer) map.get("propertyId");
             //搜索关键字
             String fuzzy = (String) map.get("fuzzy");
             Integer pageNum = (Integer) map.get("pageNum");
@@ -135,7 +135,7 @@ public class RoomDoorController {
     */
     public LockResult roomParticulars(@RequestBody Map map){
         try {
-            Integer doorid = (Integer) map.get("doorid");
+            Integer doorid = (Integer) map.get("doorId");
             Map<String,String>   resultmap=roomDoorService.selectdoorparticulars(doorid);
             System.out.println(resultmap);
             if(resultmap!=null){

@@ -207,10 +207,7 @@ public class Door implements Serializable {
     }
 
     public String getAddTime() {
-        Date date = new Date();
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String format = simpleDateFormat.format(date);
-        return format;
+        return addTime;
     }
 
     public void setAddTime(String addTime) {
