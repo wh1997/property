@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface RoomDoorService {
-    PageResult<DoorVo> selsctAll(Integer propertyid, Integer pageNum, Integer pageSize) ;
+    PageResult<DoorVo> selsctAll(Door door, Integer pageNum, Integer pageSize) ;
     Map<String, List<DoorVo>> selsctRoomnoAndPropertyname(Integer propertyid,String roomno,Integer pageNum,Integer pageSize);
     Map<String, List<DoorVo>> screenRoomDoor(Integer propertyid,Integer bulidingid ,String unitname,Integer pageNum,Integer pageSize);
     Map<String,String> selectdoorparticulars(Integer doorid);

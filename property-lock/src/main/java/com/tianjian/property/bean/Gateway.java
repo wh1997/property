@@ -52,7 +52,7 @@ public class Gateway implements Serializable {
     @Column(name = "vendor")
     private String vendor;
     //备注
-    @Column(name = "id")
+    @Column(name = "remark")
     private String remark;
 
     public Gateway() {
@@ -190,5 +190,24 @@ public class Gateway implements Serializable {
         this.remark = remark;
     }
 
+    @Override
+    public String toString() {
+        return "Gateway{" +
+                "id=" + id +
+                ", gatewayId='" + gatewayId + '\'' +
+                ", deviceseq='" + deviceseq + '\'' +
+                ", gatewayName='" + gatewayName + '\'' +
+                ", gatewayMac='" + gatewayMac + '\'' +
+                ", gatewayType=" + gatewayType +
+                ", hardwareVersion='" + hardwareVersion + '\'' +
+                ", softwareVersion='" + softwareVersion + '\'' +
+                ", createTime='" + createTime + '\'' +
+                ", discardTime='" + discardTime + '\'' +
+                ", status=" + status +
+                ", project=" + project +
+                ", vendor='" + vendor + '\'' +
+                ", remark='" + remark + '\'' +
+                '}';
+    }
 }
 

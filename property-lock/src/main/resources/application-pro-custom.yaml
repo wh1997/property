@@ -11,6 +11,8 @@ apartment :
   gatewayBind: hxjGatewayBind
   #  门锁绑定网关
   bindingGateway: hxjLockBindingGateway
+  #网关详情
+  getGatewayInfo: hxjGetGatewayInfo
   #  删除网关
   DelGateway: hxjDelGateway
   #  远程开锁业务能力
@@ -49,6 +51,12 @@ baiwei :
   WXurl : https://auth.api.melifego.cn:8443
   #老版门锁url
   BWLockURL : http://acccp.melifego.com
+  #开门
+  open :  /Open.ashx
+  #查询开门状态
+  status :  /EquipmentStatus.ashx
+  #查询控制器
+  query :  /EquipmentQuery.ashx
 #智能门禁小程序的微信参数
 lock :
   appid : wxeeee516c3ae0629b

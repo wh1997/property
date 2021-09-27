@@ -1,6 +1,7 @@
-package com.tianjian.property.management.dao;
+package com.tianjian.property.dao;
 
 import com.tianjian.property.bean.LockBaseInfo;
+import com.tianjian.property.dao.BaseDao;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
@@ -9,7 +10,7 @@ import java.util.List;
 
 @Mapper
 @Repository
-public interface LockBaseInfoDao {
+public interface LockBaseInfoDao extends BaseDao<LockBaseInfo> {
     @Select({"<script>" +
             " SELECT lock_mac " +
             "FROM tj_lockbaseinfo WHERE id = #{id} AND 1 = 1"+

@@ -1,6 +1,7 @@
-package com.tianjian.property.management.dao;
+package com.tianjian.property.dao;
 
 import com.tianjian.property.bean.Gateway;
+import com.tianjian.property.dao.BaseDao;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -12,7 +13,7 @@ import java.util.Map;
 
 @Mapper
 @Repository
-public interface GatewayDao {
+public interface GatewayDao extends BaseDao<Gateway> {
     @Select({"<script>" +
             " SELECT gateway_name, gateway_mac,deviceseq " +
             "FROM tj_gateway WHERE id = #{id} AND status != 5"+

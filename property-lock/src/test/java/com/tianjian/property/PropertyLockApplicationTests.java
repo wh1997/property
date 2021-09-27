@@ -1,5 +1,6 @@
 package com.tianjian.property;
 
+import com.tianjian.property.management.controller.NetworkCardController;
 import com.tianjian.property.management.service.CommonDoorService;
 import com.tianjian.property.management.service.GatewayService;
 import com.tianjian.property.management.service.NetworkCardService;
@@ -32,8 +33,14 @@ class PropertyLockApplicationTests {
     }
     @Test
     void test()  {
-        Map map = networkCardService.openLock("864626047482697", "123", "103");
-        System.out.println(map);
+        Map map = networkCardService.openLock("867157046608501", "123", "100001");
+        String status = (String) map.get("status");
+        System.out.println(status);
+    }
+    @Test
+    void test4()  {
+        Map map = networkCardService.selectEquipmentStatus("867157046608501");
+        System.out.println(map.toString());
     }
     @Test
     void test1()  {
@@ -44,6 +51,11 @@ class PropertyLockApplicationTests {
     void test2()  {
         String apartment = gatewayService.getApartment();
         System.out.println(apartment);
+    }
+    //网关详情测试
+    @Test
+    void test3()  {
+        Integer integer = gatewayService.selectGateway("Zkg8OGRQ4Yk=");
     }
 
 }

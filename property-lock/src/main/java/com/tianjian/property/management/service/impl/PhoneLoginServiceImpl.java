@@ -1,8 +1,8 @@
 package com.tianjian.property.management.service.impl;
 
 import com.google.gson.Gson;
-import com.tianjian.property.bean.Role;
-import com.tianjian.property.management.dao.RoleDao;
+import com.tianjian.property.bean.TjUser;
+import com.tianjian.property.dao.RoleDao;
 import com.tianjian.property.management.service.PhoneLoginService;
 import com.tianjian.property.utils.HttpUtils;
 import com.tianjian.property.utils.LockConstants;
@@ -54,10 +54,9 @@ public class PhoneLoginServiceImpl extends HttpService implements PhoneLoginServ
             Integer userId = (Integer) fromJson.get("UserId");
             if(null!=userId){
             //往角色表里添加角色
-                Role role = new Role();
+                TjUser role = new TjUser();
                 role.setUserId(userId);
                 role.setRole(2);
-                role.setPropertyId(Propertyid);
                 //往角色表里面添加数据
                 int i = roleDao.insert(role);
                 if (1!=i){
@@ -81,25 +80,24 @@ public class PhoneLoginServiceImpl extends HttpService implements PhoneLoginServ
         roletype=roleDao.selectByUserId(userId);
         HashMap<String, Object> roleMap = new HashMap<>();
         if (roletype==null){
-            Role newrole = new Role();
+            TjUser newrole = new TjUser();
             newrole.setUserId(userId);
             newrole.setRole(2);
-            newrole.setPropertyId(0);
             //往角色表里面添加数据
             int i = roleDao.insert(newrole);
             //如果没有添加角色后返回
             roleMap.put("role",2);
-            roleMap.put("Property_id",0);
+            //roleMap.put("Property_id",0);
         }else{
             roleMap.put("role",roletype.get("role"));
-            roleMap.put("Property_id",roletype.get("property_id"));
+            //roleMap.put("Property_id",roletype.get("property_id"));
         }
         String userToken = TokenUtil.createToken(userId);
         redisTemplate.opsForValue().set(LockConstants.USER_TOKEN+userToken,hashMap,1, TimeUnit.DAYS);
         logger.info("用户的token为"+userToken);
         HashMap<String, Object> datemap = new HashMap<>();
         datemap.put("role",roleMap.get("role"));
-        datemap.put("Property_id",roleMap.get("Property_id"));
+        //datemap.put("Property_id",roleMap.get("Property_id"));
         datemap.put("token",userToken);
         datemap.put("datemap",hashMap);
         resultMap.put("code",200);

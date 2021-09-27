@@ -4,7 +4,9 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.tianjian.property.bean.*;
 import com.tianjian.property.bean.vo.LockBaseInfoVo;
-import com.tianjian.property.management.dao.*;
+import com.tianjian.property.dao.GatewayDao;
+import com.tianjian.property.dao.LockBaseInfoDao;
+import com.tianjian.property.dao.LockDao;
 import com.tianjian.property.management.service.EquipmentService;
 import com.tianjian.property.management.service.GatewayService;
 import com.tianjian.property.utils.BeanChangeUtils;
@@ -27,7 +29,7 @@ private GatewayDao gatewayDao;
 @Autowired
 private LockBaseInfoDao lockBaseInfoDao;
 @Autowired
-private NetworkCardDao NetworkCardDao;
+private com.tianjian.property.dao.NetworkCardDao NetworkCardDao;
 @Autowired
 private LockDao lockDao;
 @Value("${apartment.addBluetooth}")
@@ -88,7 +90,6 @@ private String  addBluetooth;
             List<NetworkCard> list =NetworkCardDao.findByPropertyId(propertyId);
             PageInfo<NetworkCard> pageInfo=new PageInfo<>(list);
             List<NetworkCard> pageList = pageInfo.getList();
-            System.out.println(pageList);
             return pageList;
         }
     }
@@ -102,6 +103,9 @@ private String  addBluetooth;
         }else if (equipmentType==2){
             //查询网关
             Gateway list=  gatewayDao.selectById(equipmentId);
+            Integer status  = gatewayService.selectGateway(list.getGatewayId());
+            list.setStatus(status);
+            gatewayDao.updateByPrimaryKeySelective(list);
             return list;
         }else{
             //查询网卡

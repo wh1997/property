@@ -5,7 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.tianjian.property.bean.Door;
 import com.tianjian.property.bean.Lock;
 import com.tianjian.property.bean.vo.DoorVo;
-import com.tianjian.property.management.dao.*;
+import com.tianjian.property.dao.*;
 import com.tianjian.property.management.service.RoomDoorService;
 import com.tianjian.property.utils.BeanChangeUtils;
 import com.tianjian.property.utils.PageResult;
@@ -30,11 +30,11 @@ public class RoomDoorServiceImpl implements RoomDoorService {
     private GatewayDao gatewayDao;
     //根据小区搜索房间(房间门列表)
     @Override
-    public PageResult<DoorVo> selsctAll( Integer propertyid, Integer pageNum, Integer pageSize) {
+    public PageResult<DoorVo> selsctAll( Door door, Integer pageNum, Integer pageSize) {
         //List<(几栋)Map<String,(几单元)Map<String,()房间信息list<door>>>>
         //查询小区下房间的具体信息
         PageHelper.startPage(pageNum,pageSize);
-        List<DoorVo> all = doorDao.selectall(propertyid);
+        List<DoorVo> all = doorDao.selectall(door);
         PageInfo<DoorVo> doorVoPageInfo = new PageInfo<>(all);
         List<DoorVo> list = doorVoPageInfo.getList();
         int pages = doorVoPageInfo.getPages();
@@ -87,7 +87,7 @@ public class RoomDoorServiceImpl implements RoomDoorService {
         List<DoorVo> list = doorVoPageInfo.getList();
         if (all.size()>0){
             //查询公寓门有哪些楼栋
-            List<String> bulidingnameList =doorDao.selectBulidingid(propertyid,3,roomno);
+            List<String> bulidingnameList =doorDao.selectbuildingid(propertyid,3,roomno);
             if(bulidingnameList.size()<=0){
                 return null;
             }else {
@@ -197,10 +197,10 @@ public class RoomDoorServiceImpl implements RoomDoorService {
             Map doorMap =door.get(i);
             Door bean = BeanChangeUtils.mapToBean(doorMap, Door.class);
             bean.setCreatePerson(appUID.toString());
-            Integer doorList = doorDao.selectRepetition(bean);
-            if (doorList!=null){
+            Door selectOne = doorDao.selectOne(bean);
+            if (selectOne!=null){
                 map.put("code",200);
-                map.put("error",bean.getNumName()+bean.getBuildingName()+bean.getUnitName()+bean.getRoomNo());
+                map.put("error",bean.getNumName()+bean.getBuildingName()+bean.getUnitName()+bean.getRoomNo()+"添加重复");
                 return map;
             }
             doors.add(bean);

@@ -3,8 +3,8 @@ package com.tianjian.property.management.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.tianjian.property.bean.Door;
-import com.tianjian.property.management.dao.DoorDao;
-import com.tianjian.property.management.dao.DoorTypeDao;
+import com.tianjian.property.dao.DoorDao;
+import com.tianjian.property.dao.DoorTypeDao;
 import com.tianjian.property.management.service.CommonDoorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,7 +35,7 @@ public class CommonDoorServiceImpl implements CommonDoorService {
     @Override
     public List<Map<String, List<Door>>> selectCommonDoor( Integer propertyid, Integer doortype,Integer pageNum,Integer pageSize) {
         //查询有哪些楼栋
-       List<String> bulidingnameList =doorDao.selectBulidingid(propertyid,doortype,null);
+       List<String> bulidingnameList =doorDao.selectbuildingid(propertyid,doortype,null);
         //存储返回值
         ArrayList<Map<String, List<Door>>> maps = new ArrayList<>();
         if (bulidingnameList.size()<=0){

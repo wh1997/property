@@ -41,8 +41,8 @@
 
         <!-- jdbc连接-->
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="jdbc:mysql://jdbc:39.99.248.253/tianjian_park" userId="root"
-                        password="123456"/>
+                        connectionURL="jdbc:mysql://39.99.248.253/tianjian_lock" userId="root"
+                        password="Tagen2020@!#%"/>
 
         <!-- 类型转换 -->
         <javaTypeResolver>
@@ -51,7 +51,7 @@
         </javaTypeResolver>
 
         <!-- 生成实体类地址 -->
-        <javaModelGenerator targetPackage="com.tianjian.property.bean.entity" targetProject="src/main/java">
+        <javaModelGenerator targetPackage="com.tianjian.property.bean" targetProject="src/main/java">
             <!-- 是否让schema作为包的后缀 -->
             <property name="enableSubPackages" value="false"/>
             <!-- 从数据库返回的值去掉前后空格 -->
@@ -74,7 +74,7 @@
         <!--需要产生新Model类时，改以下的表名即可 -by James-->
 
 
-        <table tableName="t_park_month_card_fees">
+        <table tableName="tj_user">
             <!-- 是否只生成POJO对象 -->
             <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
         </table>

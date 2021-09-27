@@ -30,9 +30,9 @@
         就算有访问，也只会存活600秒。
      -->
     <defaultCache maxElementsInMemory="10000000" eternal="false"
-                  timeToIdleSeconds="86400" timeToLiveSeconds="518400" overflowToDisk="true" memoryStoreEvictionPolicy="LRU"/>
+                  timeToIdleSeconds="5400" timeToLiveSeconds="5400" overflowToDisk="true" memoryStoreEvictionPolicy="LRU"/>
 
     <cache name="myCache" maxElementsInMemory="10000000" eternal="false"
-           timeToIdleSeconds="86400" timeToLiveSeconds="518400" overflowToDisk="true" memoryStoreEvictionPolicy="LRU"/>
+           timeToIdleSeconds="5400" timeToLiveSeconds="5400" overflowToDisk="true" memoryStoreEvictionPolicy="LRU"/>
 
 </ehcache>

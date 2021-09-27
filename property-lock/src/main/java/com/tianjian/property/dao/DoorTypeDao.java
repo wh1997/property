@@ -1,5 +1,7 @@
-package com.tianjian.property.management.dao;
+package com.tianjian.property.dao;
 
+import com.tianjian.property.bean.DoorType;
+import com.tianjian.property.dao.BaseDao;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
@@ -14,7 +16,7 @@ import java.util.Map;
  */
 @Mapper
 @Repository
-public interface DoorTypeDao {
+public interface DoorTypeDao extends BaseDao<DoorType> {
     @Select({"<script>" +
             "SELECT id,door_type FROM tj_door_type "+
             "</script>"})

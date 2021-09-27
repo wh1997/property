@@ -3,6 +3,7 @@ package com.tianjian.property.management.controller;
 import com.tianjian.property.bean.Door;
 import com.tianjian.property.bean.vo.DoorVo;
 import com.tianjian.property.management.service.RoomDoorService;
+import com.tianjian.property.utils.BeanChangeUtils;
 import com.tianjian.property.utils.LockResult;
 import com.tianjian.property.utils.PageResult;
 import com.tianjian.property.utils.TokenUtil;
@@ -35,10 +36,10 @@ public class RoomDoorController {
     @PostMapping("/all")
     public LockResult roomDoorList(@RequestBody Map map){
         try {
-            Integer propertyid = (Integer) map.get("propertyid");
+            Door door = BeanChangeUtils.mapToBean(map, Door.class);
             Integer pageNum = (Integer) map.get("pageNum");
             Integer pageSize = (Integer) map.get("pageSize");
-            PageResult<DoorVo> doors = roomDoorService.selsctAll(propertyid, pageNum, pageSize);
+            PageResult<DoorVo> doors = roomDoorService.selsctAll(door, pageNum, pageSize);
             if (doors==null){
                 return new LockResult(true,"获取成功,没有数据", ErrorEnum.SUCCESS.getCode(),null);
             }else {

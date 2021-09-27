@@ -235,7 +235,7 @@ public class HttpUtils {
             connection.setDoInput(doInput);
             // 设置传入参数的格式:请求参数应该是 name1=value1&name2=value2 的形式。
             if(null != contentType && !contentType.equals("")){
-                connection.setRequestProperty("Content-Type", contentType);
+                connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
             }
 
             if(null != propertyMap && propertyMap.size() > 0){

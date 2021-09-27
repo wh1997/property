@@ -1,8 +1,6 @@
 package com.tianjian.property.management.service.impl;
 
-import com.google.gson.Gson;
-import com.tianjian.property.bean.BaiWeiId;
-import com.tianjian.property.management.dao.BaiWeiIdDao;
+import com.tianjian.property.dao.BaiWeiIdDao;
 import com.tianjian.property.management.service.PropertyService;
 import com.tianjian.property.utils.HttpClientUtil;
 import org.springframework.beans.factory.annotation.Autowired;

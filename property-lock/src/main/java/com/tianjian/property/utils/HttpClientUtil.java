@@ -364,6 +364,38 @@ public class HttpClientUtil {
         map.put("code",code);
         return map;
     }
+    public static Map baiwdoPostJson(String url, String json) {
+        // 创建Httpclient对象
+        CloseableHttpClient httpClient = HttpClients.createDefault();
+        CloseableHttpResponse response = null;
+        Object result = null;
+        Integer code = null;
+        try {
+            // 创建Http Post请求
+            HttpPost httpPost = new HttpPost(url);
+            httpPost.setHeader("Content-Type","application/x-www-form-urlencoded");
+            // 创建请求内容
+            StringEntity entity = new StringEntity(json, ContentType.APPLICATION_JSON);
+            httpPost.setEntity(entity);
+            // 执行http请求
+            response = httpClient.execute(httpPost);
+            String resultString = EntityUtils.toString(response.getEntity(), "utf-8");
+            result = JSONObject.parse(resultString);
+            code=response.getStatusLine().getStatusCode();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                response.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("result",result);
+        map.put("code",code);
+        return map;
+    }
    /* public static String doPostOfMultipartFormData(String url, MultipartFile file, Map<String, String> param) {
         // 创建Httpclient对象
         CloseableHttpClient httpClient = HttpClients.createDefault();

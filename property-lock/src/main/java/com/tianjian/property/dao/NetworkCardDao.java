@@ -1,6 +1,7 @@
-package com.tianjian.property.management.dao;
+package com.tianjian.property.dao;
 
 import com.tianjian.property.bean.NetworkCard;
+import com.tianjian.property.dao.BaseDao;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
@@ -11,7 +12,7 @@ import java.util.Map;
 
 @Mapper
 @Repository
-public interface NetworkCardDao {
+public interface NetworkCardDao extends BaseDao<NetworkCard> {
     @Select({"<script>" +
             " SELECT network_name,deviceflag  " +
             "FROM tj_network_card WHERE id = #{lockfacilityid}"+

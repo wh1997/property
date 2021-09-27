@@ -1,12 +1,10 @@
 package com.tianjian.property.management.service.impl;
 
-import com.alibaba.druid.support.json.JSONUtils;
-
 import com.tianjian.property.bean.Gateway;
 import com.tianjian.property.bean.Lock;
-import com.tianjian.property.management.dao.GatewayDao;
-import com.tianjian.property.management.dao.LockBaseInfoDao;
-import com.tianjian.property.management.dao.LockDao;
+import com.tianjian.property.dao.GatewayDao;
+import com.tianjian.property.dao.LockBaseInfoDao;
+import com.tianjian.property.dao.LockDao;
 import com.tianjian.property.management.service.GatewayService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -55,6 +53,9 @@ public class GatewayServiceImpl extends HttpService implements GatewayService  {
     //解除蓝牙门锁绑定网关
     @Value("${apartment.deleteGateway}")
     private  String deleteGateway;
+    //解除蓝牙门锁绑定网关
+    @Value("${apartment.getGatewayInfo}")
+    private  String getGatewayInfo;
     @Autowired
     private LockDao lockDao;
     @Autowired
@@ -214,4 +215,16 @@ public class GatewayServiceImpl extends HttpService implements GatewayService  {
             return lock;
         }
     }
+
+    @Override
+    public Integer selectGateway(String gatewayId) {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("gatewayId",gatewayId);
+        Map retulsMap= bindinggateway(getGatewayInfo, map);
+        Map data = (Map) retulsMap.get("data");
+        Map gatewayInfo = (Map) data.get("gatewayInfo");
+        Integer gatewayState = (Integer) gatewayInfo.get("gatewayState");
+        return gatewayState;
+    }
+
 }

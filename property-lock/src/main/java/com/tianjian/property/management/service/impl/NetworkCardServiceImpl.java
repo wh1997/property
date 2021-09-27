@@ -1,14 +1,13 @@
 package com.tianjian.property.management.service.impl;
 
-import com.google.gson.Gson;
-import com.tianjian.property.management.dao.BaiWeiIdDao;
-import com.tianjian.property.management.dao.NetworkCardDao;
+import com.tianjian.property.dao.BaiWeiIdDao;
+import com.tianjian.property.dao.NetworkCardDao;
 import com.tianjian.property.management.service.NetworkCardService;
-import com.tianjian.property.utils.HttpClientUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 
 import java.util.HashMap;
 import java.util.List;
@@ -27,6 +26,12 @@ public class NetworkCardServiceImpl extends CardHttpService implements NetworkCa
     private BaiWeiIdDao baiWeiIdDao;
     @Value("${baiwei.BWLockURL}")
     private  String BWLockURL;
+    @Value("${baiwei.open}")
+    private  String open;
+    @Value("${baiwei.status}")
+    private  String status;
+    @Value("${baiwei.query}")
+    private  String query;
     @Override
     @Transactional
     public void updateStatus(Integer id, Integer status) {
@@ -38,15 +43,17 @@ public class NetworkCardServiceImpl extends CardHttpService implements NetworkCa
        Integer oldId= baiWeiIdDao.selectByPropertyId(pid);
         HashMap<String, String> map = new HashMap<>();
         map.put("Pid",oldId.toString());
-        List resultMap = (List) postResult(BWLockURL + "/EquipmentQuery.ashx", map);
-        return resultMap;
+        Map resultMap = postResult(BWLockURL + query, map);
+        List resultList = (List) resultMap.get("result");
+        return resultList;
     }
     @Override
     public Map selectEquipmentStatus(String Imei) {
         HashMap<String, String> map = new HashMap<>();
         map.put("imei",Imei);
-        Map resultMap = (Map) postResult(BWLockURL+"/EquipmentStatus.ashx", map);
-        return resultMap;
+        Map resultMap = postResult(BWLockURL + status, map);
+        Map result = (Map) resultMap.get("result");
+        return result;
     }
 
     @Override
@@ -56,7 +63,8 @@ public class NetworkCardServiceImpl extends CardHttpService implements NetworkCa
         map.put("imei",imei);
         map.put("userid",userid);
         map.put("Pid",oldId.toString());
-        Map resultMap = (Map) postResult(BWLockURL+"/EquipmentStatus.ashx", map);
-        return resultMap;
+        Map resultMap = postResult(BWLockURL + open, map);
+        Map result = (Map) resultMap.get("result");
+        return result;
     }
 }

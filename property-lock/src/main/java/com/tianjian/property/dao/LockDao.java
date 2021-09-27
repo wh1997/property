@@ -1,6 +1,7 @@
-package com.tianjian.property.management.dao;
+package com.tianjian.property.dao;
 
 import com.tianjian.property.bean.Lock;
+import com.tianjian.property.dao.BaseDao;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -11,7 +12,7 @@ import java.util.List;
 
 @Mapper
 @Repository
-public interface LockDao {
+public interface LockDao extends BaseDao<Lock> {
     @Select({"<script>" +
             " SELECT * " +
             "FROM tj_lock WHERE door_id = #{doorid} AND lock_status=0 "+

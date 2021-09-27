@@ -1,9 +1,9 @@
 package com.tianjian.property.management.service.impl;
 
 import com.tianjian.property.bean.Door;
-import com.tianjian.property.management.dao.DoorDao;
-import com.tianjian.property.management.dao.LockBaseInfoDao;
-import com.tianjian.property.management.dao.LockDao;
+import com.tianjian.property.dao.DoorDao;
+import com.tianjian.property.dao.LockBaseInfoDao;
+import com.tianjian.property.dao.LockDao;
 import com.tianjian.property.management.service.GatewayService;
 import com.tianjian.property.management.service.LockBaseInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
