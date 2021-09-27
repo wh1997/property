@@ -1,7 +1,10 @@
 package com.tianjian.property.dao;
 
 import com.tianjian.property.bean.Malfunction;
-import tk.mybatis.mapper.common.Mapper;
+import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Repository;
 
-public interface MalfunctionDao extends Mapper<Malfunction> {
+@Mapper
+@Repository
+public interface MalfunctionDao extends BaseDao<Malfunction> {
 }

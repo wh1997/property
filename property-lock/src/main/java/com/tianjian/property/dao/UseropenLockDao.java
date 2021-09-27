@@ -1,7 +1,10 @@
 package com.tianjian.property.dao;
 
 import com.tianjian.property.bean.UseropenLock;
-import tk.mybatis.mapper.common.Mapper;
+import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Repository;
 
-public interface UseropenLockDao extends Mapper<UseropenLock> {
+@Mapper
+@Repository
+public interface UseropenLockDao extends BaseDao<UseropenLock> {
 }

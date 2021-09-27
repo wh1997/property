@@ -1,6 +1,7 @@
 package com.tianjian.property.management.service.impl;
 
 import com.tianjian.property.dao.BaiWeiIdDao;
+import com.tianjian.property.dao.UserDao;
 import com.tianjian.property.management.service.PropertyService;
 import com.tianjian.property.utils.HttpClientUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +20,11 @@ import java.util.Map;
 public class PropertyServiceImpl implements PropertyService {
     @Autowired
     private BaiWeiIdDao baiWeiIdDao;
+    @Autowired
+    private UserDao userDao;
     @Value("${baiwei.url}")
     private String url;
+/*
     //TODO 小程序端直接对接
     @Override
     public List getBuildings(Integer parkId) {
@@ -39,9 +43,12 @@ public class PropertyServiceImpl implements PropertyService {
         List result = (List) resultMap.get("result");
         return result;
     }
+*/
 
     @Override
     public List getProperty(Integer appUID) {
+        //根据登录用户id查询角色
+
         return   baiWeiIdDao.selectByuserId(appUID);
     }
 }

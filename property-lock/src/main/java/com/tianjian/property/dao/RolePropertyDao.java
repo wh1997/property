@@ -1,7 +1,10 @@
 package com.tianjian.property.dao;
 
 import com.tianjian.property.bean.RoleProperty;
-import tk.mybatis.mapper.common.Mapper;
+import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Repository;
 
-public interface RolePropertyDao extends Mapper<RoleProperty> {
+@Mapper
+@Repository
+public interface RolePropertyDao extends BaseDao<RoleProperty> {
 }

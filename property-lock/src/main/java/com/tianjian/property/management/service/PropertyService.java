@@ -9,9 +9,9 @@ import java.util.Map;
  * @time: 2021/7/2
  */
 public interface PropertyService {
-    List getBuildings(Integer parkId);
+    /*List getBuildings(Integer parkId);
 
-    List getApartments(Integer buildingId);
+    List getApartments(Integer buildingId);*/
 
     List getProperty(Integer appUID);
 }

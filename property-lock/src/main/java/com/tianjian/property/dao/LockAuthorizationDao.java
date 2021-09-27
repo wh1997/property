@@ -1,7 +1,10 @@
 package com.tianjian.property.dao;
 
 import com.tianjian.property.bean.LockAuthorization;
-import tk.mybatis.mapper.common.Mapper;
+import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Repository;
 
-public interface LockAuthorizationDao extends Mapper<LockAuthorization> {
+@Mapper
+@Repository
+public interface LockAuthorizationDao extends BaseDao<LockAuthorization> {
 }
