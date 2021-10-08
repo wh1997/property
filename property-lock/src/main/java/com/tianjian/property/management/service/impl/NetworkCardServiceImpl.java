@@ -1,6 +1,6 @@
 package com.tianjian.property.management.service.impl;
 
-import com.tianjian.property.dao.BaiWeiIdDao;
+import com.tianjian.property.dao.PropertyDao;
 import com.tianjian.property.dao.NetworkCardDao;
 import com.tianjian.property.management.service.NetworkCardService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +23,7 @@ public class NetworkCardServiceImpl extends CardHttpService implements NetworkCa
     @Autowired
     private NetworkCardDao networkCardDao;
     @Autowired
-    private BaiWeiIdDao baiWeiIdDao;
+    private PropertyDao propertyDao;
     @Value("${baiwei.BWLockURL}")
     private  String BWLockURL;
     @Value("${baiwei.open}")
@@ -40,7 +40,7 @@ public class NetworkCardServiceImpl extends CardHttpService implements NetworkCa
 
     @Override
     public List selectEquipment(Integer pid) {
-       Integer oldId= baiWeiIdDao.selectByPropertyId(pid);
+       Integer oldId= propertyDao.selectByPropertyId(pid);
         HashMap<String, String> map = new HashMap<>();
         map.put("Pid",oldId.toString());
         Map resultMap = postResult(BWLockURL + query, map);
@@ -58,7 +58,7 @@ public class NetworkCardServiceImpl extends CardHttpService implements NetworkCa
 
     @Override
     public Map openLock(String imei, String userid, String pid) {
-        Integer oldId= baiWeiIdDao.selectByPropertyId(Integer.valueOf(pid));
+        Integer oldId= propertyDao.selectByPropertyId(Integer.valueOf(pid));
         HashMap<String, String> map = new HashMap<>();
         map.put("imei",imei);
         map.put("userid",userid);

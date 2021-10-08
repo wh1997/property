@@ -30,7 +30,7 @@ public class GatewayController {
     /** 
     * @Description: 向汇享家绑定网关 
     * @Param: [map] 
-    * @return: com.tianjian.property.utils.LockResult 
+    * @return: com.tianjian.Property.utils.LockResult
     * @Date: 2021/7/1 
     */
     public LockResult bindingGateway(@RequestBody Map map){
@@ -55,7 +55,7 @@ public class GatewayController {
     /**
     * @Description: 删除网关
     * @Param: [map]
-    * @return: com.tianjian.property.utils.LockResult
+    * @return: com.tianjian.Property.utils.LockResult
     * @Date: 2021/7/1
     */
     public LockResult deleteGateway(@RequestBody Map map){
@@ -111,7 +111,7 @@ public class GatewayController {
     /** 
     * @Description: 解除门锁绑定网关 
     * @Param: [map] 
-    * @return: com.tianjian.property.utils.LockResult 
+    * @return: com.tianjian.Property.utils.LockResult
     * @Date: 2021/7/1 
     */
     public LockResult LockUnBindingGateway(@RequestBody Map map){
@@ -140,7 +140,7 @@ public class GatewayController {
     /** 
     * @Description: 修改蓝牙网关的设备状态
     * @Param: [map] 
-    * @return: com.tianjian.property.utils.LockResult 
+    * @return: com.tianjian.Property.utils.LockResult
     * @Date: 2021/7/1 
     */
     public LockResult UpdateGatewayStatus(@RequestBody Map map){

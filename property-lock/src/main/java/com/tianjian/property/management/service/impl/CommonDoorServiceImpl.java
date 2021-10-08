@@ -24,8 +24,8 @@ public class CommonDoorServiceImpl implements CommonDoorService {
     @Override
     @Transactional
     public int addCommonDoor(Door door) {
-        Integer doorList = doorDao.selectRepetition(door);
-        if (doorList!=null){
+        Door door1 = doorDao.selectOne(door);
+        if (door1!=null){
             return 200;
         }else{
             return  doorDao.insert(door);

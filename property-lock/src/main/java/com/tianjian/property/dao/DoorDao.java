@@ -37,7 +37,7 @@ public interface DoorDao extends BaseDao<Door> {
             "<if test='door.createPerson != null'> AND create_person = #{door.createPerson}</if>" +
             "<if test='door.remark != null'> AND remark = #{door.remark}</if>" +
             "</if>" +
-            "ORDER  BY property_id ASC ,building_id ASC ,num_id ASC,unit_no ASC ,floor_no ASC"+
+            "ORDER  BY property_id ASC ,building_id ASC ,num_id ASC,unit_no ASC ,floor_no ASC , room_no ASC"+
             "</script>"})
     List<DoorVo> selectall(@Param("door") Door door);
     @Select({"<script>" +
@@ -96,7 +96,7 @@ public interface DoorDao extends BaseDao<Door> {
            "</trim>"+
            "</script>"})
    int insert(Door door);
-    @Select({"<script>" +
+/*    @Select({"<script>" +
             " SELECT id  " +
             "FROM tj_door WHERE 1=1 " +
             "<if test='propertyId !=null'>AND property_id = #{propertyId} </if>" +
@@ -107,7 +107,7 @@ public interface DoorDao extends BaseDao<Door> {
             "<if test='floorNo !=null'>AND floor_no = #{floorNo} </if>" +
             "<if test='roomNo !=null'>AND room_no = #{roomNo} </if>" +
             "</script>"})
-   Integer selectRepetition(Door door);
+   Integer selectRepetition(Door door);*/
     @Select({"<script>" +
             " SELECT * " +
             "FROM tj_door WHERE 1=1" +

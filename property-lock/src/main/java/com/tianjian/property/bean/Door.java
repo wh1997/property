@@ -1,6 +1,8 @@
 package com.tianjian.property.bean;
 
 
+import org.omg.PortableInterceptor.INACTIVE;
+
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -46,7 +48,7 @@ public class Door implements Serializable {
     private Integer floorNo;
     //房号
     @Column(name = "room_no")
-    private String roomNo;
+    private Integer roomNo;
     //门名称
     @Column(name = "door_name")
     private String doorName;
@@ -73,7 +75,7 @@ public class Door implements Serializable {
         super();
     }
 
-    public Door(Integer id, Integer propertyId, String propertyName, Integer numId, String numName, Integer buildingId, String buildingName, Integer unitNo, String unitName, Integer floorNo, String roomNo, String doorName, Integer doorType, Integer status, String addTime, String updateTime, String createPerson, String remark) {
+    public Door(Integer id, Integer propertyId, String propertyName, Integer numId, String numName, Integer buildingId, String buildingName, Integer unitNo, String unitName, Integer floorNo, Integer roomNo, String doorName, Integer doorType, Integer status, String addTime, String updateTime, String createPerson, String remark) {
         this.id = id;
         this.propertyId = propertyId;
         this.propertyName = propertyName;
@@ -174,11 +176,11 @@ public class Door implements Serializable {
         this.floorNo = floorNo;
     }
 
-    public String getRoomNo() {
+    public Integer getRoomNo() {
         return roomNo;
     }
 
-    public void setRoomNo(String roomNo) {
+    public void setRoomNo(Integer roomNo) {
         this.roomNo = roomNo;
     }
 

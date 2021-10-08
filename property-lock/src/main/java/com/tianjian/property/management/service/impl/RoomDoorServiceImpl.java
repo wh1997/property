@@ -107,7 +107,7 @@ public class RoomDoorServiceImpl implements RoomDoorService {
                     ArrayList<DoorVo> doorVos = new ArrayList<>();
                     for (int l = 0; l <list.size() ; l++) {
                         DoorVo doorVo = list.get(l);
-                        String siteall= doorVo.getBuildingname()+"-"+doorVo.getUnitName();
+                        String siteall= doorVo.getBuildingName()+"-"+doorVo.getUnitName();
                         if (site.equals(siteall)){
                             doorVos.add(doorVo);
                         }
@@ -134,7 +134,7 @@ public class RoomDoorServiceImpl implements RoomDoorService {
         List<DoorVo> list = doorVoPageInfo.getList();
         if (all.size()>0){
             DoorVo doorVo = all.get(0);
-            String s = doorVo.getBuildingname() + "-" + doorVo.getUnitName();
+            String s = doorVo.getBuildingName() + "-" + doorVo.getUnitName();
             Map<String, List<DoorVo>> map = new HashMap<>();
             map.put(s,list);
             return map;

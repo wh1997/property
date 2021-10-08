@@ -44,13 +44,13 @@ public class CommonDoorController {
             return new LockResult(false,ErrorEnum.SYSTEM_ERROR.getErrorMsg(),ErrorEnum.SYSTEM_ERROR.getCode(),null);
         }
     }
-    @PostMapping("/selectdoor")
-    /**
+  /*  @PostMapping("/selectdoor")TODO 弃用与重复接口
+    *//**
     * @Description:  分页选项卡搜索
     * @Param: [cityd 市id, areaid  区id, propertyid  小区id, doortype  门锁类型]
     * @return: com.tagen.lock.utils.LockResult
     * @Date: 2021/5/27
-    */
+    *//*
     public LockResult showCommonDoor(@RequestBody Map map){
       try {
           Integer propertyid = (Integer) map.get("propertyId");
@@ -67,7 +67,7 @@ public class CommonDoorController {
           e.printStackTrace();
           return new LockResult(false,ErrorEnum.SYSTEM_ERROR.getErrorMsg(),ErrorEnum.SYSTEM_ERROR.getCode(),null);
       }
-    }
+    }*/
     @PostMapping("/fuzzyquery")
     /** 
     * @Description:  分页模糊搜索公共门

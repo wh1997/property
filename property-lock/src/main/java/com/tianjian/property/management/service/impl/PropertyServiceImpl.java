@@ -1,15 +1,13 @@
 package com.tianjian.property.management.service.impl;
 
-import com.tianjian.property.dao.BaiWeiIdDao;
-import com.tianjian.property.dao.UserDao;
+import com.tianjian.property.dao.PropertyDao;
 import com.tianjian.property.management.service.PropertyService;
-import com.tianjian.property.utils.HttpClientUtil;
+import com.tianjian.property.management.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * @description:
@@ -19,9 +17,11 @@ import java.util.Map;
 @Service
 public class PropertyServiceImpl implements PropertyService {
     @Autowired
-    private BaiWeiIdDao baiWeiIdDao;
+    private PropertyDao propertyDao;
     @Autowired
-    private UserDao userDao;
+    private UserService userService;
+/*    @Autowired
+    private RoleService userService;*/
     @Value("${baiwei.url}")
     private String url;
 /*
@@ -48,7 +48,9 @@ public class PropertyServiceImpl implements PropertyService {
     @Override
     public List getProperty(Integer appUID) {
         //根据登录用户id查询角色
+        List<Integer> roleId = userService.selectUserByRole(appUID);
 
-        return   baiWeiIdDao.selectByuserId(appUID);
+        List<Property> list = userService.selectPropertyByRole(roleId);
+        return  list;
     }
 }

@@ -26,7 +26,7 @@ public class PropertyController {
     /** 
     * @Description: 获取所以园区信息
     * @Param: [map] 
-    * @return: com.tianjian.property.utils.LockResult 
+    * @return: com.tianjian.Property.utils.LockResult
     * @Date: 2021/7/5 
     */
     public LockResult getProperty(@RequestHeader String token){
@@ -39,14 +39,14 @@ public class PropertyController {
             return new LockResult(false,ErrorEnum.SYSTEM_ERROR.getErrorMsg(),ErrorEnum.SYSTEM_ERROR.getCode(),null);
         }
     }
-    @PostMapping("/select/buildings")
+  /*  @PostMapping("/select/buildings")
 
-    /**
+    *//**
     * @Description: 获取指定园区内的楼栋列表
     * @Param: [map]
-    * @return: com.tianjian.property.utils.LockResult
+    * @return: com.tianjian.Property.utils.LockResult
     * @Date: 2021/7/5
-    */
+    *//*
     public LockResult getBuildings(@RequestBody Map map){
         try {
             Integer parkId = (Integer) map.get("parkId");
@@ -59,12 +59,12 @@ public class PropertyController {
     }
     @PostMapping("select/apartments")
     
-    /** 
+    *//**
     * @Description: 获取指定楼栋的房屋列表
     * @Param: [map] 
-    * @return: com.tianjian.property.utils.LockResult 
+    * @return: com.tianjian.Property.utils.LockResult
     * @Date: 2021/7/5 
-    */
+    *//*
     public LockResult getApartments(@RequestBody Map map){
         try {
             Integer buildingId = (Integer) map.get("buildingId");
@@ -74,5 +74,5 @@ public class PropertyController {
             e.printStackTrace();
             return new LockResult(false,ErrorEnum.SYSTEM_ERROR.getErrorMsg(),ErrorEnum.SYSTEM_ERROR.getCode(),null);
         }
-    }
+    }*/
 }

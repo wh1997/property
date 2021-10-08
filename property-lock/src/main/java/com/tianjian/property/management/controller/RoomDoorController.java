@@ -105,7 +105,7 @@ public class RoomDoorController {
     /**
     * @Description:  关键字搜素
     * @Param: [map]
-    * @return: com.tianjian.property.utils.LockResult
+    * @return: com.tianjian.Property.utils.LockResult
     * @Date: 2021/7/6
     */
     public  LockResult fuzzySearch(@RequestBody Map map){

@@ -26,7 +26,7 @@ public class NetworkCardController {
     /** 
     * @Description: 修改网卡设备状态
     * @Param: [map] 
-    * @return: com.tianjian.property.utils.LockResult 
+    * @return: com.tianjian.Property.utils.LockResult
     * @Date: 2021/7/1 
     */
     public LockResult updateStatus(@RequestBody Map  map){

@@ -74,7 +74,7 @@
         <!--需要产生新Model类时，改以下的表名即可 -by James-->
 
 
-        <table tableName="tj_useropen_lock">
+        <table tableName="tj_property">
             <!-- 是否只生成POJO对象 -->
             <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
         </table>

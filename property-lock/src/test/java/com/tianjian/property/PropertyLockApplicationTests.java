@@ -1,22 +1,16 @@
 package com.tianjian.property;
 
-import com.tianjian.property.management.controller.NetworkCardController;
-import com.tianjian.property.management.service.CommonDoorService;
-import com.tianjian.property.management.service.GatewayService;
-import com.tianjian.property.management.service.NetworkCardService;
-import com.tianjian.property.management.service.PropertyService;
-import com.tianjian.property.management.service.impl.NetworkCardServiceImpl;
-import com.tianjian.property.utils.LockConstants;
+import com.tianjian.property.bean.Property;
+import com.tianjian.property.management.service.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
-import static org.bouncycastle.asn1.x500.style.RFC4519Style.o;
 
 @SpringBootTest
 @Controller
@@ -27,6 +21,8 @@ class PropertyLockApplicationTests {
     private NetworkCardService networkCardService;
     @Autowired
     private GatewayService gatewayService;
+    @Autowired
+    private UserService userService;
     @Test
     void redisceshi()  {
        redisTemplate.opsForValue().set("嘻嘻呵呵","hahahaha");
@@ -51,6 +47,19 @@ class PropertyLockApplicationTests {
     void test2()  {
         String apartment = gatewayService.getApartment();
         System.out.println(apartment);
+    }
+    @Test
+    void test5()  {
+        userService.selectUserByRole(100069);
+    }
+    @Test
+    void test6()  {
+        ArrayList<Integer> integers = new ArrayList<>();
+        integers.add(1);
+        integers.add(2);
+        integers.add(3);
+        List<Property> properties = userService.selectPropertyByRole(integers);
+        System.out.println(properties);
     }
     //网关详情测试
     @Test

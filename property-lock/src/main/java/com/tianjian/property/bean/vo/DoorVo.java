@@ -8,7 +8,7 @@ public class DoorVo {
     //楼栋id
     private Integer buildingId;
     //楼栋名称
-    private String buildingname;
+    private String buildingName;
     //楼层
     private Integer floorNo;
     //房号
@@ -26,12 +26,12 @@ public class DoorVo {
         super();
     }
 
-    public DoorVo(Integer id, Integer numId, String numName, Integer buildingId, String buildingname, Integer floorNo, String roomNo, String doorName, Integer status, Integer unitNo, String unitName) {
+    public DoorVo(Integer id, Integer numId, String numName, Integer buildingId, String buildingName, Integer floorNo, String roomNo, String doorName, Integer status, Integer unitNo, String unitName) {
         this.id = id;
         this.numId = numId;
         this.numName = numName;
         this.buildingId = buildingId;
-        this.buildingname = buildingname;
+        this.buildingName = buildingName;
         this.floorNo = floorNo;
         this.roomNo = roomNo;
         this.doorName = doorName;
@@ -72,12 +72,12 @@ public class DoorVo {
         this.buildingId = buildingId;
     }
 
-    public String getBuildingname() {
-        return buildingname;
+    public String getBuildingName() {
+        return buildingName;
     }
 
-    public void setBuildingname(String buildingname) {
-        this.buildingname = buildingname;
+    public void setBuildingName(String buildingName) {
+        this.buildingName = buildingName;
     }
 
     public Integer getFloorNo() {
@@ -135,7 +135,7 @@ public class DoorVo {
                 ", numId=" + numId +
                 ", numName='" + numName + '\'' +
                 ", buildingId=" + buildingId +
-                ", buildingname='" + buildingname + '\'' +
+                ", buildingName='" + buildingName + '\'' +
                 ", floorNo=" + floorNo +
                 ", roomNo='" + roomNo + '\'' +
                 ", doorName='" + doorName + '\'' +

@@ -24,7 +24,7 @@ spring:
 
   #服务名称
   application:
-    name: property-lock   #服务名
+    name: Property-lock   #服务名
   cache:
     ehcache:
       config: classpath:config/ehcache.xml
@@ -49,7 +49,7 @@ eureka:
 #mybatis配置
 #pojo包名（此项必须与 entity项目中的包保持一致）
 mybatis:
-  type-aliases-package: com.tianjian.property.bean.entity
+  type-aliases-package: com.tianjian.Property.bean.entity
   #开启注解sql查询转驼峰式
   configuration:
     map-underscore-to-camel-case: true
