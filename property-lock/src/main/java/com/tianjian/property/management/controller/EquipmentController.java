@@ -38,7 +38,7 @@ public class EquipmentController {
             System.out.println(lockAuthCodeMap);
             String hardwareVersion = (String) map.get("hardwareVersion");
             String softwareVersion = (String) map.get("softwareVersion");
-            Integer doorid = (Integer) map.get("doorid");
+            Integer doorid = (Integer) map.get("doorId");
             Integer appUID = TokenUtil.getAppUID(token);
             Map result = equipmentService.addBluetooth(lockInfoBaseMap, lockAuthCodeMap, hardwareVersion, softwareVersion,doorid,appUID.toString());
             Integer resultCode = (Integer) result.get("resultCode");
@@ -66,7 +66,7 @@ public class EquipmentController {
             //获取设备的类型 1蓝牙锁 2网关  3网卡
             Integer equipmentType = (Integer) map.get("equipmentType");
             //设备所在项目的id
-            Integer propertyId = (Integer) map.get("propertyid");
+            Integer propertyId = (Integer) map.get("propertyId");
             Integer pageNum = (Integer) map.get("pageNum");
             Integer pageSize = (Integer) map.get("pageSize");
             List resultList= equipmentService.selectList( equipmentType, propertyId, pageNum, pageSize);

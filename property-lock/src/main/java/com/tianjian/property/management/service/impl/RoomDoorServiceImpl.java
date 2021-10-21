@@ -191,6 +191,7 @@ public class RoomDoorServiceImpl implements RoomDoorService {
     @Override
     @Transactional
     public Map addDoor(List<Map> door,Integer appUID) throws Exception {
+        System.out.println(door);
         HashMap<String, Object> map = new HashMap<>();
         List<Door> doors = new ArrayList<>();
         for (int i = 0; i< door.size(); i++) {

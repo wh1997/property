@@ -108,11 +108,36 @@ public interface LockBaseInfoDao extends BaseDao<LockBaseInfo> {
             " a.max_user maxUser,a.bleprotocol_ver bleprotocolVer,a.rfmodule_type rfmodule_type,a.rfmodule_mac rfmoduleMac, "+
             " a.aes_key aesKey,a.admin_auth_code adminAuthCode,a.general_auth_code generalAuthCode,a.temp_auth_code tempAuthCode, "+
             " a.create_time createTime,a.update_time updateTime,a.add_people addPeople,a.vendor,a.status,a.remark, "+
+            " b.property_id propertyId,b.property_name propertyName,b.num_id numId,b.num_name numName,b.building_id buildingId,"+
+            " b.building_name buildingName,b.unit_no unitNo,b.unit_name unitName, b.floor_no floorNo,b.room_no roomNo,b.door_name doorName,"+
             " door_id doorId, "+
             " b.lId lId "+
             " FROM "+
-            " tj_lockbaseinfo a "+
-            " LEFT JOIN ( SELECT door_id, lock_facility_id, l.id lId FROM tj_lock l LEFT JOIN tj_door d ON l.door_id = d.id ) b ON a.id = b.lock_facility_id "+
+            " tj_lockbaseinfo a " +
+            " LEFT JOIN ( " +
+            " SELECT " +
+            " door_id, " +
+            " lock_status, " +
+            " lock_facility_id, " +
+            " Lock_gateway_id, " +
+            " property_id, " +
+            " property_name, " +
+            " num_id, " +
+            " num_name, " +
+            " building_id, " +
+            " building_name, " +
+            " unit_no, " +
+            " unit_name, " +
+            " floor_no, " +
+            " room_no, " +
+            " door_name, " +
+            " door_type, " +
+            "  `status`,  " +
+            "   l.id lId  " +
+            " FROM " +
+            "  tj_lock l " +
+            "  LEFT JOIN tj_door d ON l.door_id = d.id   " +
+            " ) b ON a.id = b.lock_facility_id  " +
             " WHERE "+
             " a.id = #{equipmentId} "+
             "</script>"})

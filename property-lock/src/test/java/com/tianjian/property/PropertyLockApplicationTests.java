@@ -88,14 +88,14 @@ class PropertyLockApplicationTests {
         String generalAuthCode=null;
         String tempAuthCode=null;
         List<Map> maps = new ArrayList<>();
-        System.out.println(authCodeList.size());
-        for (int i = 0; i <authCodeList.size() ; i++) {
-            Map map = authCodeList.get(i);
-            if (map.get("adminAuthCode")!=null){
-                HashMap<String, Object> hashMap = new HashMap<>();
-                adminAuthCode = (String) map.get("adminAuthCode");
-                System.out.println(adminAuthCode);
-                hashMap.put("authCode",adminAuthCode);
+                        System.out.println(authCodeList.size());
+                for (int i = 0; i <authCodeList.size() ; i++) {
+                    Map map = authCodeList.get(i);
+                    if (map.get("adminAuthCode")!=null){
+                        HashMap<String, Object> hashMap = new HashMap<>();
+                        adminAuthCode = (String) map.get("adminAuthCode");
+                        System.out.println(adminAuthCode);
+                        hashMap.put("authCode",adminAuthCode);
                 hashMap.put("authCodeType",1);
                 maps.add(hashMap);
             }

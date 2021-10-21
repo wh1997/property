@@ -4,6 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.tianjian.property.bean.*;
 import com.tianjian.property.bean.vo.LockBaseInfoVo;
+import com.tianjian.property.dao.DoorDao;
 import com.tianjian.property.dao.GatewayDao;
 import com.tianjian.property.dao.LockBaseInfoDao;
 import com.tianjian.property.dao.LockDao;
@@ -29,6 +30,8 @@ private LockBaseInfoDao lockBaseInfoDao;
 private com.tianjian.property.dao.NetworkCardDao NetworkCardDao;
 @Autowired
 private LockDao lockDao;
+@Autowired
+private DoorDao  doorDao;
 @Value("${apartment.addBluetooth}")
 private String  addBluetooth;
     @Override
@@ -45,7 +48,6 @@ private String  addBluetooth;
             if (map.get("adminAuthCode")!=null){
                 HashMap<String, Object> hashMap = new HashMap<>();
                 adminAuthCode = (String) map.get("adminAuthCode");
-                System.out.println(adminAuthCode);
                 hashMap.put("authCode",adminAuthCode);
                 hashMap.put("authCodeType",1);
                 maps.add(hashMap);
@@ -65,11 +67,9 @@ private String  addBluetooth;
                 maps.add(hashMap);
             }
         }
-        System.out.println(adminAuthCode+"  "+generalAuthCode+"  "+tempAuthCode);
         HashMap<String, Object> lockAuth = new HashMap<>();
         lockAuth.put("aesKey",aesKey);
         lockAuth.put("authCodeList",maps);
-        System.out.println(lockAuth);
         HashMap<String, Object> datamap = new HashMap<>();
         //是	LockBaseInfoVo 门锁基础信息
         datamap.put("lockInfoBase",lockBaseInfo);
@@ -95,6 +95,7 @@ private String  addBluetooth;
             //往锁表里添加基本信息
             Lock lock = new Lock(null, doorid, 0, LockBaseInfo.getId(), null, 0, null, null, null);
             lockDao.inster(lock);
+            doorDao.updateDoorStatus(doorid);
             return result;
         }else{
             return result;

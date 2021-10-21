@@ -155,8 +155,8 @@ public interface DoorDao extends BaseDao<Door> {
     List<Door> fuzzySearch(Integer  propertyId,String fuzzy);
    @Insert({"<script>" +
            " INSERT INTO tj_door" +
-           "(property_id ,property_name,num_id,num_name,building_id,building_name,unit_no,unit_name,floor_no,room_no,door_name," +
-           "door_type,status,create_person) values "+
+           " (property_id ,property_name,num_id,num_name,building_id,building_name,unit_no,unit_name,floor_no,room_no,door_name," +
+           " door_type,status,create_person) values "+
            " <foreach collection=\"list\" item=\"door\" index=\"index\"  separator=\",\"> " +
            "(" +
            "#{door.propertyId}," +
