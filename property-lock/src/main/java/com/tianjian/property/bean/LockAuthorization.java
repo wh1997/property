@@ -32,14 +32,14 @@ public class LockAuthorization implements Serializable {
     /**
      * 入住时间
      */
-    @Column(name = "`entertime`")
-    private Date entertime;
+    @Column(name = "`enter_time`")
+    private Date enterTime;
 
     /**
      * 离开时间
      */
-    @Column(name = "`leavatime`")
-    private Date leavatime;
+    @Column(name = "`leava_time`")
+    private Date leavaTime;
 
     /**
      * 授权开门方式
@@ -50,14 +50,14 @@ public class LockAuthorization implements Serializable {
     /**
      * 数据添加时间
      */
-    @Column(name = "`addtime`")
-    private Date addtime;
+    @Column(name = "`add_time`")
+    private Date addTime;
 
     /**
      * 数据修改时间
      */
-    @Column(name = "`updatetime`")
-    private Date updatetime;
+    @Column(name = "`update_time`")
+    private Date updateTime;
 
     /**
      * 备注
@@ -138,37 +138,37 @@ public class LockAuthorization implements Serializable {
     /**
      * 获取入住时间
      *
-     * @return entertime - 入住时间
+     * @return enter_time - 入住时间
      */
-    public Date getEntertime() {
-        return entertime;
+    public Date getEnterTime() {
+        return enterTime;
     }
 
     /**
      * 设置入住时间
      *
-     * @param entertime 入住时间
+     * @param enterTime 入住时间
      */
-    public void setEntertime(Date entertime) {
-        this.entertime = entertime;
+    public void setEnterTime(Date enterTime) {
+        this.enterTime = enterTime;
     }
 
     /**
      * 获取离开时间
      *
-     * @return leavatime - 离开时间
+     * @return leava_time - 离开时间
      */
-    public Date getLeavatime() {
-        return leavatime;
+    public Date getLeavaTime() {
+        return leavaTime;
     }
 
     /**
      * 设置离开时间
      *
-     * @param leavatime 离开时间
+     * @param leavaTime 离开时间
      */
-    public void setLeavatime(Date leavatime) {
-        this.leavatime = leavatime;
+    public void setLeavaTime(Date leavaTime) {
+        this.leavaTime = leavaTime;
     }
 
     /**
@@ -192,37 +192,37 @@ public class LockAuthorization implements Serializable {
     /**
      * 获取数据添加时间
      *
-     * @return addtime - 数据添加时间
+     * @return add_time - 数据添加时间
      */
-    public Date getAddtime() {
-        return addtime;
+    public Date getAddTime() {
+        return addTime;
     }
 
     /**
      * 设置数据添加时间
      *
-     * @param addtime 数据添加时间
+     * @param addTime 数据添加时间
      */
-    public void setAddtime(Date addtime) {
-        this.addtime = addtime;
+    public void setAddTime(Date addTime) {
+        this.addTime = addTime;
     }
 
     /**
      * 获取数据修改时间
      *
-     * @return updatetime - 数据修改时间
+     * @return update_time - 数据修改时间
      */
-    public Date getUpdatetime() {
-        return updatetime;
+    public Date getUpdateTime() {
+        return updateTime;
     }
 
     /**
      * 设置数据修改时间
      *
-     * @param updatetime 数据修改时间
+     * @param updateTime 数据修改时间
      */
-    public void setUpdatetime(Date updatetime) {
-        this.updatetime = updatetime;
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
     }
 
     /**
@@ -253,11 +253,11 @@ public class LockAuthorization implements Serializable {
         sb.append(", doorId=").append(doorId);
         sb.append(", userId=").append(userId);
         sb.append(", userStatus=").append(userStatus);
-        sb.append(", entertime=").append(entertime);
-        sb.append(", leavatime=").append(leavatime);
+        sb.append(", enterTime=").append(enterTime);
+        sb.append(", leavaTime=").append(leavaTime);
         sb.append(", opendoorStatus=").append(opendoorStatus);
-        sb.append(", addtime=").append(addtime);
-        sb.append(", updatetime=").append(updatetime);
+        sb.append(", addTime=").append(addTime);
+        sb.append(", updateTime=").append(updateTime);
         sb.append(", remark=").append(remark);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");

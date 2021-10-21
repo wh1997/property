@@ -23,7 +23,7 @@ public class UserRole implements Serializable {
     private Integer roleId;
 
     /**
-     * 0:未启用1:启用
+     * 1:未启用0:启用
      */
     @Column(name = "`status`")
     private Integer status;
@@ -81,18 +81,18 @@ public class UserRole implements Serializable {
     }
 
     /**
-     * 获取0:未启用1:启用
+     * 获取1:未启用0:启用
      *
-     * @return status - 0:未启用1:启用
+     * @return status - 1:未启用0:启用
      */
     public Integer getStatus() {
         return status;
     }
 
     /**
-     * 设置0:未启用1:启用
+     * 设置1:未启用0:启用
      *
-     * @param status 0:未启用1:启用
+     * @param status 1:未启用0:启用
      */
     public void setStatus(Integer status) {
         this.status = status;

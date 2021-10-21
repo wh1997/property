@@ -1,84 +1,116 @@
 package com.tianjian.property.bean;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.persistence.*;
 
-/**
- * @description:
- * @author: ManolinCoder
- * @time: 2021/6/16
- */
-@Table(name = "tj_door_type")
+@Table(name = "`tj_door_type`")
 public class DoorType implements Serializable {
-    //主键id
     @Id
-    @Column(name = "id",insertable = false)
-    @GeneratedValue(generator = "JDBC")
+    @Column(name = "`id`")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    //城市id
-    @Column(name = "door_type")
-    private String doorType ;
-    //城市名称
-    @Column(name = "addtime")
-    private String addTime ;
-    //区域id
-    @Column(name = "remark")
-    private String remark	;
 
-    public DoorType() {
-        super();
-    }
+    /**
+     * 门类型
+     */
+    @Column(name = "`door_type`")
+    private String doorType;
 
-    public DoorType(Integer id, String doorType, String addTime, String remark) {
-        this.id = id;
-        this.doorType = doorType;
-        this.addTime = addTime;
-        this.remark = remark;
-    }
+    /**
+     * 添加时间
+     */
+    @Column(name = "`add_time`")
+    private Date addTime;
 
+    /**
+     * 注释
+     */
+    @Column(name = "`remark`")
+    private String remark;
+
+    private static final long serialVersionUID = 1L;
+
+    /**
+     * @return id
+     */
     public Integer getId() {
         return id;
     }
 
+    /**
+     * @param id
+     */
     public void setId(Integer id) {
         this.id = id;
     }
 
+    /**
+     * 获取门类型
+     *
+     * @return door_type - 门类型
+     */
     public String getDoorType() {
         return doorType;
     }
 
+    /**
+     * 设置门类型
+     *
+     * @param doorType 门类型
+     */
     public void setDoorType(String doorType) {
-        this.doorType = doorType;
+        this.doorType = doorType == null ? null : doorType.trim();
     }
 
-    public String getAddTime() {
+    /**
+     * 获取添加时间
+     *
+     * @return add_time - 添加时间
+     */
+    public Date getAddTime() {
         return addTime;
     }
 
-    public void setAddTime(String addTime) {
+    /**
+     * 设置添加时间
+     *
+     * @param addTime 添加时间
+     */
+    public void setAddTime(Date addTime) {
         this.addTime = addTime;
     }
+
+    /**
+     * 获取注释
+     *
+     * @return remark - 注释
+     */
     public String getRemark() {
         return remark;
     }
 
+    /**
+     * 设置注释
+     *
+     * @param remark 注释
+     */
     public void setRemark(String remark) {
-        this.remark = remark;
+        this.remark = remark == null ? null : remark.trim();
     }
 
     @Override
     public String toString() {
-        return "DoorType{" +
-                "id=" + id +
-                ", doorType='" + doorType + '\'' +
-                ", addTime='" + addTime + '\'' +
-                ", remark='" + remark + '\'' +
-                '}';
+        StringBuilder sb = new StringBuilder();
+        sb.append(getClass().getSimpleName());
+        sb.append(" [");
+        sb.append("Hash = ").append(hashCode());
+        sb.append(", id=").append(id);
+        sb.append(", doorType=").append(doorType);
+        sb.append(", addTime=").append(addTime);
+        sb.append(", remark=").append(remark);
+        sb.append(", serialVersionUID=").append(serialVersionUID);
+        sb.append("]");
+        return sb.toString();
     }
 }

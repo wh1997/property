@@ -1,7 +1,6 @@
 package com.tianjian.property.dao;
 
 import com.tianjian.property.bean.Gateway;
-import com.tianjian.property.dao.BaseDao;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -21,7 +20,7 @@ public interface GatewayDao extends BaseDao<Gateway> {
     Map<String,String> findById(Integer id);
     @Select({"<script>" +
             " SELECT * " +
-            "FROM tj_gateway WHERE Project = #{propertyId} AND status != 5"+
+            "FROM tj_gateway WHERE project = #{propertyId} AND status != 5"+
             "</script>"})
     List<Gateway> findByPropertyId(Integer propertyId);
     @Select({"<script>" +
@@ -37,12 +36,12 @@ public interface GatewayDao extends BaseDao<Gateway> {
            " <if test='gatewayName != null'>gateway_name ,</if> " +
            " <if test='gatewayMac != null'>gateway_mac ,</if> " +
            " <if test='gatewayType != null'>gateway_type ,</if> " +
-           " <if test='hardwareVersion != null'>hardwareversion ,</if> " +
-           " <if test='softwareVersion != null'>softwareversion ,</if> " +
-           " <if test='project != null'>Project, </if> " +
+           " <if test='hardwareVersion != null'>hardware_version ,</if> " +
+           " <if test='softwareVersion != null'>software_version ,</if> " +
+           " <if test='project != null'>project, </if> " +
            " <if test='vendor != null'>vendor, </if> " +
-           " <if test='createTime != null'>createtime, </if> " +
-           " <if test='discardTime != null'>discardtime ,</if> " +
+           " <if test='createTime != null'>create_time, </if> " +
+           " <if test='discardTime != null'>discard_time ,</if> " +
            " <if test='status != null'>status, </if> " +
            " <if test='remark != null'>remark, </if> " +
            "</trim>"+
@@ -74,7 +73,7 @@ public interface GatewayDao extends BaseDao<Gateway> {
             " OR gateway_name LIKE #{keyWord}  " +
             " OR gateway_mac LIKE #{keyWord}  " +
             " OR gateway_id LIKE #{keyWord}  " +
-            " AND Project = #{propertyId}   " +
+            " AND project = #{propertyId}   " +
             " AND status != 5"+
             "</script>"})
     List<Gateway> fuzzySearch(Integer propertyId,String keyWord);

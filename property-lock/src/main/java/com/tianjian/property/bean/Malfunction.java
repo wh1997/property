@@ -50,14 +50,14 @@ public class Malfunction implements Serializable {
     /**
      * 故障时间
      */
-    @Column(name = "`addtime`")
-    private Date addtime;
+    @Column(name = "`add_time`")
+    private Date addTime;
 
     /**
      * 维修时间
      */
-    @Column(name = "`updatetime`")
-    private Date updatetime;
+    @Column(name = "`update_time`")
+    private Date updateTime;
 
     /**
      * 备注
@@ -192,37 +192,37 @@ public class Malfunction implements Serializable {
     /**
      * 获取故障时间
      *
-     * @return addtime - 故障时间
+     * @return add_time - 故障时间
      */
-    public Date getAddtime() {
-        return addtime;
+    public Date getAddTime() {
+        return addTime;
     }
 
     /**
      * 设置故障时间
      *
-     * @param addtime 故障时间
+     * @param addTime 故障时间
      */
-    public void setAddtime(Date addtime) {
-        this.addtime = addtime;
+    public void setAddTime(Date addTime) {
+        this.addTime = addTime;
     }
 
     /**
      * 获取维修时间
      *
-     * @return updatetime - 维修时间
+     * @return update_time - 维修时间
      */
-    public Date getUpdatetime() {
-        return updatetime;
+    public Date getUpdateTime() {
+        return updateTime;
     }
 
     /**
      * 设置维修时间
      *
-     * @param updatetime 维修时间
+     * @param updateTime 维修时间
      */
-    public void setUpdatetime(Date updatetime) {
-        this.updatetime = updatetime;
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
     }
 
     /**
@@ -256,8 +256,8 @@ public class Malfunction implements Serializable {
         sb.append(", reason=").append(reason);
         sb.append(", facilityName=").append(facilityName);
         sb.append(", facilityId=").append(facilityId);
-        sb.append(", addtime=").append(addtime);
-        sb.append(", updatetime=").append(updatetime);
+        sb.append(", addTime=").append(addTime);
+        sb.append(", updateTime=").append(updateTime);
         sb.append(", remark=").append(remark);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");

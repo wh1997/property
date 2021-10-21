@@ -1,5 +1,6 @@
 package com.tianjian.property.dao;
 
+import com.tianjian.property.bean.Property;
 import com.tianjian.property.bean.RoleProperty;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;

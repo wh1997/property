@@ -1,12 +1,12 @@
 package com.tianjian.property.dao;
 
 import com.tianjian.property.bean.LockBaseInfo;
-import com.tianjian.property.dao.BaseDao;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 @Repository
@@ -22,18 +22,22 @@ public interface LockBaseInfoDao extends BaseDao<LockBaseInfo> {
             " <if test='lockId != null'>lock_id ,</if> " +
             " <if test='lockTag != null'>lock_tag ,</if> " +
             " <if test='lockMac != null'>lock_mac ,</if> " +
-            " <if test='hardwareVersion != null'>hardwareversion ,</if> " +
-            " <if test='softwareVersion != null'>softwareversion ,</if> " +
+            " <if test='hardwareVersion != null'>hardware_version ,</if> " +
+            " <if test='softwareVersion != null'>software_version ,</if> " +
             " <if test='lockType != null'>lock_type ,</if> " +
-            " <if test='initStatus != null'>initstatus ,</if> " +
-            " <if test='maxVolume != null'>maxvolume ,</if> " +
-            " <if test='maxUser != null'>maxuser ,</if> " +
-            " <if test='bleproTocolver != null'>bleprotocolver ,</if> " +
-            " <if test='rfmoduleType != null'>rfmoduletype ,</if> " +
-            " <if test='rfmoduleMac != null'>rfmodulemac ,</if> " +
-            " <if test='createTime != null'>createtime ,</if> " +
-            " <if test='updateTime != null'>updatetime ,</if> " +
-            " <if test='addPeople != null'>addpeople ,</if> " +
+            " <if test='initStatus != null'>init_status ,</if> " +
+            " <if test='maxVolume != null'>max_volume ,</if> " +
+            " <if test='maxUser != null'>max_user ,</if> " +
+            " <if test='bleprotocolVer != null'>bleprotocol_ver ,</if> " +
+            " <if test='rfmoduleType != null'>rfmodule_type ,</if> " +
+            " <if test='rfmoduleMac != null'>rfmodule_mac ,</if> " +
+            " <if test='aesKey != null'>aes_key ,</if> " +
+            " <if test='adminAuthCode != null'>admin_auth_code ,</if> " +
+            " <if test='generalAuthCode != null'>general_auth_code ,</if> " +
+            " <if test='tempAuthCode != null'>temp_auth_code ,</if> " +
+            " <if test='createTime != null'>create_time ,</if> " +
+            " <if test='updateTime != null'>update_time ,</if> " +
+            " <if test='addPeople != null'>add_people ,</if> " +
             " <if test='vendor != null'>vendor ,</if> " +
             " <if test='status != null'>status ,</if> " +
             " <if test='remark != null'>remark </if> " +
@@ -48,9 +52,13 @@ public interface LockBaseInfoDao extends BaseDao<LockBaseInfo> {
             " <if test='initStatus  != null'>#{initStatus} ,</if> " +
             " <if test='maxVolume != null'> #{maxVolume} ,</if> " +
             " <if test='maxUser != null'> #{maxUser} ,</if> " +
-            " <if test='bleproTocolver != null'> #{bleproTocolver} ,</if> " +
+            " <if test='bleprotocolVer != null'> #{bleprotocolVer} ,</if> " +
             " <if test='rfmoduleType != null'> #{rfmoduleType} ,</if> " +
             " <if test='rfmoduleMac != null'> #{rfmoduleMac} ,</if> " +
+            " <if test='aesKey != null'> #{aesKey} ,</if> " +
+            " <if test='adminAuthCode != null'> #{adminAuthCode} ,</if> " +
+            " <if test='generalAuthCode != null'> #{generalAuthCode} ,</if> " +
+            " <if test='tempAuthCode != null'> #{tempAuthCode} ,</if> " +
             " <if test='createTime != null'> #{createTime} ,</if> " +
             " <if test='updateTime != null'> #{updateTime} ,</if> " +
             " <if test='addPeople != null'> #{addPeople} ,</if> " +
@@ -62,8 +70,8 @@ public interface LockBaseInfoDao extends BaseDao<LockBaseInfo> {
     @Options(useGeneratedKeys = true,keyColumn = "id",keyProperty = "id")
     void inster(LockBaseInfo lockBaseInfo);
     @Select({"SELECT" +
-            " id,lock_id lockId,lock_tag lockTag,lock_mac lockMac, a.`status` ,door_id doorId,property_name propertyName," +
-            " num_name numName,building_name buildingName,unit_name unitName,room_no roomNo,door_name doorName, property_id propertyId" +
+            " id bluetoothLockId,lock_id lockId,lock_tag lockTag,lock_mac lockMac, a.`status` ,door_id doorId,property_name propertyName," +
+            " num_name numName,building_name buildingName,unit_name unitName,room_no roomNo,door_name doorName, property_id propertyId,b.lId lock_id" +
             " FROM " +
             " tj_lockbaseinfo a " +
             " LEFT JOIN ( " +
@@ -84,7 +92,8 @@ public interface LockBaseInfoDao extends BaseDao<LockBaseInfo> {
             " room_no, " +
             " door_name, " +
             " door_type, " +
-            "  `status`  " +
+            "  `status`,  " +
+            "   l.id lId  " +
             " FROM " +
             "  tj_lock l " +
             "  LEFT JOIN tj_door d ON l.door_id = d.id   " +
@@ -93,10 +102,21 @@ public interface LockBaseInfoDao extends BaseDao<LockBaseInfo> {
             "ORDER  BY building_name DESC ,unit_name DESC ,room_no DESC  "})
     List<LinkedHashMap<String, Object>> selectByPropertyId(Integer propertyId);
     @Select({"<script>" +
-            " SELECT * " +
-            "FROM tj_lockbaseinfo WHERE id = #{equipmentId} "+
+            " SELECT "+
+            " a.id id, a.lock_id lockId,a.lock_tag lockTag,a.lock_mac lockMac ,a.hardware_version hardwareVersion,"+
+            " a.software_version softwareVersion,a.lock_type lockType,a.init_status initStatus,a.max_volume maxVolume,"+
+            " a.max_user maxUser,a.bleprotocol_ver bleprotocolVer,a.rfmodule_type rfmodule_type,a.rfmodule_mac rfmoduleMac, "+
+            " a.aes_key aesKey,a.admin_auth_code adminAuthCode,a.general_auth_code generalAuthCode,a.temp_auth_code tempAuthCode, "+
+            " a.create_time createTime,a.update_time updateTime,a.add_people addPeople,a.vendor,a.status,a.remark, "+
+            " door_id doorId, "+
+            " b.lId lId "+
+            " FROM "+
+            " tj_lockbaseinfo a "+
+            " LEFT JOIN ( SELECT door_id, lock_facility_id, l.id lId FROM tj_lock l LEFT JOIN tj_door d ON l.door_id = d.id ) b ON a.id = b.lock_facility_id "+
+            " WHERE "+
+            " a.id = #{equipmentId} "+
             "</script>"})
-    LockBaseInfo selectById(Integer equipmentId);
+    Map selectById(Integer equipmentId);
     @Update({"UPDATE tj_lockbaseinfo SET `status`= #{status} WHERE id = #{bluetoothLockId}"})
     void updateStatus(Integer bluetoothLockId,Integer status);
     @Select({"SELECT" +

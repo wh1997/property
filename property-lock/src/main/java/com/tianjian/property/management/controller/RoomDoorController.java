@@ -136,6 +136,7 @@ public class RoomDoorController {
     public LockResult roomParticulars(@RequestBody Map map){
         try {
             Integer doorid = (Integer) map.get("doorId");
+            System.out.println(doorid);
             Map<String,String>   resultmap=roomDoorService.selectdoorparticulars(doorid);
             System.out.println(resultmap);
             if(resultmap!=null){

@@ -2,6 +2,7 @@ package com.tianjian.property.management.service.impl;
 
 import com.tianjian.property.bean.Gateway;
 import com.tianjian.property.bean.Lock;
+import com.tianjian.property.dao.DoorDao;
 import com.tianjian.property.dao.GatewayDao;
 import com.tianjian.property.dao.LockBaseInfoDao;
 import com.tianjian.property.dao.LockDao;
@@ -58,6 +59,8 @@ public class GatewayServiceImpl extends HttpService implements GatewayService  {
     private  String getGatewayInfo;
     @Autowired
     private LockDao lockDao;
+    @Autowired
+    private DoorDao doorDao;
     @Autowired
     private GatewayDao gatewayDao;
     @Autowired
@@ -158,7 +161,7 @@ public class GatewayServiceImpl extends HttpService implements GatewayService  {
         String gatewayIp = (String) gatewayInfoMap.get("gatewayIp");
         //更新时间
         String updateTime = (String) gatewayInfoMap.get("updateTime");*/
-        Gateway gateway = new Gateway(null, gatewayId, gatewaySeq, gatewayName, gatewayMac, gatewayType, hardwareVersion, softwareVersion, null, null, state, project, "慧享佳", null);
+        Gateway gateway = new Gateway(null, gatewayId, gatewaySeq, gatewayName, gatewayMac, gatewayType, hardwareVersion, softwareVersion, project, "慧享佳",null,null, state,null);
         gatewayDao.inster(gateway);
         return bindinggateway;
     }
@@ -166,6 +169,8 @@ public class GatewayServiceImpl extends HttpService implements GatewayService  {
     @Override
     @Transactional
     public Map LockBindingGateway(String lockId, String gatewayId, Integer doorID, Integer gateway, Integer lock) {
+        int status= doorDao.selectSutats(doorID);
+        if (status==3){
         HashMap<String, Object> datamap = new HashMap<>();
         //	是	string 门锁id
         datamap.put("lockId",lockId);
@@ -176,10 +181,19 @@ public class GatewayServiceImpl extends HttpService implements GatewayService  {
         Integer resultCode = (Integer) bindinggateway.get("resultCode");
         if(resultCode==0){
             Lock lock1 = new Lock(null, doorID, 0, lock, gateway, 0, null, null, null);
+            //添加锁信息
             lockDao.inster(lock1);
+            //修改门的状态
+            doorDao.updateDoorStatus(doorID);
             return bindinggateway;
         }
         return bindinggateway;
+        }else {
+            HashMap<String, Object> hashMap = new HashMap<>();
+            hashMap.put("resultCode",10);
+            hashMap.put("reason","重复绑定");
+            return hashMap;
+        }
     }
 
     @Override

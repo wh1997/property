@@ -30,7 +30,7 @@ public class RoomDoorServiceImpl implements RoomDoorService {
     private GatewayDao gatewayDao;
     //根据小区搜索房间(房间门列表)
     @Override
-    public PageResult<DoorVo> selsctAll( Door door, Integer pageNum, Integer pageSize) {
+    public PageResult<DoorVo> selsctAll(Door door, Integer pageNum, Integer pageSize) {
         //List<(几栋)Map<String,(几单元)Map<String,()房间信息list<door>>>>
         //查询小区下房间的具体信息
         PageHelper.startPage(pageNum,pageSize);
@@ -210,4 +210,5 @@ public class RoomDoorServiceImpl implements RoomDoorService {
         map.put("error","成功");
         return  map;
     }
+
 }

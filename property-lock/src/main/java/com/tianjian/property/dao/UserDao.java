@@ -2,6 +2,7 @@ package com.tianjian.property.dao;
 
 import com.tianjian.property.bean.User;
 import com.tianjian.property.bean.vo.DoorVo;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
@@ -18,4 +19,22 @@ public interface UserDao extends BaseDao<User> {
             "LEFT JOIN tj_role r ON t.role_id=r.id  WHERE u.user_id= #{appUID}" +
             "</script>"})
     List<Map<String,Object>> selectUserByRole(Integer  appUID);
+    @Insert({"<script>" +
+            " INSERT INTO tj_user" +
+            "<trim prefix=\"(\" suffix=\")\" suffixOverrides=\",\">"+
+            " <if test='userId != null'>user_id ,</if> " +
+            " <if test='role != null'>role ,</if> " +
+            " <if test='addTime != null'>add_time ,</if> " +
+            " <if test='updateTime != null'>update_time ,</if> " +
+            " <if test='remark != null'>remark </if> " +
+            "</trim>"+
+            "<trim prefix=\"values (\" suffix=\")\" suffixOverrides=\",\">"+
+            " <if test='userId  != null'> #{userId}, </if> " +
+            " <if test='role  != null'> #{role}, </if>" +
+            " <if test='addTime   != null'>#{addTime}, </if> " +
+            " <if test='updateTime  != null'>#{updateTime} ,</if> " +
+            " <if test='remark != null'>#{remark} </if> " +
+            "</trim>"+
+            "</script>"})
+    int insert(User role);
 }

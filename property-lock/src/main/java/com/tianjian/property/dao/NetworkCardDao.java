@@ -1,7 +1,6 @@
 package com.tianjian.property.dao;
 
 import com.tianjian.property.bean.NetworkCard;
-import com.tianjian.property.dao.BaseDao;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;

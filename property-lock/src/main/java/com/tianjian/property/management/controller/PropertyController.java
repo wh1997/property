@@ -24,7 +24,7 @@ public class PropertyController {
     @PostMapping("/select/all")
     
     /** 
-    * @Description: 获取所以园区信息
+    * @Description: 获取所有园区信息
     * @Param: [map] 
     * @return: com.tianjian.Property.utils.LockResult
     * @Date: 2021/7/5 

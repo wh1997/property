@@ -2,11 +2,7 @@ package com.tianjian.property.dao;
 
 import com.tianjian.property.bean.Door;
 import com.tianjian.property.bean.vo.DoorVo;
-import com.tianjian.property.dao.BaseDao;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -32,8 +28,8 @@ public interface DoorDao extends BaseDao<Door> {
             "<if test='door.doorName != null'> AND door_name like CONCAT('%',#{door.doorName},'%')</if>" +
             "<if test='door.doorType != null'> AND door_type =  #{door.doorType}</if>" +
             "<if test='door.status != null'> AND status = #{door.status}</if>" +
-            "<if test='door.addTime != null'> AND addtime = #{door.addTime}</if>" +
-            "<if test='door.updateTime != null'> AND updatetime = #{door.updateTime}</if>" +
+            "<if test='door.addTime != null'> AND add_time = #{door.addTime}</if>" +
+            "<if test='door.updateTime != null'> AND update_time = #{door.updateTime}</if>" +
             "<if test='door.createPerson != null'> AND create_person = #{door.createPerson}</if>" +
             "<if test='door.remark != null'> AND remark = #{door.remark}</if>" +
             "</if>" +
@@ -43,18 +39,18 @@ public interface DoorDao extends BaseDao<Door> {
     @Select({"<script>" +
             " SELECT id ,num_id,num_name,building_id,building_name,floor_no ,room_no,door_name,status ,unit_no ,unit_name " +
             "FROM tj_door WHERE 1=1 " +
-            "<if test='propertyid !=null'>AND property_id = #{propertyid} </if> " +
+            "<if test='propertyId !=null'>AND property_id = #{propertyId} </if> " +
             "<if test='roomno !=null'>AND room_no = #{roomno} </if> " +
             "</script>"})
-    List<DoorVo> RoomnoAndPropertyname(Integer propertyid,String roomno);
+    List<DoorVo> RoomnoAndPropertyname(Integer propertyId,String roomno);
     @Select({"<script>" +
             " SELECT id ,num_id,num_name,building_id,building_name,floor_no ,room_no,door_name,status ,unit_no ,unit_name " +
             "FROM tj_door WHERE 1=1" +
-            "<if test='propertyid !=null'> AND property_id = #{propertyid} </if>" +
-            "<if test='buildingid !=null'> AND building_id = #{buildingid} </if>" +
-            "<if test='unitname !=null'>AND unit_name = #{unitname} </if>" +
+            "<if test='propertyId !=null'> AND property_id = #{propertyId} </if>" +
+            "<if test='buildingId !=null'> AND building_id = #{buildingId} </if>" +
+            "<if test='unitName !=null'>AND unit_name = #{unitName} </if>" +
             "</script>"})
-    List<DoorVo> screenRoomDoor(Integer propertyid, Integer buildingid, String unitname);
+    List<DoorVo> screenRoomDoor(Integer propertyId, Integer buildingId, String unitName);
     //添加公共门
    @Insert({"<script>" +
            " INSERT INTO tj_door" +
@@ -71,7 +67,7 @@ public interface DoorDao extends BaseDao<Door> {
            " <if test='roomNo != null'> room_no ,</if> " +
            " <if test='doorType != null'>door_type ,</if> " +
            " <if test='doorName != null'>door_name ,</if> " +
-           " <if test='addTime != null'>addtime ,</if> " +
+           " <if test='addTime != null'>add_time ,</if> " +
            " <if test='status != null'>status ,</if> " +
            " <if test='createPerson != null'>create_person ,</if> " +
            " <if test='remark != null'>remark </if> " +
@@ -111,30 +107,30 @@ public interface DoorDao extends BaseDao<Door> {
     @Select({"<script>" +
             " SELECT * " +
             "FROM tj_door WHERE 1=1" +
-            "<if test='propertyid !=null'>AND property_id = #{propertyid} </if>" +
-            "<if test='doortype !=null'>AND door_type = #{doortype} </if>" +
+            "<if test='propertyId !=null'>AND property_id = #{propertyId} </if>" +
+            "<if test='doorType !=null'>AND door_type = #{doorType} </if>" +
             "</script>"})
-    List<Door> selectCommonDoor( Integer propertyid, Integer doortype);
+    List<Door> selectCommonDoor(Integer propertyId, Integer doorType);
     //根据楼栋分组查出该楼栋下有哪些楼栋
     @Select({"<script>" +
             " SELECT building_name " +
             "FROM tj_door WHERE 1=1" +
-            "<if test='propertyid !=null'> AND property_id = #{propertyid} </if>" +
-            "<if test='doortype !=null'>AND door_type = #{doortype} </if>" +
-            "<if test='roomno !=null'>AND room_no = #{roomno} </if>" +
+            "<if test='propertyId !=null'> AND property_id = #{propertyId} </if>" +
+            "<if test='doorType !=null'>AND door_type = #{doorType} </if>" +
+            "<if test='roomNo !=null'>AND room_no = #{roomNo} </if>" +
             " GROUP   BY building_name"+
             "</script>"})
-    List<String> selectbuildingid( Integer propertyid, Integer doortype,String roomno);
+    List<String> selectbuildingid( Integer propertyId, Integer doorType,String roomNo);
     //根据楼栋分组查出该楼栋下有哪些单元
     @Select({"<script>" +
             " SELECT unit_name " +
             "FROM tj_door WHERE 1=1 " +
-            "<if test='propertyid !=null'> AND property_id = #{propertyid} </if>" +
-            "<if test='buildingname !=null'>AND building_name = #{buildingname} </if>" +
-            "<if test='roomno !=null'>AND room_no = #{roomno} </if>" +
+            "<if test='propertyId !=null'> AND property_id = #{propertyId} </if>" +
+            "<if test='buildingName !=null'>AND building_name = #{buildingName} </if>" +
+            "<if test='roomNo !=null'>AND room_no = #{roomNo} </if>" +
             "AND 1 = 1 GROUP   BY unit_name ORDER BY unit_name"+
             "</script>"})
-    List<String> selectunitname(Integer propertyid,String buildingname,String roomno);
+    List<String> selectunitname(Integer propertyid,String buildingName,String roomNo);
     @Select({"<script>" +
             " SELECT * " +
             "FROM tj_door WHERE " +
@@ -154,21 +150,46 @@ public interface DoorDao extends BaseDao<Door> {
             "unit_name LIKE #{fuzzy} OR " +
             "room_no LIKE #{fuzzy} OR " +
             "door_name LIKE #{fuzzy}  " +
-            "AND door_type = 3 AND property_id = #{propertyid}  ORDER BY room_no desc,unit_name desc,building_name desc ,floor_no desc"+
+            "AND door_type = 3 AND property_id = #{propertyId}  ORDER BY room_no desc,unit_name desc,building_name desc ,floor_no desc"+
             "</script>"})
-    List<Door> fuzzySearch(Integer  propertyid,String fuzzy);
+    List<Door> fuzzySearch(Integer  propertyId,String fuzzy);
    @Insert({"<script>" +
            " INSERT INTO tj_door" +
            "(property_id ,property_name,num_id,num_name,building_id,building_name,unit_no,unit_name,floor_no,room_no,door_name," +
-           "door_type,status,addtime,updatetime,create_person,remark) values "+
+           "door_type,status,create_person) values "+
            " <foreach collection=\"list\" item=\"door\" index=\"index\"  separator=\",\"> " +
-           "(#{door.propertyId},#{door.propertyName},#{door.numId},#{door.numName},#{door.buildingId}" +
-           ",#{door.buildingName},#{door.unitNo},#{door.unitName},#{door.floorNo},#{door.roomNo}" +
-           ",#{door.doorName},#{door.doorType},#{door.status},#{door.addTime},#{door.updateTime}" +
-           ",#{door.createPerson},#{door.remark})" +
+           "(" +
+           "#{door.propertyId}," +
+           "#{door.propertyName}," +
+           "#{door.numId}," +
+           "#{door.numName}," +
+           "#{door.buildingId}," +
+           "#{door.buildingName}," +
+           "#{door.unitNo}," +
+           "#{door.unitName}," +
+           "#{door.floorNo}," +
+           "#{door.roomNo}," +
+           "#{door.doorName}," +
+           "#{door.doorType}," +
+           "#{door.status}," +
+           "#{door.createPerson}" +
+           ")" +
            "</foreach>"+
+         /*  "ON DUPLICATE KEY UPDATE"+
+           " property_id = VALUES(property_id),property_name = VALUES(property_name),num_id = VALUES(num_id),num_name = VALUES(num_name),"+
+           "building_id = VALUES(building_id),building_name = VALUES(building_name),unit_no = VALUES(unit_no),"+
+           "unit_name = VALUES(unit_name),floor_no = VALUES(floor_no),room_no = VALUES(room_no),"+
+           "door_name = VALUES(door_name),door_type = VALUES(door_type),status = VALUES(status),create_person = VALUES(create_person)"+*/
            "</script>"})
-    void addDoor(List<Door> list);
+    void addDoor(@Param("list") List<Door> list);
     @Select({"SELECT * FROM  tj_door  WHERE id = #{doorID}"})
     Door selectById(Integer doorID);
+    @Update({"<script>" +
+            "UPDATE tj_door SET status =1  WHERE id=#{doorID}"+
+            "</script>"})
+    int updateDoorStatus(Integer doorID);
+    @Update({"<script>" +
+            "SELECT  status FROM tj_door WHERE id=#{doorID}"+
+            "</script>"})
+    int selectSutats(Integer doorID);
 }

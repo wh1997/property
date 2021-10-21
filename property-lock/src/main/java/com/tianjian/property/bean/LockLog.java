@@ -32,8 +32,8 @@ public class LockLog implements Serializable {
     /**
      * 开锁时间
      */
-    @Column(name = "`recordtime`")
-    private Date recordtime;
+    @Column(name = "`record_time`")
+    private Date recordTime;
 
     /**
      * 小区id
@@ -50,8 +50,8 @@ public class LockLog implements Serializable {
     /**
      * 添加时间
      */
-    @Column(name = "`addtime`")
-    private Date addtime;
+    @Column(name = "`add_time`")
+    private Date addTime;
 
     /**
      * 备注
@@ -132,19 +132,19 @@ public class LockLog implements Serializable {
     /**
      * 获取开锁时间
      *
-     * @return recordtime - 开锁时间
+     * @return record_time - 开锁时间
      */
-    public Date getRecordtime() {
-        return recordtime;
+    public Date getRecordTime() {
+        return recordTime;
     }
 
     /**
      * 设置开锁时间
      *
-     * @param recordtime 开锁时间
+     * @param recordTime 开锁时间
      */
-    public void setRecordtime(Date recordtime) {
-        this.recordtime = recordtime;
+    public void setRecordTime(Date recordTime) {
+        this.recordTime = recordTime;
     }
 
     /**
@@ -186,19 +186,19 @@ public class LockLog implements Serializable {
     /**
      * 获取添加时间
      *
-     * @return addtime - 添加时间
+     * @return add_time - 添加时间
      */
-    public Date getAddtime() {
-        return addtime;
+    public Date getAddTime() {
+        return addTime;
     }
 
     /**
      * 设置添加时间
      *
-     * @param addtime 添加时间
+     * @param addTime 添加时间
      */
-    public void setAddtime(Date addtime) {
-        this.addtime = addtime;
+    public void setAddTime(Date addTime) {
+        this.addTime = addTime;
     }
 
     /**
@@ -229,10 +229,10 @@ public class LockLog implements Serializable {
         sb.append(", lockId=").append(lockId);
         sb.append(", lockType=").append(lockType);
         sb.append(", lockMac=").append(lockMac);
-        sb.append(", recordtime=").append(recordtime);
+        sb.append(", recordTime=").append(recordTime);
         sb.append(", propertyId=").append(propertyId);
         sb.append(", userId=").append(userId);
-        sb.append(", addtime=").append(addtime);
+        sb.append(", addTime=").append(addTime);
         sb.append(", remark=").append(remark);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");

@@ -9,6 +9,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -65,6 +66,58 @@ class PropertyLockApplicationTests {
     @Test
     void test3()  {
         Integer integer = gatewayService.selectGateway("Zkg8OGRQ4Yk=");
+    }
+    @Test
+    void test7()  {
+        HashMap<String, Object> map1 = new HashMap<>();
+        map1.put("adminAuthCode","9dd263fc");
+        HashMap<String, Object> map2 = new HashMap<>();
+        map2.put("generalAuthCode","aac4cceb");
+        HashMap<String, Object> map3 = new HashMap<>();
+        map3.put("tempAuthCode","378c3ea9");
+        ArrayList<Map> list = new ArrayList<>();
+        list.add(map1);
+        list.add(map2);
+        list.add(map3);
+        HashMap<String, Object> lockAuthCode = new HashMap<>();
+        lockAuthCode.put("aesKey","hWTCnp9YfX7vK2Md");
+        lockAuthCode.put("authCodeList",list);
+        String aesKey = (String) lockAuthCode.get("aesKey");
+        List<Map> authCodeList = (List<Map>) lockAuthCode.get("authCodeList");
+        String adminAuthCode=null;
+        String generalAuthCode=null;
+        String tempAuthCode=null;
+        List<Map> maps = new ArrayList<>();
+        System.out.println(authCodeList.size());
+        for (int i = 0; i <authCodeList.size() ; i++) {
+            Map map = authCodeList.get(i);
+            if (map.get("adminAuthCode")!=null){
+                HashMap<String, Object> hashMap = new HashMap<>();
+                adminAuthCode = (String) map.get("adminAuthCode");
+                System.out.println(adminAuthCode);
+                hashMap.put("authCode",adminAuthCode);
+                hashMap.put("authCodeType",1);
+                maps.add(hashMap);
+            }
+            if (map.get("generalAuthCode")!=null){
+                HashMap<String, Object> hashMap = new HashMap<>();
+                generalAuthCode = (String) map.get("generalAuthCode");
+                System.out.println(generalAuthCode);
+                hashMap.put("authCode",generalAuthCode);
+                hashMap.put("authCodeType",2);
+                maps.add(hashMap);
+            }
+            if (map.get("tempAuthCode")!=null){
+                HashMap<String, Object> hashMap = new HashMap<>();
+                tempAuthCode = (String) map.get("tempAuthCode");
+                System.out.println(tempAuthCode);
+                hashMap.put("authCode",tempAuthCode);
+                hashMap.put("authCodeType",3);
+                maps.add(hashMap);
+            }
+        }
+        System.out.println(maps);
+        System.out.println(adminAuthCode+"  "+generalAuthCode+"  "+tempAuthCode);
     }
 
 }

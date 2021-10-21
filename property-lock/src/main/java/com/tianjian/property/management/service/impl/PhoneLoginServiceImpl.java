@@ -3,6 +3,7 @@ package com.tianjian.property.management.service.impl;
 import com.google.gson.Gson;
 import com.tianjian.property.bean.User;
 import com.tianjian.property.dao.RoleDao;
+import com.tianjian.property.dao.UserDao;
 import com.tianjian.property.management.service.PhoneLoginService;
 import com.tianjian.property.utils.HttpUtils;
 import com.tianjian.property.utils.LockConstants;
@@ -32,6 +33,8 @@ public class PhoneLoginServiceImpl extends HttpService implements PhoneLoginServ
     private RedisTemplate redisTemplate;
     @Autowired
     private RoleDao roleDao;
+    @Autowired
+    private UserDao userDao;
     //进行微信授权登陆
     @Override
     public HashMap<String, Object> wechatLogin(String encryptedData, String iv, String code) throws Exception {
@@ -43,10 +46,10 @@ public class PhoneLoginServiceImpl extends HttpService implements PhoneLoginServ
         HashMap<String, String> map = new HashMap<>();
         map.put("Identity",phone);
         map.put("Token",token);
-        Gson gson = new Gson();
-        String json = gson.toJson(map);
-        Integer Propertyid=0;
-        //判断用户是否存在 如果是204则表示用户已存在若果是404则表示用户不存在需要注册
+//        Gson gson = new Gson();
+//        String json = gson.toJson(map);
+//        Integer Propertyid=0;
+        //判断用户是否存在 如果是204则表示用户已存在如果是404则表示用户不存在需要注册
         Integer status = HttpUtils.doGetExists(url + "/Security/Users/Exists/*:"+phone);
         if (404==status){
             //进行注册的接口
@@ -54,11 +57,11 @@ public class PhoneLoginServiceImpl extends HttpService implements PhoneLoginServ
             Integer userId = (Integer) fromJson.get("UserId");
             if(null!=userId){
             //往角色表里添加角色
-                User role = new User();
-                role.setUserId(userId);
-                role.setRole(2);
+                User user = new User();
+                user.setUserId(userId);
+                user.setRole(2);
                 //往角色表里面添加数据
-                int i = roleDao.insert(role);
+                int i = userDao.insert(user);
                 if (1!=i){
                     resultMap.put("code",403);
                     resultMap.put("errorMessage","注册失败");
@@ -84,7 +87,7 @@ public class PhoneLoginServiceImpl extends HttpService implements PhoneLoginServ
             newrole.setUserId(userId);
             newrole.setRole(2);
             //往角色表里面添加数据
-            int i = roleDao.insert(newrole);
+            int i = userDao.insert(newrole);
             //如果没有添加角色后返回
             roleMap.put("role",2);
             //roleMap.put("Property_id",0);

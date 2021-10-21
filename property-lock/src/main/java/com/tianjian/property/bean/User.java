@@ -26,14 +26,14 @@ public class User implements Serializable {
     /**
      * 添加时间
      */
-    @Column(name = "`addtime`")
-    private Date addtime;
+    @Column(name = "`add_time`")
+    private Date addTime;
 
     /**
      * 修改时间
      */
-    @Column(name = "`updatetime`")
-    private Date updatetime;
+    @Column(name = "`update_time`")
+    private Date updateTime;
 
     /**
      * 备注
@@ -96,37 +96,37 @@ public class User implements Serializable {
     /**
      * 获取添加时间
      *
-     * @return addtime - 添加时间
+     * @return add_time - 添加时间
      */
-    public Date getAddtime() {
-        return addtime;
+    public Date getAddTime() {
+        return addTime;
     }
 
     /**
      * 设置添加时间
      *
-     * @param addtime 添加时间
+     * @param addTime 添加时间
      */
-    public void setAddtime(Date addtime) {
-        this.addtime = addtime;
+    public void setAddTime(Date addTime) {
+        this.addTime = addTime;
     }
 
     /**
      * 获取修改时间
      *
-     * @return updatetime - 修改时间
+     * @return update_time - 修改时间
      */
-    public Date getUpdatetime() {
-        return updatetime;
+    public Date getUpdateTime() {
+        return updateTime;
     }
 
     /**
      * 设置修改时间
      *
-     * @param updatetime 修改时间
+     * @param updateTime 修改时间
      */
-    public void setUpdatetime(Date updatetime) {
-        this.updatetime = updatetime;
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
     }
 
     /**
@@ -156,8 +156,8 @@ public class User implements Serializable {
         sb.append(", id=").append(id);
         sb.append(", userId=").append(userId);
         sb.append(", role=").append(role);
-        sb.append(", addtime=").append(addtime);
-        sb.append(", updatetime=").append(updatetime);
+        sb.append(", addTime=").append(addTime);
+        sb.append(", updateTime=").append(updateTime);
         sb.append(", remark=").append(remark);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");

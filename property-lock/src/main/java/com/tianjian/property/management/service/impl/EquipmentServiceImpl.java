@@ -15,10 +15,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class EquipmentServiceImpl implements EquipmentService {
@@ -37,11 +34,47 @@ private String  addBluetooth;
     @Override
     @Transactional
     public Map addBluetooth(Map lockBaseInfo, Map lockAuthCode, String hardwareVersion, String softwareVersion, Integer doorid, String addpeople) throws Exception {
+        String aesKey = (String) lockAuthCode.get("aesKey");
+        List<Map> authCodeList = (List<Map>) lockAuthCode.get("authCodeList");
+        String adminAuthCode=null;
+        String generalAuthCode=null;
+        String tempAuthCode=null;
+        List<Map> maps = new ArrayList<>();
+        for (int i = 0; i <authCodeList.size() ; i++) {
+            Map map = authCodeList.get(i);
+            if (map.get("adminAuthCode")!=null){
+                HashMap<String, Object> hashMap = new HashMap<>();
+                adminAuthCode = (String) map.get("adminAuthCode");
+                System.out.println(adminAuthCode);
+                hashMap.put("authCode",adminAuthCode);
+                hashMap.put("authCodeType",1);
+                maps.add(hashMap);
+            }
+            if (map.get("generalAuthCode")!=null){
+                HashMap<String, Object> hashMap = new HashMap<>();
+                generalAuthCode = (String) map.get("generalAuthCode");
+                hashMap.put("authCode",generalAuthCode);
+                hashMap.put("authCodeType",2);
+                maps.add(hashMap);
+            }
+            if (map.get("tempAuthCode")!=null){
+                HashMap<String, Object> hashMap = new HashMap<>();
+                tempAuthCode = (String) map.get("tempAuthCode");
+                hashMap.put("authCode",tempAuthCode);
+                hashMap.put("authCodeType",3);
+                maps.add(hashMap);
+            }
+        }
+        System.out.println(adminAuthCode+"  "+generalAuthCode+"  "+tempAuthCode);
+        HashMap<String, Object> lockAuth = new HashMap<>();
+        lockAuth.put("aesKey",aesKey);
+        lockAuth.put("authCodeList",maps);
+        System.out.println(lockAuth);
         HashMap<String, Object> datamap = new HashMap<>();
         //是	LockBaseInfoVo 门锁基础信息
         datamap.put("lockInfoBase",lockBaseInfo);
         //是	LockAuthCode 门锁授权码
-        datamap.put("lockAuthCode",lockAuthCode);
+        datamap.put("lockAuthCode",lockAuth);
         //是	string 蓝牙模块的硬件版本号，可以通过小程序插件、APP的SDK添加门锁时获取到
         datamap.put("hardwareVersion",hardwareVersion);
         //是	string 蓝牙模块的软件版本号 ,可以通过小程序插件、APP的SDK添加门锁时获取到
@@ -57,7 +90,7 @@ private String  addBluetooth;
             //请求成功了往门锁基本信息表里添加门锁基本信息
             LockBaseInfo LockBaseInfo = new LockBaseInfo(null,lockId, lockInfoBase.getLockTag(), lockInfoBase.getLockMac(), hardwareVersion, softwareVersion, lockInfoBase.getLockType(),
                     lockInfoBase.getInitStatus(), lockInfoBase.getMaxVolume(), lockInfoBase.getMaxUser(), lockInfoBase.getBleProtocolVer(), lockInfoBase.getRfModuleType(),
-                    lockInfoBase.getRfModuleMac(),  null, null,  addpeople, "慧享佳", 1, null);
+                    lockInfoBase.getRfModuleMac(), aesKey,adminAuthCode,generalAuthCode, tempAuthCode,null, null,  addpeople, "慧享佳", 1, null);
             lockBaseInfoDao.inster(LockBaseInfo);
             //往锁表里添加基本信息
             Lock lock = new Lock(null, doorid, 0, LockBaseInfo.getId(), null, 0, null, null, null);
@@ -98,13 +131,15 @@ private String  addBluetooth;
     public Object selectEquipment(Integer equipmentType, Integer equipmentId) {
         //1蓝牙锁设备基本信息  2  网关基本信息   3  网卡基本信息
         if (equipmentType==1){
-            LockBaseInfo list= lockBaseInfoDao.selectById(equipmentId);
-            return list;
+            Map map= lockBaseInfoDao.selectById(equipmentId);
+            return map;
         }else if (equipmentType==2){
             //查询网关
             Gateway list=  gatewayDao.selectById(equipmentId);
+            //查询网关在线状态
             Integer status  = gatewayService.selectGateway(list.getGatewayId());
             list.setStatus(status);
+            //修改网关的状态
             gatewayDao.updateByPrimaryKeySelective(list);
             return list;
         }else{
