@@ -35,7 +35,6 @@ public class EquipmentController {
         try {
             Map lockInfoBaseMap =  (Map) map.get("lockInfoBase");
             Map lockAuthCodeMap = (Map) map.get("lockAuthCode");
-            System.out.println(lockAuthCodeMap);
             String hardwareVersion = (String) map.get("hardwareVersion");
             String softwareVersion = (String) map.get("softwareVersion");
             Integer doorid = (Integer) map.get("doorId");

@@ -2,6 +2,7 @@ package com.tianjian.property.management.controller;
 
 import com.tianjian.property.bean.Door;
 import com.tianjian.property.management.service.CommonDoorService;
+import com.tianjian.property.utils.BeanChangeUtils;
 import com.tianjian.property.utils.LockResult;
 import com.tianjian.property.utils.TokenUtil;
 import com.tianjian.property.utils.error.ErrorEnum;
@@ -29,9 +30,11 @@ public class CommonDoorController {
     * @Date: 2021/5/27
     */
     @PostMapping("/add")
-    public LockResult addCommonDoor(@RequestBody Door door , @RequestHeader String token){
+    public LockResult addCommonDoor(@RequestBody Map doorMap , @RequestHeader String token){
         try {
             Integer appUID = TokenUtil.getAppUID(token);
+            Door door = BeanChangeUtils.mapToBean(doorMap, Door.class);
+            System.out.println(doorMap);
             door.setCreatePerson(appUID.toString());
             int i= commonDoorService.addCommonDoor(door);
             if (i==200) {

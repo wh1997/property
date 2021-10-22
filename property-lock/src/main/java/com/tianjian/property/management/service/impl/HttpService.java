@@ -14,8 +14,8 @@ import java.util.Map;
 @Slf4j
 public class HttpService {
     public Object postResult(String url,Map map){
-        log.info(url+"请求的参数为："+map.toString());
         String json = JSON.toJSONString(map);
+        log.info(url+"请求的参数为："+json);
         Map result = HttpClientUtil.doPostJson(url, json);
         log.info(url+"请求返回值为："+result.toString());
         return result.get("result");
