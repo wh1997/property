@@ -6,6 +6,8 @@ import com.tianjian.property.dao.LockBaseInfoDao;
 import com.tianjian.property.dao.LockDao;
 import com.tianjian.property.management.service.GatewayService;
 import com.tianjian.property.management.service.LockBaseInfoService;
+import com.tianjian.property.utils.LockResult;
+import com.tianjian.property.utils.error.ErrorEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -33,11 +35,18 @@ public class LockBaseInfoServiceImpl implements LockBaseInfoService {
     private  String theRemoteUnlock;
     @Override
     @Transactional
-    public void updateStatus(String lockId,Integer lock,Integer id, Integer status) {
+    public LockResult updateStatus(String lockId, Integer lock, Integer id, Integer status) {
         //先删除蓝牙门锁绑定的网关
-        gatewayService.LockUnBindingGateway(lockId,lock,id);
-        //修改蓝牙门锁的转态为废弃(删除)
-        lockBaseInfoDao.updateStatus(id,status);
+        Map map = gatewayService.LockUnBindingGateway(lockId, lock, id);
+        Integer resultCode = (Integer) map.get("resultCode");
+        if(resultCode==0){
+            //修改蓝牙门锁的转态为废弃(删除)
+            int i = lockBaseInfoDao.updateStatus(id, status);
+            if (i>=0){
+               return new LockResult(true, ErrorEnum.SUCCESS.getErrorMsg(),ErrorEnum.SUCCESS.getCode(),"");
+            }
+        }
+        return new LockResult(false, ErrorEnum.SYSTEM_ERROR.getErrorMsg(),ErrorEnum.SYSTEM_ERROR.getCode(),"");
     }
 
     @Override

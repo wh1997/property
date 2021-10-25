@@ -1,5 +1,7 @@
 package com.tianjian.property.management.service;
 
+import com.tianjian.property.utils.LockResult;
+
 import java.util.Map;
 
 /**
@@ -9,7 +11,7 @@ import java.util.Map;
  */
 public interface LockBaseInfoService  {
     //修改设备状态
-    void updateStatus(String lockId,Integer lock,Integer id, Integer status);
+    LockResult updateStatus(String lockId, Integer lock, Integer id, Integer status);
     //管理员开锁
     Map openLock(String lockId, Integer lockUserId, Integer doorId);
 }

@@ -143,7 +143,7 @@ public interface LockBaseInfoDao extends BaseDao<LockBaseInfo> {
             "</script>"})
     Map selectById(Integer equipmentId);
     @Update({"UPDATE tj_lockbaseinfo SET `status`= #{status} WHERE id = #{bluetoothLockId}"})
-    void updateStatus(Integer bluetoothLockId,Integer status);
+    int updateStatus(Integer bluetoothLockId,Integer status);
     @Select({"SELECT" +
             " id,lock_id,lock_tag,lock_mac, a.`status` ,door_id,property_name,num_name,building_name,unit_name,room_no,door_name , property_id " +
             "FROM " +

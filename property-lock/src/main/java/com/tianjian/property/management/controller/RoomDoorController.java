@@ -26,7 +26,6 @@ import java.util.Map;
 public class RoomDoorController {
     @Autowired
     private RoomDoorService roomDoorService;
-
     /**
     * @Description:根据小区搜索房间(房间门列表)
     * @Param: [cityid 城市id, areaid  区域id, propertyid  小区id]
@@ -136,9 +135,7 @@ public class RoomDoorController {
     public LockResult roomParticulars(@RequestBody Map map){
         try {
             Integer doorid = (Integer) map.get("doorId");
-            System.out.println(doorid);
             Map<String,String>   resultmap=roomDoorService.selectdoorparticulars(doorid);
-            System.out.println(resultmap);
             if(resultmap!=null){
                 return new LockResult(true,"获取成功",ErrorEnum.SUCCESS.getCode(),resultmap);
             }else {

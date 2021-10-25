@@ -39,8 +39,7 @@ public class LockBaseInfoController {
             Integer lock= (Integer) map.get("lock");
             //门锁id(厂家生成的id)
             String lockId= (String) map.get("lockId");
-            lockBaseInfoService.updateStatus(lockId, lock,id, status);
-            return   new LockResult(true,ErrorEnum.SUCCESS.getErrorMsg(),ErrorEnum.SUCCESS.getCode(),null);
+            return lockBaseInfoService.updateStatus(lockId, lock, id, status);
         }catch (Exception e){
             e.printStackTrace();
             return new LockResult(false, ErrorEnum.SYSTEM_ERROR.getErrorMsg(),ErrorEnum.SYSTEM_ERROR.getCode(),null);
