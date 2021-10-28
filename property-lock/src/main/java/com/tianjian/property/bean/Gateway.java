@@ -69,13 +69,13 @@ public class Gateway implements Serializable {
      * 创建时间
      */
     @Column(name = "`create_time`")
-    private Date createTime;
+    private String createTime;
 
     /**
      * 废弃时间
      */
     @Column(name = "`discard_time`")
-    private Date discardTime;
+    private String discardTime;
 
     /**
      * 网关状态 3在线 4离线  5删除
@@ -91,7 +91,7 @@ public class Gateway implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    public Gateway(Integer id, String gatewayId, String deviceseq, String gatewayName, String gatewayMac, Integer gatewayType, String hardwareVersion, String softwareVersion, Integer project, String vendor, Date createTime, Date discardTime, Integer status, String remark) {
+    public Gateway(Integer id, String gatewayId, String deviceseq, String gatewayName, String gatewayMac, Integer gatewayType, String hardwareVersion, String softwareVersion, Integer project, String vendor, String createTime, String discardTime, Integer status, String remark) {
         this.id = id;
         this.gatewayId = gatewayId;
         this.deviceseq = deviceseq;
@@ -289,7 +289,7 @@ public class Gateway implements Serializable {
      *
      * @return create_time - 创建时间
      */
-    public Date getCreateTime() {
+    public String getCreateTime() {
         return createTime;
     }
 
@@ -298,7 +298,7 @@ public class Gateway implements Serializable {
      *
      * @param createTime 创建时间
      */
-    public void setCreateTime(Date createTime) {
+    public void setCreateTime(String createTime) {
         this.createTime = createTime;
     }
 
@@ -307,7 +307,7 @@ public class Gateway implements Serializable {
      *
      * @return discard_time - 废弃时间
      */
-    public Date getDiscardTime() {
+    public String getDiscardTime() {
         return discardTime;
     }
 
@@ -316,7 +316,7 @@ public class Gateway implements Serializable {
      *
      * @param discardTime 废弃时间
      */
-    public void setDiscardTime(Date discardTime) {
+    public void setDiscardTime(String discardTime) {
         this.discardTime = discardTime;
     }
 

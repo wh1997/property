@@ -21,7 +21,7 @@ public class DoorType implements Serializable {
      * 添加时间
      */
     @Column(name = "`add_time`")
-    private Date addTime;
+    private String addTime;
 
     /**
      * 注释
@@ -68,7 +68,7 @@ public class DoorType implements Serializable {
      *
      * @return add_time - 添加时间
      */
-    public Date getAddTime() {
+    public String getAddTime() {
         return addTime;
     }
 
@@ -77,7 +77,7 @@ public class DoorType implements Serializable {
      *
      * @param addTime 添加时间
      */
-    public void setAddTime(Date addTime) {
+    public void setAddTime(String addTime) {
         this.addTime = addTime;
     }
 

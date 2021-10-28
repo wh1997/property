@@ -17,12 +17,14 @@ public interface GatewayDao extends BaseDao<Gateway> {
             " SELECT gateway_name, gateway_mac,deviceseq " +
             "FROM tj_gateway WHERE id = #{id} AND status != 5"+
             "</script>"})
-    Map<String,String> findById(Integer id);
+    Map<String,Object> findById(Integer id);
     @Select({"<script>" +
             " SELECT * " +
-            "FROM tj_gateway WHERE project = #{propertyId} AND status != 5"+
+            "FROM tj_gateway WHERE " +
+            "<if test='keyWord !=null'> deviceseq LIKE #{keyWord} OR gateway_name LIKE #{keyWord} OR gateway_mac LIKE #{keyWord} OR gateway_id LIKE #{keyWord} AND </if>"+
+            "project = #{propertyId} AND status != 5"+
             "</script>"})
-    List<Gateway> findByPropertyId(Integer propertyId);
+    List<Gateway> findByPropertyId(Integer propertyId,String keyWord);
     @Select({"<script>" +
             " SELECT * " +
             "FROM tj_gateway WHERE id = #{equipmentId} AND status != 5"+

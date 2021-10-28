@@ -41,6 +41,31 @@ public class DateUtils {
     }
 
     /**
+     * date转String
+     * @param date
+     * @return
+     * @throws ParseException
+     * @throws BusinessException
+     */
+    public static String dateToString(Date date) throws ParseException, BusinessException {
+        return dateToString(date, DEFAULT_DATE_FORMAT);
+    }
+    /**
+     * date转String
+     * @param date
+     * @param formatType
+     * @return
+     * @throws ParseException
+     * @throws BusinessException
+     */
+    public static String dateToString(Date date, String formatType) throws ParseException, BusinessException {
+        if(null == date){
+            return null;
+        }
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(formatType);
+        return simpleDateFormat.format(date);
+    }
+    /**
      * 检测是否是默认日期格式
      * @param date
      * @return

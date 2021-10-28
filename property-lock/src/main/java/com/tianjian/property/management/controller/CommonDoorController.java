@@ -34,7 +34,6 @@ public class CommonDoorController {
         try {
             Integer appUID = TokenUtil.getAppUID(token);
             Door door = BeanChangeUtils.mapToBean(doorMap, Door.class);
-            System.out.println(doorMap);
             door.setCreatePerson(appUID.toString());
             int i= commonDoorService.addCommonDoor(door);
             if (i==200) {

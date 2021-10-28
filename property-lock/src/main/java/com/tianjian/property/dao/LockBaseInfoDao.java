@@ -69,12 +69,13 @@ public interface LockBaseInfoDao extends BaseDao<LockBaseInfo> {
             "</script>"})
     @Options(useGeneratedKeys = true,keyColumn = "id",keyProperty = "id")
     void inster(LockBaseInfo lockBaseInfo);
-    @Select({"SELECT" +
+    @Select({"<script>"+
+            "SELECT" +
             " id bluetoothLockId,lock_id lockId,lock_tag lockTag,lock_mac lockMac, a.`status` ,door_id doorId,property_name propertyName," +
             " num_name numName,building_name buildingName,unit_name unitName,room_no roomNo,door_name doorName, property_id propertyId,b.lId lock_id" +
             " FROM " +
             " tj_lockbaseinfo a " +
-            " LEFT JOIN ( " +
+            " INNER JOIN ( " +
             " SELECT " +
             " door_id, " +
             " lock_status, " +
@@ -96,11 +97,13 @@ public interface LockBaseInfoDao extends BaseDao<LockBaseInfo> {
             "   l.id lId  " +
             " FROM " +
             "  tj_lock l " +
-            "  LEFT JOIN tj_door d ON l.door_id = d.id   " +
-            " ) b ON a.id = b.lock_facility_id  " +
-            "WHERE a.status != 2  AND property_id = #{propertyId} " +
-            "ORDER  BY building_name DESC ,unit_name DESC ,room_no DESC  "})
-    List<LinkedHashMap<String, Object>> selectByPropertyId(Integer propertyId);
+            "  INNER JOIN tj_door d ON l.door_id = d.id   " +
+            " ) b ON a.id = b.lock_facility_id   WHERE " +
+            "<if test='keyWord !=null'> lock_tag LIKE #{keyWord} OR lock_mac LIKE #{keyWord} OR lock_id LIKE #{keyWord} AND </if>" +
+            "  a.status != 2  AND property_id = #{propertyId} "+
+            " ORDER  BY building_name DESC ,unit_name DESC ,room_no DESC  "+
+            "</script>"})
+    List<LinkedHashMap<String, Object>> selectByPropertyId(Integer propertyId,String keyWord);
     @Select({"<script>" +
             " SELECT "+
             " a.id id, a.lock_id lockId,a.lock_tag lockTag,a.lock_mac lockMac ,a.hardware_version hardwareVersion,"+

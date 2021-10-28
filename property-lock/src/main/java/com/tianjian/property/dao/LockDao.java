@@ -16,7 +16,7 @@ public interface LockDao extends BaseDao<Lock> {
             " SELECT * " +
             "FROM tj_lock WHERE door_id = #{doorid} AND lock_status=0 "+
             "</script>"})
-    List<Lock> selectByDoorid(Integer doorid);
+    Lock selectByDoorid(Integer doorid);
     @Insert({"<script>" +
             " INSERT INTO tj_lock" +
             "<trim prefix=\"(\" suffix=\")\" suffixOverrides=\",\">"+
@@ -45,4 +45,12 @@ public interface LockDao extends BaseDao<Lock> {
     void updateGatewayId(Integer lock);
     @Select({"SELECT * FROM  tj_lock  WHERE Lock_gateway_id = #{id}"})
     List<Lock> selectByGatewayId(Integer id);
+    @Update({"<script>" +
+            "UPDATE tj_lock " +
+            "SET Lock_gateway_id = #{gateway}" +
+            " WHERE door_id= #{doorID} " +
+            " AND lock_facility_id= #{lock} " +
+            " AND lock_status = 0"+
+            "</script>"})
+    int updateByLockToGateway(Integer doorID, Integer lock, Integer gateway);
 }

@@ -1,9 +1,12 @@
 package com.tianjian.property.management.service.impl;
 
+import com.alibaba.fastjson.JSON;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.tianjian.property.bean.Door;
 import com.tianjian.property.bean.Lock;
+import com.tianjian.property.bean.LockBaseInfo;
 import com.tianjian.property.bean.vo.DoorVo;
 import com.tianjian.property.dao.*;
 import com.tianjian.property.management.service.RoomDoorService;
@@ -14,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.ParseException;
 import java.util.*;
 
 @Service
@@ -147,31 +151,37 @@ public class RoomDoorServiceImpl implements RoomDoorService {
     @Override
     
     /** 
-    * @Description: 房间门详情
+    * @Description: 房间门锁详情
     * @Param: [doorid 门id]
     * @return: java.util.Map<java.lang.String,java.lang.String> 
     * @Date: 2021/5/31
     */
-    public Map<String, String> selectdoorparticulars(Integer doorid) {
-        List<Lock> list = lockDao.selectByDoorid(doorid);
-        if (list.size()>0){
-            //获取到门锁设备
-            Lock lock = list.get(0);
+    public Map<String, Object> selectdoorparticulars(Integer doorid)  {
+        Lock lock = lockDao.selectByDoorid(doorid);
+        if (lock!=null){
             //获取门锁设备类型  0网关  1网卡
             Integer facilitytype = lock.getFacilityType();
             //获取到设备id
             Integer lockfacilityid = lock.getLockFacilityId();
-            Map<String, String> map=null;
+            Map<String, Object> map= new HashMap<>();
             if(1==facilitytype){
-                //查询网卡设备表中的网卡设备信息
+                    //查询网卡设备表中的网卡设备信息
                 map = networkCardDao.selectById(lockfacilityid);
             }else{
                 //根据设备id查门锁lock_mac信息
-                String lock_mac = lockBaseInfoDao.findById(lockfacilityid);
+                LockBaseInfo lockBaseInfo = lockBaseInfoDao.selectByPrimaryKey(lockfacilityid);
+                Map lockBaseInfoMap = JSON.parseObject(JSON.toJSONString(lockBaseInfo), Map.class);
                 //获取到网关设备id
                 Integer lockgatewayid = lock.getLockGatewayId();
-                map = gatewayDao.findById(lockgatewayid);
-                map.put("lock_mac",lock_mac);
+                if (lockgatewayid==-1){
+                    map.put("lockGatewayId",-1);
+                }
+                Map<String,Object> gatewayMap = gatewayDao.findById(lockgatewayid);
+                if (gatewayMap!=null){
+                    map.putAll(gatewayMap);
+                }
+                //返回门锁的Mac信息
+                map.putAll(lockBaseInfoMap);
             }
             return map;
         }else {
@@ -191,7 +201,6 @@ public class RoomDoorServiceImpl implements RoomDoorService {
     @Override
     @Transactional
     public Map addDoor(List<Map> door,Integer appUID) throws Exception {
-        System.out.println(door);
         HashMap<String, Object> map = new HashMap<>();
         List<Door> doors = new ArrayList<>();
         for (int i = 0; i< door.size(); i++) {

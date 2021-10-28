@@ -16,12 +16,14 @@ public interface NetworkCardDao extends BaseDao<NetworkCard> {
             " SELECT network_name,deviceflag  " +
             "FROM tj_network_card WHERE id = #{lockfacilityid}"+
             "</script>"})
-    Map<String,String> selectById(Integer lockfacilityid);
+    Map<String,Object> selectById(Integer lockfacilityid);
     @Select({"<script>" +
             " SELECT *  " +
-            "FROM tj_network_card WHERE property_id = #{propertyId}  AND network_status != 1"+
+            "FROM tj_network_card WHERE " +
+            "<if test='keyWord !=null'> network_name LIKE #{keyWord} OR deviceflag LIKE #{keyWord} AND </if>"+
+            "property_id = #{propertyId}  AND network_status != 1"+
             "</script>"})
-    List<NetworkCard> findByPropertyId(Integer propertyId);
+    List<NetworkCard> findByPropertyId(Integer propertyId ,String keyWord);
     @Select({"<script>" +
             " SELECT * " +
             "FROM tj_network_card WHERE id = #{equipmentId}"+

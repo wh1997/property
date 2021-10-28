@@ -1,10 +1,12 @@
 package com.tianjian.property.management.controller;
 
+import com.google.inject.internal.cglib.core.$KeyFactory;
 import com.tianjian.property.bean.LockAuthCode;
 import com.tianjian.property.bean.vo.LockBaseInfoVo;
 import com.tianjian.property.management.service.EquipmentService;
 import com.tianjian.property.utils.BeanChangeUtils;
 import com.tianjian.property.utils.LockResult;
+import com.tianjian.property.utils.PageResult;
 import com.tianjian.property.utils.TokenUtil;
 import com.tianjian.property.utils.error.ErrorEnum;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,14 +41,7 @@ public class EquipmentController {
             String softwareVersion = (String) map.get("softwareVersion");
             Integer doorid = (Integer) map.get("doorId");
             Integer appUID = TokenUtil.getAppUID(token);
-            Map result = equipmentService.addBluetooth(lockInfoBaseMap, lockAuthCodeMap, hardwareVersion, softwareVersion,doorid,appUID.toString());
-            Integer resultCode = (Integer) result.get("resultCode");
-            String reason = (String) result.get("reason");
-            if (resultCode==0){
-                return new LockResult(true, ErrorEnum.SUCCESS.getErrorMsg(), ErrorEnum.SUCCESS.getCode(),result);
-            }else{
-                return new LockResult(false,reason,200,result);
-            }
+            return equipmentService.addBluetooth(lockInfoBaseMap, lockAuthCodeMap, hardwareVersion, softwareVersion,doorid,appUID.toString());
         }catch (Exception e){
             e.printStackTrace();
             return new LockResult(false,ErrorEnum.SYSTEM_ERROR.getErrorMsg(),ErrorEnum.SYSTEM_ERROR.getCode(),null);
@@ -68,11 +63,13 @@ public class EquipmentController {
             Integer propertyId = (Integer) map.get("propertyId");
             Integer pageNum = (Integer) map.get("pageNum");
             Integer pageSize = (Integer) map.get("pageSize");
-            List resultList= equipmentService.selectList( equipmentType, propertyId, pageNum, pageSize);
-            if(resultList==null || resultList.size()==0){
+            //搜索关键字
+            String keyWord = (String) map.get("keyWord");
+            PageResult<?> pageResult = equipmentService.selectList(equipmentType, propertyId, pageNum, pageSize,keyWord);
+            if(pageResult==null){
                 return new LockResult(true,"查询成功没有数据",ErrorEnum.SUCCESS.getCode(),null);
             }
-            return new LockResult(true,ErrorEnum.SUCCESS.getErrorMsg(),ErrorEnum.SUCCESS.getCode(),resultList);
+            return new LockResult(true,ErrorEnum.SUCCESS.getErrorMsg(),ErrorEnum.SUCCESS.getCode(),pageResult);
         }catch (Exception e){
             e.printStackTrace();
             return new LockResult(false,ErrorEnum.SYSTEM_ERROR.getErrorMsg(),ErrorEnum.SYSTEM_ERROR.getCode(),null);
@@ -101,32 +98,32 @@ public class EquipmentController {
             return new LockResult(false,ErrorEnum.SYSTEM_ERROR.getErrorMsg(),ErrorEnum.SYSTEM_ERROR.getCode(),null);
         }
     }
-    /**
-    * @Description: 模糊搜索设备
-    * @Param: [map]
-    * @return: com.tagen.lock.utils.LockResult
-    * @Date: 2021/6/21
-    */
-    @PostMapping("/fuzzy/search")
-    public LockResult fuzzySearch(@RequestBody Map map){
-        try {
-            //获取设备的类型 1蓝牙锁 2网关  3网卡
-            Integer equipmentType = (Integer) map.get("equipmentType");
-            //所在项目id
-            Integer propertyId = (Integer) map.get("propertyId");
-            //搜索关键字
-            String KeyWord = (String) map.get("KeyWord");
-            Integer pageNum = (Integer) map.get("pageNum");
-            Integer pageSize = (Integer) map.get("pageSize");
-            Object result= equipmentService.fuzzySearch( propertyId,equipmentType, KeyWord,pageNum,pageSize);
-            if (result==null){
-                return new LockResult(true,"查询成功没有数据",ErrorEnum.SUCCESS.getCode(),result);
-            }
-            return new LockResult(true,ErrorEnum.SUCCESS.getErrorMsg(),ErrorEnum.SUCCESS.getCode(),result);
-        }catch (Exception e){
-            e.printStackTrace();
-            return new LockResult(false,ErrorEnum.SYSTEM_ERROR.getErrorMsg(),ErrorEnum.SYSTEM_ERROR.getCode(),null);
-        }
-    }
+//    /**
+//    * @Description: 模糊搜索设备    TODO 接口重复不用
+//    * @Param: [map]
+//    * @return: com.tagen.lock.utils.LockResult
+//    * @Date: 2021/6/21
+//    */
+//    @PostMapping("/fuzzy/search")
+//    public LockResult fuzzySearch(@RequestBody Map map){
+//        try {
+//            //获取设备的类型 1蓝牙锁 2网关  3网卡
+//            Integer equipmentType = (Integer) map.get("equipmentType");
+//            //所在项目id
+//            Integer propertyId = (Integer) map.get("propertyId");
+//            //搜索关键字
+//            String KeyWord = (String) map.get("KeyWord");
+//            Integer pageNum = (Integer) map.get("pageNum");
+//            Integer pageSize = (Integer) map.get("pageSize");
+//            Object result= equipmentService.fuzzySearch( propertyId,equipmentType, KeyWord,pageNum,pageSize);
+//            if (result==null){
+//                return new LockResult(true,"查询成功没有数据",ErrorEnum.SUCCESS.getCode(),result);
+//            }
+//            return new LockResult(true,ErrorEnum.SUCCESS.getErrorMsg(),ErrorEnum.SUCCESS.getCode(),result);
+//        }catch (Exception e){
+//            e.printStackTrace();
+//            return new LockResult(false,ErrorEnum.SYSTEM_ERROR.getErrorMsg(),ErrorEnum.SYSTEM_ERROR.getCode(),null);
+//        }
+//    }
 
 }

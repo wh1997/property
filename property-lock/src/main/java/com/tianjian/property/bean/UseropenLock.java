@@ -45,25 +45,25 @@ public class UseropenLock implements Serializable {
      * 有效起始时间
      */
     @Column(name = "`validstart_time`")
-    private Date validstartTime;
+    private String validstartTime;
 
     /**
      * 有效结束时间
      */
     @Column(name = "`validend_time`")
-    private Date validendTime;
+    private String validendTime;
 
     /**
      * 数据添加时间
      */
     @Column(name = "`add_time`")
-    private Date addTime;
+    private String addTime;
 
     /**
      * 数据修改时间
      */
     @Column(name = "`update_time`")
-    private Date updateTime;
+    private String updateTime;
 
     /**
      * 备注
@@ -182,7 +182,7 @@ public class UseropenLock implements Serializable {
      *
      * @return validstart_time - 有效起始时间
      */
-    public Date getValidstartTime() {
+    public String getValidstartTime() {
         return validstartTime;
     }
 
@@ -191,7 +191,7 @@ public class UseropenLock implements Serializable {
      *
      * @param validstartTime 有效起始时间
      */
-    public void setValidstartTime(Date validstartTime) {
+    public void setValidstartTime(String validstartTime) {
         this.validstartTime = validstartTime;
     }
 
@@ -200,7 +200,7 @@ public class UseropenLock implements Serializable {
      *
      * @return validend_time - 有效结束时间
      */
-    public Date getValidendTime() {
+    public String getValidendTime() {
         return validendTime;
     }
 
@@ -209,7 +209,7 @@ public class UseropenLock implements Serializable {
      *
      * @param validendTime 有效结束时间
      */
-    public void setValidendTime(Date validendTime) {
+    public void setValidendTime(String validendTime) {
         this.validendTime = validendTime;
     }
 
@@ -218,7 +218,7 @@ public class UseropenLock implements Serializable {
      *
      * @return add_time - 数据添加时间
      */
-    public Date getAddTime() {
+    public String getAddTime() {
         return addTime;
     }
 
@@ -227,7 +227,7 @@ public class UseropenLock implements Serializable {
      *
      * @param addTime 数据添加时间
      */
-    public void setAddTime(Date addTime) {
+    public void setAddTime(String addTime) {
         this.addTime = addTime;
     }
 
@@ -236,7 +236,7 @@ public class UseropenLock implements Serializable {
      *
      * @return update_time - 数据修改时间
      */
-    public Date getUpdateTime() {
+    public String getUpdateTime() {
         return updateTime;
     }
 
@@ -245,7 +245,7 @@ public class UseropenLock implements Serializable {
      *
      * @param updateTime 数据修改时间
      */
-    public void setUpdateTime(Date updateTime) {
+    public void setUpdateTime(String updateTime) {
         this.updateTime = updateTime;
     }
 

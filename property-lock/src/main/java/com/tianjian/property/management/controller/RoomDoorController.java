@@ -1,5 +1,6 @@
 package com.tianjian.property.management.controller;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.tianjian.property.bean.Door;
 import com.tianjian.property.bean.vo.DoorVo;
 import com.tianjian.property.management.service.RoomDoorService;
@@ -135,7 +136,8 @@ public class RoomDoorController {
     public LockResult roomParticulars(@RequestBody Map map){
         try {
             Integer doorid = (Integer) map.get("doorId");
-            Map<String,String>   resultmap=roomDoorService.selectdoorparticulars(doorid);
+            Map<String,Object>  resultmap=roomDoorService.selectdoorparticulars(doorid);
+            System.out.println(resultmap);
             if(resultmap!=null){
                 return new LockResult(true,"获取成功",ErrorEnum.SUCCESS.getCode(),resultmap);
             }else {

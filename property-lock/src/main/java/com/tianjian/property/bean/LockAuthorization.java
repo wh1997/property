@@ -33,13 +33,13 @@ public class LockAuthorization implements Serializable {
      * 入住时间
      */
     @Column(name = "`enter_time`")
-    private Date enterTime;
+    private String enterTime;
 
     /**
      * 离开时间
      */
     @Column(name = "`leava_time`")
-    private Date leavaTime;
+    private String leavaTime;
 
     /**
      * 授权开门方式
@@ -51,13 +51,13 @@ public class LockAuthorization implements Serializable {
      * 数据添加时间
      */
     @Column(name = "`add_time`")
-    private Date addTime;
+    private String addTime;
 
     /**
      * 数据修改时间
      */
     @Column(name = "`update_time`")
-    private Date updateTime;
+    private String updateTime;
 
     /**
      * 备注
@@ -140,7 +140,7 @@ public class LockAuthorization implements Serializable {
      *
      * @return enter_time - 入住时间
      */
-    public Date getEnterTime() {
+    public String getEnterTime() {
         return enterTime;
     }
 
@@ -149,7 +149,7 @@ public class LockAuthorization implements Serializable {
      *
      * @param enterTime 入住时间
      */
-    public void setEnterTime(Date enterTime) {
+    public void setEnterTime(String enterTime) {
         this.enterTime = enterTime;
     }
 
@@ -158,7 +158,7 @@ public class LockAuthorization implements Serializable {
      *
      * @return leava_time - 离开时间
      */
-    public Date getLeavaTime() {
+    public String getLeavaTime() {
         return leavaTime;
     }
 
@@ -167,7 +167,7 @@ public class LockAuthorization implements Serializable {
      *
      * @param leavaTime 离开时间
      */
-    public void setLeavaTime(Date leavaTime) {
+    public void setLeavaTime(String leavaTime) {
         this.leavaTime = leavaTime;
     }
 
@@ -194,7 +194,7 @@ public class LockAuthorization implements Serializable {
      *
      * @return add_time - 数据添加时间
      */
-    public Date getAddTime() {
+    public String getAddTime() {
         return addTime;
     }
 
@@ -203,7 +203,7 @@ public class LockAuthorization implements Serializable {
      *
      * @param addTime 数据添加时间
      */
-    public void setAddTime(Date addTime) {
+    public void setAddTime(String addTime) {
         this.addTime = addTime;
     }
 
@@ -212,7 +212,7 @@ public class LockAuthorization implements Serializable {
      *
      * @return update_time - 数据修改时间
      */
-    public Date getUpdateTime() {
+    public String getUpdateTime() {
         return updateTime;
     }
 
@@ -221,7 +221,7 @@ public class LockAuthorization implements Serializable {
      *
      * @param updateTime 数据修改时间
      */
-    public void setUpdateTime(Date updateTime) {
+    public void setUpdateTime(String updateTime) {
         this.updateTime = updateTime;
     }
 

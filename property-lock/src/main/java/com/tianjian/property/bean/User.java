@@ -27,13 +27,13 @@ public class User implements Serializable {
      * 添加时间
      */
     @Column(name = "`add_time`")
-    private Date addTime;
+    private String addTime;
 
     /**
      * 修改时间
      */
     @Column(name = "`update_time`")
-    private Date updateTime;
+    private String updateTime;
 
     /**
      * 备注
@@ -98,7 +98,7 @@ public class User implements Serializable {
      *
      * @return add_time - 添加时间
      */
-    public Date getAddTime() {
+    public String getAddTime() {
         return addTime;
     }
 
@@ -107,7 +107,7 @@ public class User implements Serializable {
      *
      * @param addTime 添加时间
      */
-    public void setAddTime(Date addTime) {
+    public void setAddTime(String addTime) {
         this.addTime = addTime;
     }
 
@@ -116,7 +116,7 @@ public class User implements Serializable {
      *
      * @return update_time - 修改时间
      */
-    public Date getUpdateTime() {
+    public String getUpdateTime() {
         return updateTime;
     }
 
@@ -125,7 +125,7 @@ public class User implements Serializable {
      *
      * @param updateTime 修改时间
      */
-    public void setUpdateTime(Date updateTime) {
+    public void setUpdateTime(String updateTime) {
         this.updateTime = updateTime;
     }
 

@@ -117,6 +117,7 @@ public class BeanChangeUtils {
             // 返回新对象
             return newInstance;
         } catch (Exception e){
+            e.printStackTrace();
             logger.error("bean类型转换异常，异常为" + e.getMessage());
             return null;
         }

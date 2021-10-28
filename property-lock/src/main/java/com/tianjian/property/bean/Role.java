@@ -49,10 +49,10 @@ public class Role implements Serializable {
     private Integer updateBy;
 
     @Column(name = "`create_time`")
-    private Date createTime;
+    private String createTime;
 
     @Column(name = "`update_time`")
-    private Date updateTime;
+    private String updateTime;
 
     private static final long serialVersionUID = 1L;
 
@@ -185,28 +185,28 @@ public class Role implements Serializable {
     /**
      * @return create_time
      */
-    public Date getCreateTime() {
+    public String getCreateTime() {
         return createTime;
     }
 
     /**
      * @param createTime
      */
-    public void setCreateTime(Date createTime) {
+    public void setCreateTime(String createTime) {
         this.createTime = createTime;
     }
 
     /**
      * @return update_time
      */
-    public Date getUpdateTime() {
+    public String getUpdateTime() {
         return updateTime;
     }
 
     /**
      * @param updateTime
      */
-    public void setUpdateTime(Date updateTime) {
+    public void setUpdateTime(String updateTime) {
         this.updateTime = updateTime;
     }
 

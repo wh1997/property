@@ -7,8 +7,8 @@ import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-//开启缓存支持
-@EnableCaching
+
+@EnableCaching     //开启Ehcache缓存支持
 @SpringBootApplication
 @ServletComponentScan
 @EnableDiscoveryClient      //eureka客户端

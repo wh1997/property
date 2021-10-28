@@ -33,13 +33,13 @@ public class NetworkCard implements Serializable {
      * 设备使用时间
      */
     @Column(name = "`addtime`")
-    private Date addtime;
+    private String addtime;
 
     /**
      * 修改时间
      */
     @Column(name = "`updatetime`")
-    private Date updatetime;
+    private String updatetime;
 
     /**
      * 设备状态  0表示正常1表示删除
@@ -146,7 +146,7 @@ public class NetworkCard implements Serializable {
      *
      * @return addtime - 设备使用时间
      */
-    public Date getAddtime() {
+    public String getAddtime() {
         return addtime;
     }
 
@@ -155,7 +155,7 @@ public class NetworkCard implements Serializable {
      *
      * @param addtime 设备使用时间
      */
-    public void setAddtime(Date addtime) {
+    public void setAddtime(String addtime) {
         this.addtime = addtime;
     }
 
@@ -164,7 +164,7 @@ public class NetworkCard implements Serializable {
      *
      * @return updatetime - 修改时间
      */
-    public Date getUpdatetime() {
+    public String getUpdatetime() {
         return updatetime;
     }
 
@@ -173,7 +173,7 @@ public class NetworkCard implements Serializable {
      *
      * @param updatetime 修改时间
      */
-    public void setUpdatetime(Date updatetime) {
+    public void setUpdatetime(String updatetime) {
         this.updatetime = updatetime;
     }
 

@@ -33,7 +33,7 @@ public class LockLog implements Serializable {
      * 开锁时间
      */
     @Column(name = "`record_time`")
-    private Date recordTime;
+    private String recordTime;
 
     /**
      * 小区id
@@ -134,7 +134,7 @@ public class LockLog implements Serializable {
      *
      * @return record_time - 开锁时间
      */
-    public Date getRecordTime() {
+    public String getRecordTime() {
         return recordTime;
     }
 
@@ -143,7 +143,7 @@ public class LockLog implements Serializable {
      *
      * @param recordTime 开锁时间
      */
-    public void setRecordTime(Date recordTime) {
+    public void setRecordTime(String recordTime) {
         this.recordTime = recordTime;
     }
 

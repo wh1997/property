@@ -40,13 +40,13 @@ public class Property implements Serializable {
      * 添加时间
      */
     @Column(name = "`add_time`")
-    private Date addTime;
+    private String addTime;
 
     /**
      * 更新时间
      */
     @Column(name = "`update_time`")
-    private Date updateTime;
+    private String updateTime;
 
     /**
      * 0启用1未启用
@@ -157,7 +157,7 @@ public class Property implements Serializable {
      *
      * @return add_time - 添加时间
      */
-    public Date getAddTime() {
+    public String getAddTime() {
         return addTime;
     }
 
@@ -166,7 +166,7 @@ public class Property implements Serializable {
      *
      * @param addTime 添加时间
      */
-    public void setAddTime(Date addTime) {
+    public void setAddTime(String addTime) {
         this.addTime = addTime;
     }
 
@@ -175,7 +175,7 @@ public class Property implements Serializable {
      *
      * @return update_time - 更新时间
      */
-    public Date getUpdateTime() {
+    public String getUpdateTime() {
         return updateTime;
     }
 
@@ -184,7 +184,7 @@ public class Property implements Serializable {
      *
      * @param updateTime 更新时间
      */
-    public void setUpdateTime(Date updateTime) {
+    public void setUpdateTime(String updateTime) {
         this.updateTime = updateTime;
     }
 

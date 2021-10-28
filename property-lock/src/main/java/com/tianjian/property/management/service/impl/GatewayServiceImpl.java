@@ -21,6 +21,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 @Service
 //EH缓存注解
@@ -68,8 +69,12 @@ public class GatewayServiceImpl extends HttpService implements GatewayService  {
     @Autowired
     private RedisTemplate redisTemplate;
     //绑定网关
-    @Cacheable
+    @Cacheable("myCache")
     public  String getApartment(){
+        String token = (String) redisTemplate.opsForValue().get("tokenId");
+        if (token!=null){
+            return token;
+        }
         //存储请求体
         HashMap<String, Object> map = new HashMap<>();
         //存储请求体中的data字段
@@ -83,6 +88,7 @@ public class GatewayServiceImpl extends HttpService implements GatewayService  {
         String tokenId = data.get("tokenId");
         logger.info("获取到的门锁API token:"+tokenId);
         System.out.println("没走缓存");
+        redisTemplate.opsForValue().set("tokenId",tokenId,1, TimeUnit.HOURS);
         return tokenId;
     }
     // 接口公共类
@@ -181,8 +187,10 @@ public class GatewayServiceImpl extends HttpService implements GatewayService  {
         Integer resultCode = (Integer) bindinggateway.get("resultCode");
         if(resultCode==0){
             Lock lock1 = new Lock(null, doorID, 0, lock, gateway, 0, null, null, null);
+            lock1.setDoorId(doorID);
+            lock1.setLockGatewayId(gateway);
             //添加锁信息
-            lockDao.inster(lock1);
+            lockDao.updateByLockToGateway(doorID,lock,gateway);
             //修改门的状态
             doorDao.updateDoorStatus(doorID);
             return bindinggateway;

@@ -1,5 +1,7 @@
 package com.tianjian.property.bean;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.*;
@@ -112,13 +114,13 @@ public class LockBaseInfo implements Serializable {
      * 创建时间
      */
     @Column(name = "`create_time`")
-    private Date createTime;
+    private String createTime;
 
     /**
      * 修改时间
      */
     @Column(name = "`update_time`")
-    private Date updateTime;
+    private String updateTime;
 
     /**
      * 设备添加人userid
@@ -146,7 +148,7 @@ public class LockBaseInfo implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    public LockBaseInfo(Integer id, String lockId, String lockTag, String lockMac, String hardwareVersion, String softwareVersion, Integer lockType, Integer initStatus, Integer maxVolume, Integer maxUser, Integer bleprotocolVer, Integer rfmoduleType, String rfmoduleMac, String aesKey, String adminAuthCode, String generalAuthCode, String tempAuthCode, Date createTime, Date updateTime, String addPeople, String vendor, Integer status, String remark) {
+    public LockBaseInfo(Integer id, String lockId, String lockTag, String lockMac, String hardwareVersion, String softwareVersion, Integer lockType, Integer initStatus, Integer maxVolume, Integer maxUser, Integer bleprotocolVer, Integer rfmoduleType, String rfmoduleMac, String aesKey, String adminAuthCode, String generalAuthCode, String tempAuthCode, String createTime, String updateTime, String addPeople, String vendor, Integer status, String remark) {
         this.id = id;
         this.lockId = lockId;
         this.lockTag = lockTag;
@@ -483,7 +485,7 @@ public class LockBaseInfo implements Serializable {
      *
      * @return create_time - 创建时间
      */
-    public Date getCreateTime() {
+    public String getCreateTime() {
         return createTime;
     }
 
@@ -492,7 +494,7 @@ public class LockBaseInfo implements Serializable {
      *
      * @param createTime 创建时间
      */
-    public void setCreateTime(Date createTime) {
+    public void setCreateTime(String createTime) {
         this.createTime = createTime;
     }
 
@@ -501,7 +503,7 @@ public class LockBaseInfo implements Serializable {
      *
      * @return update_time - 修改时间
      */
-    public Date getUpdateTime() {
+    public String getUpdateTime() {
         return updateTime;
     }
 
@@ -510,7 +512,7 @@ public class LockBaseInfo implements Serializable {
      *
      * @param updateTime 修改时间
      */
-    public void setUpdateTime(Date updateTime) {
+    public void setUpdateTime(String updateTime) {
         this.updateTime = updateTime;
     }
 
