@@ -51,12 +51,12 @@ public class RoomDoorController {
         }
     }
     /**
-    * @Description:根据房间门搜索房间
+    * @Description:根据房间门搜索房间    TODO  弃用接口与 根据小区搜索房间(房间门列表)重复
     * @Param: [cityid 城市id, areaid  区域id, propertyid  小区id, roomno   房间号]
     * @return: com.tagen.lock.utils.LockResult
     * @Date: 2021/5/25
     */
-    @PostMapping("/roomno")
+/*    @PostMapping("/roomno")
     public LockResult findBypropertynameOrRoomno(@RequestBody Map map){
         try {
             Integer propertyid = (Integer) map.get("propertyId");
@@ -73,7 +73,7 @@ public class RoomDoorController {
             e.printStackTrace();
             return new LockResult(false,ErrorEnum.SYSTEM_ERROR.getErrorMsg(),ErrorEnum.SYSTEM_ERROR.getCode(),null);
         }
-    }
+    }*/
   /*  *//**TODO 弃用  与all接口重复
     * @Description:根据小区,楼栋,单元名称搜索房间
     * @Param: [cityid 城市id, areaid  区域id, propertyid   小区id, bulidingid  楼栋id , unitname   单元名称]
@@ -137,7 +137,6 @@ public class RoomDoorController {
         try {
             Integer doorid = (Integer) map.get("doorId");
             Map<String,Object>  resultmap=roomDoorService.selectdoorparticulars(doorid);
-            System.out.println(resultmap);
             if(resultmap!=null){
                 return new LockResult(true,"获取成功",ErrorEnum.SUCCESS.getCode(),resultmap);
             }else {

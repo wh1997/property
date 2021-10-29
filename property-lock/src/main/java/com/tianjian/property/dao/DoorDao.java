@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 @Repository
@@ -16,22 +17,23 @@ public interface DoorDao extends BaseDao<Door> {
             "<if test='door != null'> " +
             "<if test='door.id != null'> AND id = #{door.id}</if>" +
             "<if test='door.propertyId != null'> AND property_id = #{door.propertyId}</if>" +
-            "<if test='door.propertyName != null'> AND property_name  like CONCAT('%',#{door.propertyName},'%')</if>" +
             "<if test='door.numId != null'> AND num_id = #{door.numId}</if>" +
-            "<if test='door.numName != null'> AND num_name like CONCAT('%',#{door.numName},'%') </if>" +
             "<if test='door.buildingId != null'> AND building_id = #{door.buildingId}</if>" +
-            "<if test='door.buildingName != null'> AND building_name like CONCAT('%',#{door.buildingName},'%') </if>" +
             "<if test='door.unitNo != null'> AND unit_no = #{door.unitNo}</if>" +
-            "<if test='door.unitName != null'> AND unit_name like CONCAT('%',#{door.unitName},'%') </if>" +
             "<if test='door.floorNo != null'> AND floor_no = #{door.floorNo}</if>" +
             "<if test='door.roomNo != null'> AND room_no = #{door.roomNo}</if>" +
-            "<if test='door.doorName != null'> AND door_name like CONCAT('%',#{door.doorName},'%')</if>" +
             "<if test='door.doorType != null'> AND door_type =  #{door.doorType}</if>" +
             "<if test='door.status != null'> AND status = #{door.status}</if>" +
             "<if test='door.addTime != null'> AND add_time = #{door.addTime}</if>" +
             "<if test='door.updateTime != null'> AND update_time = #{door.updateTime}</if>" +
             "<if test='door.createPerson != null'> AND create_person = #{door.createPerson}</if>" +
             "<if test='door.remark != null'> AND remark = #{door.remark}</if>" +
+//            "<if test='door.roomNo != null'> OR like CONCAT('%',#{door.roomNo},'%')</if>" +
+            "<if test='door.propertyName != null'> OR property_name  like CONCAT('%',#{door.propertyName},'%')</if>" +
+            "<if test='door.numName != null'> OR num_name like CONCAT('%',#{door.numName},'%') </if>" +
+            "<if test='door.buildingName != null'> OR building_name like CONCAT('%',#{door.buildingName},'%') </if>" +
+            "<if test='door.unitName != null'> OR unit_name like CONCAT('%',#{door.unitName},'%') </if>" +
+            "<if test='door.doorName != null'> OR door_name like CONCAT('%',#{door.doorName},'%')</if>" +
             "</if>" +
             "ORDER  BY property_id ASC ,building_id ASC ,num_id ASC,unit_no ASC ,floor_no ASC , room_no ASC"+
             "</script>"})
@@ -139,9 +141,10 @@ public interface DoorDao extends BaseDao<Door> {
             "num_name LIKE #{doorName} OR " +
             "unit_name LIKE #{doorName} OR " +
             "door_name LIKE #{doorName}  " +
-            "AND door_type = #{doorType} ORDER BY door_name desc,unit_name desc,building_name desc "+
+            "AND door_type = #{doorType} AND property_id = #{propertyId}" +
+            " ORDER BY door_name desc,unit_name desc,building_name desc "+
             "</script>"})
-    List<Door> fuzzyQueryCommonDoor(String doorName, Integer doorType);
+    List<Door> fuzzyQueryCommonDoor(String doorName, Integer doorType,Integer propertyId);
     @Select({"<script>" +
             " SELECT * " +
             "FROM tj_door WHERE " +
@@ -188,8 +191,14 @@ public interface DoorDao extends BaseDao<Door> {
             "UPDATE tj_door SET status =1  WHERE id=#{doorID}"+
             "</script>"})
     int updateDoorStatus(Integer doorID);
-    @Update({"<script>" +
+    @Select({"<script>" +
             "SELECT  status FROM tj_door WHERE id=#{doorID}"+
             "</script>"})
     int selectSutats(Integer doorID);
+    @Select({"<script>" +
+            "SELECT id  doorId ,property_name propertyName,num_name numName,building_name buildingName,unit_name unitName, floor_no floorNo," +
+            " room_no roomNo,door_name  doorName "+
+            " FROM tj_door WHERE id=#{doorID}"+
+            "</script>"})
+    Map<String,Object> selectDoor(Integer doorid);
 }

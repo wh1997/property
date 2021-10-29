@@ -13,7 +13,7 @@ import java.util.Map;
 public interface LockBaseInfoDao extends BaseDao<LockBaseInfo> {
     @Select({"<script>" +
             " SELECT lock_mac " +
-            "FROM tj_lockbaseinfo WHERE id = #{id} AND 1 = 1"+
+            "FROM tj_lockbaseinfo WHERE id = #{id}"+
             "</script>"})
     String findById(Integer id);
     @Insert({"<script>" +

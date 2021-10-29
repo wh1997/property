@@ -164,6 +164,8 @@ public class RoomDoorServiceImpl implements RoomDoorService {
             //获取到设备id
             Integer lockfacilityid = lock.getLockFacilityId();
             Map<String, Object> map= new HashMap<>();
+            Map<String, Object> doorMap = doorDao.selectDoor(doorid);
+            map.putAll(doorMap);
             if(1==facilitytype){
                     //查询网卡设备表中的网卡设备信息
                 map = networkCardDao.selectById(lockfacilityid);

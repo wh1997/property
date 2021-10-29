@@ -6,6 +6,7 @@ import com.tianjian.property.bean.Door;
 import com.tianjian.property.dao.DoorDao;
 import com.tianjian.property.dao.DoorTypeDao;
 import com.tianjian.property.management.service.CommonDoorService;
+import com.tianjian.property.utils.PageResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,7 +25,9 @@ public class CommonDoorServiceImpl implements CommonDoorService {
     @Override
     @Transactional
     public int addCommonDoor(Door door) {
+        System.out.println(door.toString());
         Door door1 = doorDao.selectOne(door);
+
         if (door1!=null){
             return 200;
         }else{
@@ -69,12 +72,14 @@ public class CommonDoorServiceImpl implements CommonDoorService {
     }
 
     @Override
-    public List<Door> fuzzyQueryCommonDoor(String doorName,Integer doorType,Integer pageNum,Integer pageSize) {
+    public PageResult<Door> fuzzyQueryCommonDoor(String doorName, Integer doorType, Integer pageNum, Integer pageSize, Integer propertyId) {
         PageHelper.startPage(pageNum,pageSize);
-        List<Door> list=doorDao.fuzzyQueryCommonDoor("%"+doorName+"%",doorType);
+        List<Door> list=doorDao.fuzzyQueryCommonDoor("%"+doorName+"%",doorType,propertyId);
         PageInfo<Door> doorPageInfo = new PageInfo<>(list);
         List<Door> doorList = doorPageInfo.getList();
-        return doorList;
+        int pages = doorPageInfo.getPages();
+        long total = doorPageInfo.getTotal();
+        return new PageResult<>(pageSize,pageNum,doorList,total,pages);
     }
 
     @Override

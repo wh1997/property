@@ -4,6 +4,7 @@ import com.tianjian.property.bean.Door;
 import com.tianjian.property.management.service.CommonDoorService;
 import com.tianjian.property.utils.BeanChangeUtils;
 import com.tianjian.property.utils.LockResult;
+import com.tianjian.property.utils.PageResult;
 import com.tianjian.property.utils.TokenUtil;
 import com.tianjian.property.utils.error.ErrorEnum;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -80,10 +81,11 @@ public class CommonDoorController {
     public LockResult fuzzyQueryCommonDoor(@RequestBody Map map){
         try{
             String doorName = (String) map.get("doorName");//门名称
-            Integer doorType = (Integer) map.get("doorType");//门类型
+            Integer doorType = (Integer) map.get("doortype");//门类型
             Integer pageNum = (Integer) map.get("pageNum");//门类型
             Integer pageSize = (Integer) map.get("pageSize");//门类型
-            List<Door> result=commonDoorService.fuzzyQueryCommonDoor(doorName,doorType, pageNum, pageSize);
+            Integer propertyId = (Integer) map.get("propertyId");//门类型
+            PageResult<Door> result=commonDoorService.fuzzyQueryCommonDoor(doorName,doorType, pageNum, pageSize,propertyId);
             if (result!=null){
                 return new LockResult(true, ErrorEnum.SUCCESS.getErrorMsg(),ErrorEnum.SUCCESS.getCode(),result);
             }else {
