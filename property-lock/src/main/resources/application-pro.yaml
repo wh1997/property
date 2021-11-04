@@ -4,7 +4,7 @@ server:
 spring:
   datasource:           #数据源配置
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://39.99.248.253/tianjian_lock?serverTimezone=GMT%2B8&characterEncoding=utf-8
+    url: jdbc:mysql://8.134.123.207/tianjian_lock?serverTimezone=GMT%2B8&characterEncoding=utf-8
     username: root
     password: Tagen2020@!#%
 

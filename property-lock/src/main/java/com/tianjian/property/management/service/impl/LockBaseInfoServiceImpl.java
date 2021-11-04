@@ -63,6 +63,7 @@ public class LockBaseInfoServiceImpl implements LockBaseInfoService {
             //2001~49999	普通用户
             //50000~52000	普通用户（人脸识别）
             datamap.put("lockUserId",lockUserId);
+
             //开锁
             Map result = gatewayService.bindinggateway(theRemoteUnlock,datamap);
             return result;
