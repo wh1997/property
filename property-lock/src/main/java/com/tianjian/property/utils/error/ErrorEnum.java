@@ -16,7 +16,8 @@ public enum ErrorEnum  implements CommonError {
     PARAMETER_VALIDATION_ERROR(6, "入参异常"),
     PARAMETER_NONE_ERROR(7,"入参不能为空！"),
     CONNECT_FAIL(8, "链接失败"),
-    SYSTEM_ERROR(9, "系统错误"),
+    RIGHT(9, "没有权限"),
+    SYSTEM_ERROR(10, "系统错误"),
     ;
 
     private Integer  code;

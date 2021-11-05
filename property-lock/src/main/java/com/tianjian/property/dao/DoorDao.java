@@ -12,7 +12,7 @@ import java.util.Map;
 @Repository
 public interface DoorDao extends BaseDao<Door> {
     @Select({"<script>" +
-            " SELECT id ,num_id,num_name,building_id,building_name,floor_no ,room_no,door_name,status ,unit_no ,unit_name " +
+            " SELECT id, property_id propertyId,num_id,num_name,building_id,building_name,floor_no ,room_no,door_name,status ,unit_no ,unit_name " +
             "FROM tj_door WHERE 1=1 " +
             "<if test='door != null'> " +
             "<if test='door.id != null'> AND id = #{door.id}</if>" +
@@ -28,7 +28,6 @@ public interface DoorDao extends BaseDao<Door> {
             "<if test='door.updateTime != null'> AND update_time = #{door.updateTime}</if>" +
             "<if test='door.createPerson != null'> AND create_person = #{door.createPerson}</if>" +
             "<if test='door.remark != null'> AND remark = #{door.remark}</if>" +
-//            "<if test='door.roomNo != null'> OR like CONCAT('%',#{door.roomNo},'%')</if>" +
             "<if test='door.propertyName != null'> OR property_name  like CONCAT('%',#{door.propertyName},'%')</if>" +
             "<if test='door.numName != null'> OR num_name like CONCAT('%',#{door.numName},'%') </if>" +
             "<if test='door.buildingName != null'> OR building_name like CONCAT('%',#{door.buildingName},'%') </if>" +
@@ -201,4 +200,33 @@ public interface DoorDao extends BaseDao<Door> {
             " FROM tj_door WHERE id=#{doorID}"+
             "</script>"})
     Map<String,Object> selectDoor(Integer doorid);
+    @Select({"<script>" +
+            " SELECT id, property_id propertyId,num_id,num_name,building_id,building_name,floor_no ,room_no,door_name,status ,unit_no ,unit_name " +
+            "FROM tj_door WHERE 1=1 " +
+            "<if test='door != null'> " +
+            "<if test='door.id != null'> AND id = #{door.id}</if>" +
+            "<if test='door.numId != null'> AND num_id = #{door.numId}</if>" +
+            "<if test='door.buildingId != null'> AND building_id = #{door.buildingId}</if>" +
+            "<if test='door.unitNo != null'> AND unit_no = #{door.unitNo}</if>" +
+            "<if test='door.floorNo != null'> AND floor_no = #{door.floorNo}</if>" +
+            "<if test='door.roomNo != null'> AND room_no = #{door.roomNo}</if>" +
+            "<if test='door.doorType != null'> AND door_type =  #{door.doorType}</if>" +
+            "<if test='door.status != null'> AND status = #{door.status}</if>" +
+            "<if test='door.addTime != null'> AND add_time = #{door.addTime}</if>" +
+            "<if test='door.updateTime != null'> AND update_time = #{door.updateTime}</if>" +
+            "<if test='door.createPerson != null'> AND create_person = #{door.createPerson}</if>" +
+            "<if test='door.remark != null'> AND remark = #{door.remark}</if>" +
+            "<if test='door.propertyName != null'> OR property_name  like CONCAT('%',#{door.propertyName},'%')</if>" +
+            "<if test='door.numName != null'> OR num_name like CONCAT('%',#{door.numName},'%') </if>" +
+            "<if test='door.buildingName != null'> OR building_name like CONCAT('%',#{door.buildingName},'%') </if>" +
+            "<if test='door.unitName != null'> OR unit_name like CONCAT('%',#{door.unitName},'%') </if>" +
+            "<if test='door.doorName != null'> OR door_name like CONCAT('%',#{door.doorName},'%')</if>" +
+            "</if>" +
+            " AND property_id IN"+
+            "<foreach collection=\"lists\" item=\"list\" index=\"index\" open=\"(\" close=\")\" separator=\",\"> " +
+            "#{list} " +
+            "</foreach>" +
+            "ORDER  BY property_id ASC ,building_id ASC ,num_id ASC,unit_no ASC ,floor_no ASC , room_no ASC"+
+            "</script>"})
+    List<DoorVo> selectPageDoor(Door door, List<Integer> lists);
 }

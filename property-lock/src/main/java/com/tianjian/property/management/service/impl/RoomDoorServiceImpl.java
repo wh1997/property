@@ -34,17 +34,17 @@ public class RoomDoorServiceImpl implements RoomDoorService {
     private GatewayDao gatewayDao;
     //根据小区搜索房间(房间门列表)
     @Override
-    public PageResult<DoorVo> selsctAll(Door door, Integer pageNum, Integer pageSize) {
+    public PageResult<DoorVo> selsctAll(Door door,Integer pageNum, Integer pageSize) {
         //List<(几栋)Map<String,(几单元)Map<String,()房间信息list<door>>>>
         //查询小区下房间的具体信息
         PageHelper.startPage(pageNum,pageSize);
         List<DoorVo> all = doorDao.selectall(door);
         PageInfo<DoorVo> doorVoPageInfo = new PageInfo<>(all);
-        List<DoorVo> list = doorVoPageInfo.getList();
+        List<DoorVo> Doorlist = doorVoPageInfo.getList();
         int pages = doorVoPageInfo.getPages();
         //总共多少条
         long total = doorVoPageInfo.getTotal();
-        PageResult<DoorVo> doorVoPageResult = new PageResult<>(pageSize,pageNum,list,total,pages);
+        PageResult<DoorVo> doorVoPageResult = new PageResult<>(pageSize,pageNum,Doorlist,total,pages);
         return doorVoPageResult;
         // if (all.size()>0){
         //    //查询公寓门有哪些楼栋

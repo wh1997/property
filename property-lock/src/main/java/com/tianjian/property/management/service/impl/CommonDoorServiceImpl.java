@@ -27,7 +27,6 @@ public class CommonDoorServiceImpl implements CommonDoorService {
     public int addCommonDoor(Door door) {
         System.out.println(door.toString());
         Door door1 = doorDao.selectOne(door);
-
         if (door1!=null){
             return 200;
         }else{

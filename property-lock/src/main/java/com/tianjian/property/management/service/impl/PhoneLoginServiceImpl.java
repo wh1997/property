@@ -77,6 +77,8 @@ public class PhoneLoginServiceImpl extends HttpService implements PhoneLoginServ
             return resultMap;
         }
         Integer userId = (Integer) identity.get("UserId");
+        String FullName = (String) identity.get("FullName");
+        String Phone = (String) identity.get("Phone");
         Map roletype= null;
         //判断角色表有没有添加没有添加进行添加
         roletype=roleDao.selectByUserId(userId);
@@ -84,9 +86,10 @@ public class PhoneLoginServiceImpl extends HttpService implements PhoneLoginServ
         if (roletype==null){
             User newrole = new User();
             newrole.setUserId(userId);
-
             newrole.setRole(2);
-            //往角色表里面添加数据
+            newrole.setName(FullName);
+            newrole.setPhone(Phone);
+            //往用户表里面添加数据
             int i = userDao.insert(newrole);
             //如果没有添加角色后返回
             roleMap.put("role",2);

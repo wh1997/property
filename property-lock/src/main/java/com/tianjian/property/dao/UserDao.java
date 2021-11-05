@@ -24,6 +24,8 @@ public interface UserDao extends BaseDao<User> {
             "<trim prefix=\"(\" suffix=\")\" suffixOverrides=\",\">"+
             " <if test='userId != null'>user_id ,</if> " +
             " <if test='role != null'>role ,</if> " +
+            " <if test='phone != null'>phone ,</if> " +
+            " <if test='name != null'>name ,</if> " +
             " <if test='addTime != null'>add_time ,</if> " +
             " <if test='updateTime != null'>update_time ,</if> " +
             " <if test='remark != null'>remark </if> " +
@@ -31,10 +33,19 @@ public interface UserDao extends BaseDao<User> {
             "<trim prefix=\"values (\" suffix=\")\" suffixOverrides=\",\">"+
             " <if test='userId  != null'> #{userId}, </if> " +
             " <if test='role  != null'> #{role}, </if>" +
+            " <if test='phone != null'> #{phone},</if> " +
+            " <if test='name != null'> #{name},</if> " +
             " <if test='addTime   != null'>#{addTime}, </if> " +
             " <if test='updateTime  != null'>#{updateTime} ,</if> " +
             " <if test='remark != null'>#{remark} </if> " +
             "</trim>"+
             "</script>"})
     int insert(User role);
+    @Select({"<script>" +
+            "SELECT role_id  FROM  `tj_user` u " +
+            " INNER JOIN  tj_user_role r ON u.user_id = r.user_id " +
+            " WHERE u.user_id " +
+            " = #{userId}" +
+            "</script>"})
+    List<Integer> selectRoleByUserId(Integer userId);
 }

@@ -16,6 +16,16 @@ public class User implements Serializable {
      */
     @Column(name = "`user_id`")
     private Integer userId;
+    /**
+     * 备注
+     */
+    @Column(name = "`phone`")
+    private String phone;
+    /**
+     * 备注
+     */
+    @Column(name = "`name`")
+    private String name;
 
     /**
      * 小程序用户角色  1管理员   2普通用户
@@ -73,6 +83,22 @@ public class User implements Serializable {
      */
     public void setUserId(Integer userId) {
         this.userId = userId;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone == null ? null : phone.trim();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name == null ? null : name.trim();
     }
 
     /**
@@ -149,18 +175,15 @@ public class User implements Serializable {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", id=").append(id);
-        sb.append(", userId=").append(userId);
-        sb.append(", role=").append(role);
-        sb.append(", addTime=").append(addTime);
-        sb.append(", updateTime=").append(updateTime);
-        sb.append(", remark=").append(remark);
-        sb.append(", serialVersionUID=").append(serialVersionUID);
-        sb.append("]");
-        return sb.toString();
+        return "User{" +
+                "id=" + id +
+                ", userId=" + userId +
+                ", phone='" + phone + '\'' +
+                ", name='" + name + '\'' +
+                ", role=" + role +
+                ", addTime='" + addTime + '\'' +
+                ", updateTime='" + updateTime + '\'' +
+                ", remark='" + remark + '\'' +
+                '}';
     }
 }

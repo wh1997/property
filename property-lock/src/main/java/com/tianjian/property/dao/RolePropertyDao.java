@@ -22,4 +22,14 @@ public interface RolePropertyDao extends BaseDao<RoleProperty> {
             " group by p.id "+
             "</script>"})
     List<Property> selectPropertyByRole(@Param("lists") List<Integer>  lists);
+    @Select({"<script>" +
+            " SELECT p.bw_property_id " +
+            " FROM `tj_role` r LEFT JOIN tj_role_property t ON r.id= t.role_id " +
+            " LEFT JOIN tj_property p ON t.property_id=p.id  WHERE r.id IN " +
+            "<foreach collection=\"lists\" item=\"list\" index=\"index\" open=\"(\" close=\")\" separator=\",\"> " +
+            "#{list} " +
+            "</foreach>" +
+            " group by p.id "+
+            "</script>"})
+    List<Integer> selectPropertyByRoleId(@Param("lists") List<Integer>  lists);
 }
