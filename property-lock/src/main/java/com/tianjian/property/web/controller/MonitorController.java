@@ -2,6 +2,7 @@ package com.tianjian.property.web.controller;
 
 import com.tianjian.property.bean.Door;
 import com.tianjian.property.bean.vo.DoorVo;
+import com.tianjian.property.management.service.RoomDoorService;
 import com.tianjian.property.utils.BeanChangeUtils;
 import com.tianjian.property.utils.LockResult;
 import com.tianjian.property.utils.PageResult;
@@ -28,6 +29,8 @@ public class MonitorController {
     private MonitorService monitorServices;
     @Autowired
     private SelectRoleService selectRoleService;
+    @Autowired
+    private RoomDoorService roomDoorService;
 
     @RequestMapping("/select/door")
     public LockResult selectDoor(@RequestHeader String token , Map map) throws Exception {
@@ -46,8 +49,42 @@ public class MonitorController {
             return new LockResult(true,"获取成功",ErrorEnum.SUCCESS.getCode(),doors);
         }
     }
+    
+    /** 
+    * @Description:  修改门禁监控
+    * @Param:
+    * @return:  
+    * @Date: 2021/11/8 
+    */
     @RequestMapping("/update/door")
-    public LockResult updateDoor(@RequestHeader String token , Map map) {
-        return new LockResult(true,"获取成功",ErrorEnum.SUCCESS.getCode(),"");
+    public LockResult updateDoor(@RequestHeader String token , Map map) throws Exception {
+        Door door = BeanChangeUtils.mapToBean(map, Door.class);
+        int i= monitorServices.updateDoor(door);
+        if (i>=0){
+            return new LockResult(true,"修改成功",ErrorEnum.SUCCESS.getCode(),"");
+        }else{
+            return new LockResult(false,"修改失败",ErrorEnum.OPERATION_ERROR.getCode(),"");
+        }
     }
+    /**
+    * @Description:  添加门禁监控
+    * @Param:
+    * @return:
+    * @Date: 2021/11/8
+    */
+    @RequestMapping("/add/door")
+    public LockResult addDoor(@RequestHeader String token , Map map) throws Exception {
+        Integer appUID = TokenUtil.getAppUID(token);
+        List<Map> door = (List<Map>) map.get("list");
+        Map resultMap = roomDoorService.addDoor(door,appUID);
+        Integer code = (Integer) resultMap.get("code");
+        if (code==200){
+            String error = (String) resultMap.get("error");
+            return new LockResult(false, "添加失败,房间"+error+"重复添加",200,"");
+        }else{
+            return new LockResult(true, ErrorEnum.SUCCESS.getErrorMsg(),ErrorEnum.SUCCESS.getCode(),null);
+        }
+    }
+
 }
+

@@ -81,4 +81,18 @@ public interface GatewayDao extends BaseDao<Gateway> {
     List<Gateway> fuzzySearch(Integer propertyId,String keyWord);
     @Update({"UPDATE tj_gateway SET `status`= 5 WHERE gateway_id = #{gatewayId}"})
     int updateByGatewayId(String gatewayId);
+    @Select({"<script>" +
+            " SELECT * " +
+            "FROM tj_gateway WHERE " +
+            "<if test='gateway != null'> " +
+            "<if test='gateway.gatewayName != null'> AND gateway_name like CONCAT('%',#{gateway.gatewayName},'%')</if>" +
+            "<if test='gateway.gatewayMac != null'> AND gateway_mac like CONCAT('%',#{gateway.gatewayMac},'%')</if>" +
+            "<if test='gateway.status != null'> AND status = #{gateway.status}  </if>" +
+            "</if>" +
+            " AND project IN"+
+            "<foreach collection=\"lists\" item=\"list\" index=\"index\" open=\"(\" close=\")\" separator=\",\"> " +
+            "#{list} " +
+            "</foreach>" +
+            "</script>"})
+    List<Gateway> selectGateway(List<Integer> list, Gateway gateway);
 }

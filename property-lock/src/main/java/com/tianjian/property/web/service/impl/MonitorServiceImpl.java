@@ -9,6 +9,7 @@ import com.tianjian.property.utils.PageResult;
 import com.tianjian.property.web.service.MonitorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -33,5 +34,11 @@ public class MonitorServiceImpl implements MonitorService {
         long total = doorVoPageInfo.getTotal();
         PageResult<DoorVo> doorVoPageResult = new PageResult<>(pageSize,pageNum,Doorlist,total,pages);
         return doorVoPageResult;
+    }
+
+    @Override
+    @Transactional
+    public int updateDoor(Door door) {
+        return doorDao.updateByPrimaryKey(door);
     }
 }

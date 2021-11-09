@@ -2,6 +2,7 @@ package com.tianjian.property;
 
 import com.tianjian.property.bean.Property;
 import com.tianjian.property.management.service.*;
+import com.tianjian.property.web.service.ManageService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -24,6 +25,8 @@ class PropertyLockApplicationTests {
     private GatewayService gatewayService;
     @Autowired
     private UserService userService;
+    @Autowired
+    private ManageService manageService;
     @Test
     void redisceshi()  {
        redisTemplate.opsForValue().set("嘻嘻呵呵","hahahaha");
@@ -61,6 +64,11 @@ class PropertyLockApplicationTests {
         integers.add(3);
         List<Property> properties = userService.selectPropertyByRole(integers);
         System.out.println(properties);
+    }
+    @Test
+    void test8()  {
+        Object o = manageService.BluetoothdDetails("BeLKR3tkXvE=");
+        System.out.println(o);
     }
     //网关详情测试
     @Test

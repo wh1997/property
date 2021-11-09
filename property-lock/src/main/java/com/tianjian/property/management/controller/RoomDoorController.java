@@ -1,7 +1,5 @@
 package com.tianjian.property.management.controller;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.sun.xml.internal.bind.v2.TODO;
 import com.tianjian.property.bean.Door;
 import com.tianjian.property.bean.vo.DoorVo;
 import com.tianjian.property.management.service.RoomDoorService;
@@ -13,7 +11,6 @@ import com.tianjian.property.utils.error.ErrorEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -159,7 +156,7 @@ public class RoomDoorController {
             Integer code = (Integer) resultMap.get("code");
             if (code==200){
                 String error = (String) resultMap.get("error");
-                return new LockResult(false, "添加失败,房间"+error+"重复添加",200,null);
+                return new LockResult(false, "添加失败,房间"+error+"重复添加",200,"");
             }else{
                 return new LockResult(true, ErrorEnum.SUCCESS.getErrorMsg(),ErrorEnum.SUCCESS.getCode(),null);
             }

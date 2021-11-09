@@ -177,4 +177,47 @@ public interface LockBaseInfoDao extends BaseDao<LockBaseInfo> {
             "WHERE lock_tag LIKE #{keyWord} OR lock_mac LIKE #{keyWord} OR lock_id LIKE #{keyWord} AND a.`status` != 2  AND property_id = #{propertyId}   " +
             "ORDER  BY building_name DESC ,unit_name DESC ,room_no DESC  "})
     List<LinkedHashMap<String, Object>> fuzzySearch(Integer propertyId,String keyWord);
+
+    @Select({"<script>"+
+            "SELECT" +
+            " id bluetoothLockId,lock_id lockId,lock_tag lockTag,lock_mac lockMac, a.`status` ,door_id doorId,property_name propertyName," +
+            " num_name numName,building_name buildingName,unit_name unitName,room_no roomNo,door_name doorName, property_id propertyId,b.lId lock_id" +
+            " FROM " +
+            " tj_lockbaseinfo a " +
+            " INNER JOIN ( " +
+            " SELECT " +
+            " door_id, " +
+            " lock_status, " +
+            " lock_facility_id, " +
+            " Lock_gateway_id, " +
+            " property_id, " +
+            " property_name, " +
+            " num_id, " +
+            " num_name, " +
+            " building_id, " +
+            " building_name, " +
+            " unit_no, " +
+            " unit_name, " +
+            " floor_no, " +
+            " room_no, " +
+            " door_name, " +
+            " door_type, " +
+            "  `status`,  " +
+            "   l.id lId  " +
+            " FROM " +
+            "  tj_lock l " +
+            "  INNER JOIN tj_door d ON l.door_id = d.id   " +
+            " ) b ON a.id = b.lock_facility_id   WHERE " +
+            "<if test='lockBaseInfo != null'> " +
+            "<if test='lockBaseInfo.lockMac != null'> AND lock_mac like CONCAT('%',#{lockBaseInfo.lockMac},'%')</if>" +
+            "<if test='lockBaseInfo.status != null'> AND status = #{lockBaseInfo.status}  </if>" +
+            "</if>" +
+            "<if test='doorName != null'> AND door_name = CONCAT('%',#{lockBaseInfo.doorName},'%')</if>" +
+            " AND property_id IN"+
+            "<foreach collection=\"lists\" item=\"list\" index=\"index\" open=\"(\" close=\")\" separator=\",\"> " +
+            "#{list} " +
+            "</foreach>" +
+            " ORDER  BY building_name DESC ,unit_name DESC ,room_no DESC  "+
+            "</script>"})
+    List<LinkedHashMap<String, Object>> selectBluetooth( List<Integer> lists, LockBaseInfo lockBaseInfo,String doorName);
 }

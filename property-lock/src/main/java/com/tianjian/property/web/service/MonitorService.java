@@ -13,4 +13,6 @@ import java.util.List;
  */
 public interface MonitorService {
     PageResult<DoorVo> selsctAll(Door door, List<Integer> list, Integer pageNum, Integer pageSize);
+
+    int updateDoor(Door door);
 }
