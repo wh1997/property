@@ -220,4 +220,9 @@ public interface LockBaseInfoDao extends BaseDao<LockBaseInfo> {
             " ORDER  BY building_name DESC ,unit_name DESC ,room_no DESC  "+
             "</script>"})
     List<LinkedHashMap<String, Object>> selectBluetooth( List<Integer> lists, LockBaseInfo lockBaseInfo,String doorName);
+    @Select({"<script>" +
+            " SELECT * " +
+            "FROM tj_lockbaseinfo WHERE lock_mac = #{lockMac}"+
+            "</script>"})
+    LockBaseInfo selectByMac(String lockMac);
 }

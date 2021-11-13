@@ -1,8 +1,11 @@
 package com.tianjian.property.web.controller;
 
+import com.google.inject.internal.cglib.core.$ClassEmitter;
 import com.tianjian.property.bean.Door;
 import com.tianjian.property.bean.Gateway;
 import com.tianjian.property.bean.LockBaseInfo;
+import com.tianjian.property.bean.vo.Param;
+import com.tianjian.property.management.service.GatewayService;
 import com.tianjian.property.utils.BeanChangeUtils;
 import com.tianjian.property.utils.LockResult;
 import com.tianjian.property.utils.PageResult;
@@ -30,6 +33,8 @@ public class ManageController {
     private ManageService manageService;
     @Autowired
     private SelectRoleService selectRoleService;
+    @Autowired
+    private GatewayService gatewayService;
     /**
     * @Description: 删除蓝牙门锁
     * @Param:  
@@ -75,7 +80,6 @@ public class ManageController {
                 return new LockResult(false,"没有权限,请添加权限", ErrorEnum.RIGHT.getCode(), "");
             }
             LockBaseInfo lockBaseInfo = BeanChangeUtils.mapToBean(map, LockBaseInfo.class);
-            //获取设备的类型 1蓝牙锁 2网关  3网卡
             String doorName = (String) map.get("doorName");
             //设备所在项目的id
             Integer pageNum = (Integer) map.get("pageNum");
@@ -91,16 +95,56 @@ public class ManageController {
         }
     }
     /**
-    * @Description: 查看蓝牙门锁信息
+    * @Description: 查看蓝牙锁详情
     * @Param:
     * @return:
     * @Date: 2021/11/8
     */
     @RequestMapping("/bluetooth/details")
-    public LockResult BluetoothdDtails(@RequestHeader String token , Map map) {
+    public LockResult bluetoothdDetails(@RequestHeader String token , Map map) {
         String lockId= (String) map.get("lockId");
-        Object details = manageService.BluetoothdDetails(lockId);
-        return null;
+        Map details = manageService.BluetoothdDetails(lockId);
+        Integer resultCode = (Integer) details.get("resultCode");
+        String reason = (String) details.get("reason");
+        if (resultCode==0){
+            return new LockResult(true,"查询成功",ErrorEnum.SUCCESS.getCode(),details);
+        }else{
+            return new LockResult(false,reason,ErrorEnum.OPERATION_ERROR.getCode(),"");
+        }
+    }
+    /**
+    * @Description: 查看蓝牙锁绑定网关详情
+    * @Param:
+    * @return:
+    * @Date: 2021/11/8
+    */
+    @RequestMapping("/lock/gateway/details")
+    public LockResult lockGatewayDetails(@RequestHeader String token , Map map) {
+        try {
+            Integer lockId= (Integer) map.get("lockId");
+            Map details = manageService.lockGatewayDetails(lockId);
+            return new LockResult(true,"查询成功",ErrorEnum.SUCCESS.getCode(),details);
+        } catch (Exception e){
+            e.printStackTrace();
+            return new LockResult(false, ErrorEnum.COMMON_ERROR.getErrorMsg(), ErrorEnum.COMMON_ERROR.getCode(), "");
+        }
+    }
+    /**
+    * @Description: 设置蓝牙门锁
+    * @Param:
+    * @return:
+    * @Date: 2021/11/8
+    */
+    @RequestMapping("/lock/configuration")
+    public LockResult configuration(@RequestHeader String token , Map map) {
+        try {
+            LockResult result = manageService.configuration(map);
+            return result;
+        } catch (Exception e){
+            e.printStackTrace();
+            return new LockResult(false,  ErrorEnum.COMMON_ERROR.getErrorMsg(), ErrorEnum.COMMON_ERROR.getCode(), "");
+        }
+
     }
     /**
     * @Description: 查看网关信息
@@ -108,7 +152,7 @@ public class ManageController {
     * @return:
     * @Date: 2021/11/8
     */
-    @RequestMapping("/Gateway/select")
+    @RequestMapping("/gateway/select")
     public LockResult selectGateway(@RequestHeader String token , Map map) throws Exception {
         try {
             Integer appUID = TokenUtil.getAppUID(token);
@@ -128,6 +172,69 @@ public class ManageController {
         }catch (Exception e){
             e.printStackTrace();
             return new LockResult(false,ErrorEnum.SYSTEM_ERROR.getErrorMsg(),ErrorEnum.SYSTEM_ERROR.getCode(),null);
+        }
+    }
+    /**
+     * @Description: 编辑网关
+     * @Param:
+     * @return:
+     * @Date: 2021/11/8
+     */
+    @RequestMapping("/gateway/update")
+    public LockResult updateGateway(@RequestHeader String token , Map map) {
+        try {
+            Gateway gateway = BeanChangeUtils.mapToBean(map, Gateway.class);
+            int i = manageService.updateGateway(gateway);
+            if (i>0){
+                return new LockResult(true,  "修改成功", ErrorEnum.SUCCESS.getCode(), "");
+            }else {
+                return new LockResult(false,  "修改失败", ErrorEnum.OPERATION_ERROR.getCode(), "");
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+            return new LockResult(false,  ErrorEnum.COMMON_ERROR.getErrorMsg(), ErrorEnum.COMMON_ERROR.getCode(), "");
+        }
+    }
+    /**
+     * @Description: 删除网关
+     * @Param:
+     * @return:
+     * @Date: 2021/11/8
+     */
+    @RequestMapping("/gateway/delete")
+    public LockResult deleteGateway(@RequestHeader String token , Map map) {
+        try {
+            String gatewayId = (String) map.get("gatewayId");
+            int resultMap=gatewayService.deleteGateway(gatewayId);
+            if (resultMap>0){
+                return new LockResult(true,  "删除成功", ErrorEnum.SUCCESS.getCode(), "");
+            }else {
+                return new LockResult(false,  "删除失败", ErrorEnum.OPERATION_ERROR.getCode(), "");
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+            return new LockResult(false,  ErrorEnum.COMMON_ERROR.getErrorMsg(), ErrorEnum.COMMON_ERROR.getCode(), "");
+        }
+    }
+    /**
+     * @Description: 网关详情
+     * @Param:
+     * @return:
+     * @Date: 2021/11/8
+     */
+    @RequestMapping("/gateway/details")
+    public LockResult gatewayDetails(@RequestHeader String token , Map map) {
+        try {
+            String gatewayId = (String) map.get("gatewayId");
+            Map resultMap=manageService.gatewayDetails(gatewayId);
+            if (resultMap!=null){
+                return new LockResult(true,ErrorEnum.SUCCESS.getErrorMsg(), ErrorEnum.SUCCESS.getCode(), resultMap);
+            }else {
+                return new LockResult(false,  ErrorEnum.COMMON_ERROR.getErrorMsg(), ErrorEnum.COMMON_ERROR.getCode(), "");
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+            return new LockResult(false,  ErrorEnum.COMMON_ERROR.getErrorMsg(), ErrorEnum.COMMON_ERROR.getCode(), "");
         }
     }
 }

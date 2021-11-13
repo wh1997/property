@@ -95,4 +95,10 @@ public interface GatewayDao extends BaseDao<Gateway> {
             "</foreach>" +
             "</script>"})
     List<Gateway> selectGateway(List<Integer> list, Gateway gateway);
+    @Select({"<script>" +
+            " SELECT * " +
+            "FROM tj_gateway WHERE " +
+             " deviceseq = #{gatewaySeq}"+
+            "</script>"})
+    Gateway selectbyGatewaySeq(String gatewaySeq);
 }

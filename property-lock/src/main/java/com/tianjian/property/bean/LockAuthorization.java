@@ -28,6 +28,11 @@ public class LockAuthorization implements Serializable {
      */
     @Column(name = "`user_status`")
     private Integer userStatus;
+    /**
+     * 添加权限人
+     */
+    @Column(name = "`add_person`")
+    private Integer addPerson;
 
     /**
      * 入住时间
@@ -133,6 +138,14 @@ public class LockAuthorization implements Serializable {
      */
     public void setUserStatus(Integer userStatus) {
         this.userStatus = userStatus;
+    }
+
+    public Integer getAddPerson() {
+        return addPerson;
+    }
+
+    public void setAddPerson(Integer addPerson) {
+        this.addPerson = addPerson;
     }
 
     /**
@@ -245,22 +258,18 @@ public class LockAuthorization implements Serializable {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", id=").append(id);
-        sb.append(", doorId=").append(doorId);
-        sb.append(", userId=").append(userId);
-        sb.append(", userStatus=").append(userStatus);
-        sb.append(", enterTime=").append(enterTime);
-        sb.append(", leavaTime=").append(leavaTime);
-        sb.append(", opendoorStatus=").append(opendoorStatus);
-        sb.append(", addTime=").append(addTime);
-        sb.append(", updateTime=").append(updateTime);
-        sb.append(", remark=").append(remark);
-        sb.append(", serialVersionUID=").append(serialVersionUID);
-        sb.append("]");
-        return sb.toString();
+        return "LockAuthorization{" +
+                "id=" + id +
+                ", doorId=" + doorId +
+                ", userId=" + userId +
+                ", userStatus=" + userStatus +
+                ", addPerson=" + addPerson +
+                ", enterTime='" + enterTime + '\'' +
+                ", leavaTime='" + leavaTime + '\'' +
+                ", opendoorStatus='" + opendoorStatus + '\'' +
+                ", addTime='" + addTime + '\'' +
+                ", updateTime='" + updateTime + '\'' +
+                ", remark='" + remark + '\'' +
+                '}';
     }
 }

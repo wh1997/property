@@ -43,6 +43,7 @@ private String  addBluetooth;
     @Override
     @Transactional
     public LockResult addBluetooth(Map lockBaseInfo, Map lockAuthCode, String hardwareVersion, String softwareVersion, Integer doorid, String addpeople) throws Exception {
+        System.out.println(doorid);
         Lock locks = lockDao.selectByDoorid(doorid);
         if (locks!=null){
             return new LockResult(false,"重复添加",200,"");
@@ -97,6 +98,11 @@ private String  addBluetooth;
         String lockId = (String) data.get("lockId");
         if (resultCode==0){
              LockBaseInfoVo lockInfoBase = BeanChangeUtils.mapToBean(lockBaseInfo, LockBaseInfoVo.class);
+            String lockMac = lockInfoBase.getLockMac();
+            LockBaseInfo lockBaseInfoMac= lockBaseInfoDao.selectByMac(lockMac);
+            if(lockBaseInfoMac!=null){
+                return new LockResult(false, "该门锁已添加请先删除", ErrorEnum.OPERATION_ERROR.getCode(),"");
+            }
             // LockAuthCode lockAuthCodeBean = BeanChangeUtils.mapToBean(lockAuthCode, LockAuthCode.class);
             //请求成功了往门锁基本信息表里添加门锁基本信息
             LockBaseInfo LockBaseInfo = new LockBaseInfo(null,lockId, lockInfoBase.getLockTag(), lockInfoBase.getLockMac(), hardwareVersion, softwareVersion, lockInfoBase.getLockType(),
@@ -162,10 +168,13 @@ private String  addBluetooth;
             //查询网关
             Gateway list=  gatewayDao.selectById(equipmentId);
             //查询网关在线状态
-            Integer status  = gatewayService.selectGateway(list.getGatewayId());
-            list.setStatus(status);
-            //修改网关的状态
-            gatewayDao.updateByPrimaryKeySelective(list);
+            Map map= gatewayService.selectGateway(list.getGatewayId());
+            if (map!=null){
+                Integer status = (Integer) map.get("gatewayState");
+                list.setStatus(status);
+                //修改网关的状态
+                gatewayDao.updateByPrimaryKeySelective(list);
+            }
             return list;
         }else{
             //查询网卡

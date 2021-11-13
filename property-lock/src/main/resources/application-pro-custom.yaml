@@ -46,7 +46,9 @@ apartment :
   #解除蓝牙门锁绑定网关
   deleteGateway : hxjLockUnBindingGateway
   #读取门锁系统参数和状态
-  bluetoothdDetails : hxjSynLockInfo
+  BluetoothdDetails : hxjSynLockInfo
+  #设置门锁系统参数
+  configuration : hxjSetParam
 baiwei :
   url : http://client.api.melifego.cn:80
   #百为微信登录获取参数url

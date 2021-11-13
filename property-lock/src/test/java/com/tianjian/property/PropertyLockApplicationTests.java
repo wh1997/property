@@ -2,6 +2,8 @@ package com.tianjian.property;
 
 import com.tianjian.property.bean.Property;
 import com.tianjian.property.management.service.*;
+import com.tianjian.property.utils.LockResult;
+import com.tianjian.property.web.service.LoginService;
 import com.tianjian.property.web.service.ManageService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +29,8 @@ class PropertyLockApplicationTests {
     private UserService userService;
     @Autowired
     private ManageService manageService;
+    @Autowired
+    private LoginService loginService;
     @Test
     void redisceshi()  {
        redisTemplate.opsForValue().set("嘻嘻呵呵","hahahaha");
@@ -67,13 +71,19 @@ class PropertyLockApplicationTests {
     }
     @Test
     void test8()  {
-        Object o = manageService.BluetoothdDetails("BeLKR3tkXvE=");
+        Object o = manageService.BluetoothdDetails("0tyxLhB8vJ8=");
         System.out.println(o);
     }
     //网关详情测试
     @Test
     void test3()  {
-        Integer integer = gatewayService.selectGateway("Zkg8OGRQ4Yk=");
+        gatewayService.selectGateway("Zkg8OGRQ4Yk=");
+    }
+    //登录测试
+    @Test
+    void test9() throws Exception {
+        LockResult login = loginService.login("15873306605");
+        System.out.println(login.getErrorMessage());
     }
     @Test
     void test7()  {

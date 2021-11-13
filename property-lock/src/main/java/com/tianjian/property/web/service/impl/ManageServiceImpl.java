@@ -5,14 +5,20 @@ import com.github.pagehelper.PageInfo;
 import com.tianjian.property.bean.Gateway;
 import com.tianjian.property.bean.LockBaseInfo;
 import com.tianjian.property.bean.NetworkCard;
+import com.tianjian.property.bean.vo.Param;
+import com.tianjian.property.dao.DoorDao;
 import com.tianjian.property.dao.GatewayDao;
 import com.tianjian.property.dao.LockBaseInfoDao;
+import com.tianjian.property.dao.LockDao;
 import com.tianjian.property.management.service.GatewayService;
+import com.tianjian.property.utils.LockResult;
 import com.tianjian.property.utils.PageResult;
+import com.tianjian.property.utils.error.ErrorEnum;
 import com.tianjian.property.web.service.ManageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -28,10 +34,16 @@ import java.util.Map;
 public class ManageServiceImpl implements ManageService {
     @Value("${apartment.BluetoothdDetails}")
     private  String bluetoothdDetails;
+    @Value("${apartment.configuration}")
+    private  String configuration;
     @Autowired
     private LockBaseInfoDao lockBaseInfoDao;
     @Autowired
     private GatewayDao gatewayDao;
+    @Autowired
+    private LockDao lockDao;
+    @Autowired
+    private DoorDao doorDao;
     @Autowired
     private GatewayService gatewayService;
 
@@ -58,7 +70,7 @@ public class ManageServiceImpl implements ManageService {
     }
 
     @Override
-    public Object BluetoothdDetails(String lockId) {
+    public Map BluetoothdDetails(String lockId) {
         HashMap<String, Object> datamap = new HashMap<>();
         //	是	string 门锁id
         datamap.put("lockId",lockId);
@@ -66,8 +78,41 @@ public class ManageServiceImpl implements ManageService {
         datamap.put("delLockUserId",901);
         //发送请求
         Map bindinggateway = gatewayService.bindinggateway(bluetoothdDetails, datamap);
-        System.out.println(bindinggateway);
         return bindinggateway;
+    }
+    @Override
+    public Map lockGatewayDetails(Integer lockId) {
+        HashMap<String, Object> resultMap = new HashMap<>();
+        Map map=  lockDao.lockSelectGateway(lockId);
+        Integer doorId = (Integer) map.get("doorId");
+        String gatewayId = (String) map.get("gatewayId");
+        Map<String, Object> door = doorDao.selectDoor(doorId);
+        resultMap.put("door",door);
+        if (gatewayId==null){
+            resultMap.put("gateway","未绑定网关");
+            return resultMap;
+        }
+        Map<String,Object> GatewayMap = gatewayService.selectGateway(gatewayId);
+        if (GatewayMap==null){
+            resultMap.put("gateway","未绑定网关");
+            return resultMap;
+        }
+        resultMap.put("gateway",GatewayMap);
+
+        return resultMap;
+    }
+
+    @Override
+    public LockResult configuration(Map param) {
+        //发送请求
+        Map result = gatewayService.bindinggateway(configuration, param);
+        Integer resultCode = (Integer) result.get("resultCode");
+        String reason = (String) result.get("reason");
+        if (resultCode==0){
+            return new LockResult(true,"设置成功", ErrorEnum.SUCCESS.getCode(),"");
+        }else{
+            return new LockResult(false,"设置失败: "+ reason, ErrorEnum.OPERATION_ERROR.getCode(),"");
+        }
     }
 
     @Override
@@ -80,5 +125,18 @@ public class ManageServiceImpl implements ManageService {
         long total = pageInfo.getTotal();
         PageResult<Gateway> pageResult = new PageResult<Gateway>(pageSize,pageNum,pageList,total,pages);
         return pageResult;
+    }
+
+    @Override
+    @Transactional
+    public int updateGateway(Gateway gateway) {
+        int update = gatewayDao.updateByPrimaryKeySelective(gateway);
+        return update;
+    }
+
+    @Override
+    public Map gatewayDetails(String gatewayId) {
+        Map<String,Object> GatewayMap = gatewayService.selectGateway(gatewayId);
+        return GatewayMap;
     }
 }

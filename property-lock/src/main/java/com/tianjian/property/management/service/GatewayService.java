@@ -22,5 +22,5 @@ public interface GatewayService {
     //修改蓝牙网关的设备状态
     List<Lock> updateStatus(Integer id, Integer status);
     //查询网关详情
-    Integer selectGateway(String gatewayId);
+    Map selectGateway(String gatewayId);
 }

@@ -62,7 +62,7 @@ public class GatewayController {
         try {
             String gatewayId = (String) map.get("gatewayId");
             int resultMap=gatewayService.deleteGateway(gatewayId);
-            if(resultMap>=0){
+            if(resultMap>0){
                 return new LockResult(true, ErrorEnum.SUCCESS.getErrorMsg(),ErrorEnum.SUCCESS.getCode(),resultMap);
             }
             return new LockResult(false,"删除失败",ErrorEnum.OPERATION_ERROR.getCode(),"");
@@ -93,6 +93,7 @@ public class GatewayController {
             Integer gateway = (Integer) map.get("gateway");
             //蓝牙锁设备id
             Integer lock = (Integer) map.get("lock");
+            System.out.println(lockId);
             Map result = gatewayService.LockBindingGateway(lockId, gatewayId,doorID,gateway,lock);
             Integer resultCode = (Integer) result.get("resultCode");
             String reason = (String) result.get("reason");

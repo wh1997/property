@@ -168,15 +168,24 @@ public class GatewayServiceImpl extends HttpService implements GatewayService  {
         //更新时间
         String updateTime = (String) gatewayInfoMap.get("updateTime");*/
         Gateway gateway = new Gateway(null, gatewayId, gatewaySeq, gatewayName, gatewayMac, gatewayType, hardwareVersion, softwareVersion, project, "慧享佳",null,null, state,null);
-        gatewayDao.inster(gateway);
+        //查询该网关是否绑定
+        Gateway select = gatewayDao.selectbyGatewaySeq(gatewaySeq);
+        if(select==null){
+            gatewayDao.inster(gateway);
+        }else{
+            //更改网关的gatewayId参数(gatewayId会随网关的再次绑定二更改)
+            gateway.setId(select.getId());
+            gatewayDao.updateByPrimaryKeySelective(gateway);
+        }
         return bindinggateway;
     }
 
     @Override
     @Transactional
     public Map LockBindingGateway(String lockId, String gatewayId, Integer doorID, Integer gateway, Integer lock) {
-        int status= doorDao.selectSutats(doorID);
-        if (status==3){
+        Lock lock2 = lockDao.selectByDoorid(doorID);
+        Integer lockGatewayId = lock2.getLockGatewayId();
+        if (lockGatewayId==-1){
         HashMap<String, Object> datamap = new HashMap<>();
         //	是	string 门锁id
         datamap.put("lockId",lockId);
@@ -185,16 +194,16 @@ public class GatewayServiceImpl extends HttpService implements GatewayService  {
         //发送请求
         Map bindinggateway = bindinggateway(bindingGateway, datamap);
         Integer resultCode = (Integer) bindinggateway.get("resultCode");
-        if(resultCode==0){
-            Lock lock1 = new Lock(null, doorID, 0, lock, gateway, 0, null, null, null);
-            lock1.setDoorId(doorID);
-            lock1.setLockGatewayId(gateway);
-            //添加锁信息
-            lockDao.updateByLockToGateway(doorID,lock,gateway);
-            //修改门的状态
-            doorDao.updateDoorStatus(doorID);
-            return bindinggateway;
-        }
+            if(resultCode==0){
+                Lock lock1 = new Lock(null, doorID, 0, lock, gateway, 0, null, null, null);
+                lock1.setDoorId(doorID);
+                lock1.setLockGatewayId(gateway);
+                //添加锁信息
+                lockDao.updateByLockToGateway(doorID,lock,gateway);
+                //修改门的状态
+                doorDao.updateDoorStatus(doorID);
+                return bindinggateway;
+            }
         return bindinggateway;
         }else {
             HashMap<String, Object> hashMap = new HashMap<>();
@@ -237,16 +246,19 @@ public class GatewayServiceImpl extends HttpService implements GatewayService  {
             return lock;
         }
     }
-
     @Override
-    public Integer selectGateway(String gatewayId) {
+    public Map selectGateway(String gatewayId) {
         HashMap<String, Object> map = new HashMap<>();
         map.put("gatewayId",gatewayId);
         Map retulsMap= bindinggateway(getGatewayInfo, map);
-        Map data = (Map) retulsMap.get("data");
-        Map gatewayInfo = (Map) data.get("gatewayInfo");
-        Integer gatewayState = (Integer) gatewayInfo.get("gatewayState");
-        return gatewayState;
+        Integer resultCode = (Integer) retulsMap.get("resultCode");
+        if (resultCode==0){
+            Map data = (Map) retulsMap.get("data");
+            Map gatewayInfo = (Map) data.get("gatewayInfo");
+            return gatewayInfo;
+        }else {
+            return null;
+        }
     }
 
 }

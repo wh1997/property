@@ -1,6 +1,7 @@
 package com.tianjian.property.dao;
 
 import com.tianjian.property.bean.Door;
+import com.tianjian.property.bean.User;
 import com.tianjian.property.bean.vo.DoorVo;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
@@ -28,11 +29,11 @@ public interface DoorDao extends BaseDao<Door> {
             "<if test='door.updateTime != null'> AND update_time = #{door.updateTime}</if>" +
             "<if test='door.createPerson != null'> AND create_person = #{door.createPerson}</if>" +
             "<if test='door.remark != null'> AND remark = #{door.remark}</if>" +
-            "<if test='door.propertyName != null'> OR property_name  like CONCAT('%',#{door.propertyName},'%')</if>" +
-            "<if test='door.numName != null'> OR num_name like CONCAT('%',#{door.numName},'%') </if>" +
-            "<if test='door.buildingName != null'> OR building_name like CONCAT('%',#{door.buildingName},'%') </if>" +
-            "<if test='door.unitName != null'> OR unit_name like CONCAT('%',#{door.unitName},'%') </if>" +
-            "<if test='door.doorName != null'> OR door_name like CONCAT('%',#{door.doorName},'%')</if>" +
+            "<if test='door.propertyName != null'> AND property_name  like CONCAT('%',#{door.propertyName},'%')</if>" +
+            "<if test='door.numName != null'> AND num_name like CONCAT('%',#{door.numName},'%') </if>" +
+            "<if test='door.buildingName != null'> AND building_name like CONCAT('%',#{door.buildingName},'%') </if>" +
+            "<if test='door.unitName != null'> AND unit_name like CONCAT('%',#{door.unitName},'%') </if>" +
+            "<if test='door.doorName != null'> AND door_name like CONCAT('%',#{door.doorName},'%')</if>" +
             "</if>" +
             "ORDER  BY property_id ASC ,building_id ASC ,num_id ASC,unit_no ASC ,floor_no ASC , room_no ASC"+
             "</script>"})
@@ -193,7 +194,7 @@ public interface DoorDao extends BaseDao<Door> {
     @Select({"<script>" +
             "SELECT  status FROM tj_door WHERE id=#{doorID}"+
             "</script>"})
-    int selectSutats(Integer doorID);
+    Integer selectSutats(Integer doorID);
     @Select({"<script>" +
             "SELECT id  doorId ,property_name propertyName,num_name numName,building_name buildingName,unit_name unitName, floor_no floorNo," +
             " room_no roomNo,door_name  doorName "+
@@ -229,4 +230,32 @@ public interface DoorDao extends BaseDao<Door> {
             "ORDER  BY property_id ASC ,building_id ASC ,num_id ASC,unit_no ASC ,floor_no ASC , room_no ASC"+
             "</script>"})
     List<DoorVo> selectPageDoor(Door door, List<Integer> lists);
+    @Select({"<script>" +
+            "SELECT * " +
+            " FROM tj_door WHERE status!=3 AND property_id IN "+
+            "<foreach collection=\"lists\" item=\"list\" index=\"index\" open=\"(\" close=\")\" separator=\",\"> " +
+            "#{list} " +
+            "</foreach>" +
+            "</script>"})
+    List<Door> selectDoorByProperty(List<Integer> lists);
+    @Select({"<script>" +
+           "SELECT " +
+            "  u.id uId, " +
+            "  u.user_id userId, " +
+            "  u.phone phone, " +
+            "  u.name name, " +
+            "  u.role role  " +
+            " FROM " +
+            "  `tj_user` u " +
+            "  INNER JOIN tj_lock_authorization a ON u.user_id = a.user_id " +
+            "  INNER JOIN tj_door d ON d.id = a.door_id  " +
+            " WHERE " +
+            " a. user_status=0 AND" +
+            "  d.property_id IN " +
+            "<foreach collection=\"lists\" item=\"list\" index=\"index\" open=\"(\" close=\")\" separator=\",\"> " +
+            "#{list} " +
+            "</foreach>" +
+            "    GROUP BY  u.id"+
+            "</script>"})
+    List<User> selectUser(List<Integer> lists);
 }

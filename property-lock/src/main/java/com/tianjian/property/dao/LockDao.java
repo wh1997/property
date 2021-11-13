@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 @Repository
@@ -53,4 +54,11 @@ public interface LockDao extends BaseDao<Lock> {
             " AND lock_status = 0"+
             "</script>"})
     int updateByLockToGateway(Integer doorID, Integer lock, Integer gateway);
+    @Select({"<script>" +
+            " select l.door_id doorId,g.gateway_id gatewayId   FROM tj_lock l " +
+            " INNER JOIN tj_gateway g ON " +
+            " l.lock_gateway_id=g.id " +
+            " WHERE  l.lock_facility_id= #{lockId}" +
+            "</script>"})
+    Map lockSelectGateway(Integer lockId);
 }
