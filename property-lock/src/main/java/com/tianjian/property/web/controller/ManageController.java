@@ -15,8 +15,10 @@ import com.tianjian.property.web.service.ManageService;
 import com.tianjian.property.web.service.SelectRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.Map;
@@ -26,7 +28,7 @@ import java.util.Map;
  * @author: ManolinCoder
  * @time: 2021/11/4
  */
-@Controller
+@RestController
 @RequestMapping("/manage")
 public class ManageController {
     @Autowired
@@ -42,7 +44,7 @@ public class ManageController {
     * @Date: 2021/11/8 
     */
     @RequestMapping("/bluetooth/delete")
-    public LockResult deleteBluetooth(@RequestHeader String token , Map map)  {
+    public LockResult deleteBluetooth(@RequestHeader String token ,@RequestBody Map map)  {
         Integer id = (Integer) map.get("id");
         int i=  manageService.deleteBluetooth(id);
         if (i>0){
@@ -57,7 +59,7 @@ public class ManageController {
     * @Date: 2021/11/8
     */
     @RequestMapping("/bluetooth/updata")
-    public LockResult updataBluetooth(@RequestHeader String token , Map map) throws Exception {
+    public LockResult updataBluetooth(@RequestHeader String token ,@RequestBody Map map) throws Exception {
         LockBaseInfo lockBaseInfo = BeanChangeUtils.mapToBean(map, LockBaseInfo.class);
         int i = manageService.updataBluetooth(lockBaseInfo);
         if (i>0){
@@ -72,7 +74,7 @@ public class ManageController {
     * @Date: 2021/11/8
     */
     @RequestMapping("/bluetooth/select")
-    public LockResult selectBluetooth(@RequestHeader String token , Map map) {
+    public LockResult selectBluetooth(@RequestHeader String token ,@RequestBody Map map) {
         try {
             Integer appUID = TokenUtil.getAppUID(token);
             List<Integer> propertyList = selectRoleService.selectRole(appUID);
@@ -101,7 +103,7 @@ public class ManageController {
     * @Date: 2021/11/8
     */
     @RequestMapping("/bluetooth/details")
-    public LockResult bluetoothdDetails(@RequestHeader String token , Map map) {
+    public LockResult bluetoothdDetails(@RequestHeader String token ,@RequestBody Map map) {
         String lockId= (String) map.get("lockId");
         Map details = manageService.BluetoothdDetails(lockId);
         Integer resultCode = (Integer) details.get("resultCode");
@@ -119,7 +121,7 @@ public class ManageController {
     * @Date: 2021/11/8
     */
     @RequestMapping("/lock/gateway/details")
-    public LockResult lockGatewayDetails(@RequestHeader String token , Map map) {
+    public LockResult lockGatewayDetails(@RequestHeader String token ,@RequestBody Map map) {
         try {
             Integer lockId= (Integer) map.get("lockId");
             Map details = manageService.lockGatewayDetails(lockId);
@@ -136,7 +138,7 @@ public class ManageController {
     * @Date: 2021/11/8
     */
     @RequestMapping("/lock/configuration")
-    public LockResult configuration(@RequestHeader String token , Map map) {
+    public LockResult configuration(@RequestHeader String token ,@RequestBody Map map) {
         try {
             LockResult result = manageService.configuration(map);
             return result;
@@ -153,7 +155,7 @@ public class ManageController {
     * @Date: 2021/11/8
     */
     @RequestMapping("/gateway/select")
-    public LockResult selectGateway(@RequestHeader String token , Map map) throws Exception {
+    public LockResult selectGateway(@RequestHeader String token ,@RequestBody Map map) throws Exception {
         try {
             Integer appUID = TokenUtil.getAppUID(token);
             List<Integer> propertyList = selectRoleService.selectRole(appUID);
@@ -181,7 +183,7 @@ public class ManageController {
      * @Date: 2021/11/8
      */
     @RequestMapping("/gateway/update")
-    public LockResult updateGateway(@RequestHeader String token , Map map) {
+    public LockResult updateGateway(@RequestHeader String token ,@RequestBody Map map) {
         try {
             Gateway gateway = BeanChangeUtils.mapToBean(map, Gateway.class);
             int i = manageService.updateGateway(gateway);
@@ -202,7 +204,7 @@ public class ManageController {
      * @Date: 2021/11/8
      */
     @RequestMapping("/gateway/delete")
-    public LockResult deleteGateway(@RequestHeader String token , Map map) {
+    public LockResult deleteGateway(@RequestHeader String token ,@RequestBody Map map) {
         try {
             String gatewayId = (String) map.get("gatewayId");
             int resultMap=gatewayService.deleteGateway(gatewayId);
@@ -223,7 +225,7 @@ public class ManageController {
      * @Date: 2021/11/8
      */
     @RequestMapping("/gateway/details")
-    public LockResult gatewayDetails(@RequestHeader String token , Map map) {
+    public LockResult gatewayDetails(@RequestHeader String token ,@RequestBody Map map) {
         try {
             String gatewayId = (String) map.get("gatewayId");
             Map resultMap=manageService.gatewayDetails(gatewayId);

@@ -41,4 +41,18 @@ public class MonitorServiceImpl implements MonitorService {
     public int updateDoor(Door door) {
         return doorDao.updateByPrimaryKey(door);
     }
+
+    @Override
+    public PageResult<DoorVo> selectPublicDoor(Door door,List<Integer> types, List<Integer> list, Integer pageNum, Integer pageSize) {
+        //查询小区下房间的具体信息
+        PageHelper.startPage(pageNum,pageSize);
+        List<DoorVo> all = doorDao.selectPublicDoor(door,types,list);
+        PageInfo<DoorVo> doorVoPageInfo = new PageInfo<>(all);
+        List<DoorVo> Doorlist = doorVoPageInfo.getList();
+        int pages = doorVoPageInfo.getPages();
+        //总共多少条
+        long total = doorVoPageInfo.getTotal();
+        PageResult<DoorVo> doorVoPageResult = new PageResult<>(pageSize,pageNum,Doorlist,total,pages);
+        return doorVoPageResult;
+    }
 }

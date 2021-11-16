@@ -1,6 +1,9 @@
 package com.tianjian.property.web.service;
 
+import com.tianjian.property.bean.vo.DoorVo;
+
 import java.util.List;
+import java.util.Map;
 
 /**
  * @description:
@@ -9,4 +12,6 @@ import java.util.List;
  */
 public interface SelectRoleService {
     List<Integer> selectRole(Integer userId);
+
+    List<Map> selecProperty(Integer appUID);
 }

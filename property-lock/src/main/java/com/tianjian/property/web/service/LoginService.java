@@ -8,5 +8,5 @@ import com.tianjian.property.utils.LockResult;
  * @time: 2021/11/12
  */
 public interface LoginService {
-    LockResult login(String phone) throws Exception;
+    LockResult login(String phone,String Password) throws Exception;
 }

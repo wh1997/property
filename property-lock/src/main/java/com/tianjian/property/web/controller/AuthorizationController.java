@@ -12,8 +12,10 @@ import com.tianjian.property.web.service.AuthorizationService;
 import com.tianjian.property.web.service.SelectRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.Map;
@@ -23,7 +25,7 @@ import java.util.Map;
  * @author: ManolinCoder
  * @time: 2021/11/4
  */
-@Controller
+@RestController
 @RequestMapping("/authorization")
 public class AuthorizationController {
     @Autowired
@@ -38,7 +40,7 @@ public class AuthorizationController {
      */
     //TODO  待定  没确定用户的地址
     @RequestMapping("/select/user")
-    public LockResult selectUser(@RequestHeader String token , Map map) {
+    public LockResult selectUser(@RequestHeader String token ,@RequestBody Map map) {
         try {
             Integer pageNum = (Integer) map.get("pageNum");
             Integer pageSize = (Integer) map.get("pageSize");
@@ -66,7 +68,7 @@ public class AuthorizationController {
      * @Date: 2021/11/8
      */
     @RequestMapping("/select/door")
-    public LockResult selectDoorByProperty(@RequestHeader String token,Map map ) {
+    public LockResult selectDoorByProperty(@RequestHeader String token,@RequestBody Map map ) {
         try {
             Integer appUID = TokenUtil.getAppUID(token);
             Integer pageNum = (Integer) map.get("pageNum");
@@ -93,7 +95,7 @@ public class AuthorizationController {
      * @Date: 2021/11/8
      */
     @RequestMapping("/add/right")
-    public LockResult addRight(@RequestHeader String token , Map map) {
+    public LockResult addRight(@RequestHeader String token ,@RequestBody Map map) {
         try {
             Integer appUID = TokenUtil.getAppUID(token);
             LockAuthorization lockAuthorization = BeanChangeUtils.mapToBean(map, LockAuthorization.class);
@@ -116,7 +118,7 @@ public class AuthorizationController {
      * @Date: 2021/11/8
      */
     @RequestMapping("/select/right")
-    public LockResult selectRight(@RequestHeader String token , Map map) {
+    public LockResult selectRight(@RequestHeader String token ,@RequestBody Map map) {
         try {
             Integer pageNum = (Integer) map.get("pageNum");
             Integer pageSize = (Integer) map.get("pageSize");
@@ -138,7 +140,7 @@ public class AuthorizationController {
      * @Date: 2021/11/8
      */
     @RequestMapping("/delete/right")
-    public LockResult deleteRight(@RequestHeader String token , Map map) {
+    public LockResult deleteRight(@RequestHeader String token ,@RequestBody Map map) {
         try {
             Integer aId = (Integer) map.get("aId");
             int i =authorizationService.deleteRight(aId);

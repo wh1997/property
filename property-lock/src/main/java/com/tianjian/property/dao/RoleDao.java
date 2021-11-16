@@ -1,11 +1,14 @@
 package com.tianjian.property.dao;
 
+import com.tianjian.property.bean.Role;
 import com.tianjian.property.bean.User;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -15,28 +18,15 @@ import java.util.Map;
  */
 @Mapper
 @Repository
-public interface RoleDao extends BaseDao<User> {
-//    @Insert({"<script>" +
-//            " INSERT INTO tj_user" +
-//            "<trim prefix=\"(\" suffix=\")\" suffixOverrides=\",\">"+
-//            " <if test='userId != null'>user_id ,</if> " +
-//            " <if test='role != null'>role ,</if> " +
-//            " <if test='addTime != null'>add_time ,</if> " +
-//            " <if test='updateTime != null'>update_time ,</if> " +
-//            " <if test='remark != null'>remark </if> " +
-//            "</trim>"+
-//            "<trim prefix=\"values (\" suffix=\")\" suffixOverrides=\",\">"+
-//            " <if test='userId  != null'> #{userId}, </if> " +
-//            " <if test='role  != null'> #{role}, </if>" +
-//            " <if test='addTime   != null'>#{addTime}, </if> " +
-//            " <if test='updateTime  != null'>#{updateTime} ,</if> " +
-//            " <if test='remark != null'>#{remark} </if> " +
-//            "</trim>"+
-//            "</script>"})
-//    int insert(User role);
+public interface RoleDao extends BaseDao<Role> {
     @Select({"<script>" +
-            " SELECT role  " +
-            "FROM tj_user WHERE user_id = #{userId} AND 1 = 1"+
+            " SELECT *  " +
+            "FROM tj_role WHERE 1=1 "+
+            "<if test='role != null'> " +
+            "<if test='role.id != null'> AND id = #{role.id}</if>" +
+            "<if test='role.parentId != null'> AND parent_id = #{role.parentId}</if>" +
+            "<if test='role.name != null'> AND name  like CONCAT('%',#{role.name},'%')</if>" +
+            "</if>" +
             "</script>"})
-    Map selectByUserId(Integer userId);
+    List<Role> selectRole(@Param("role") Role role);
 }

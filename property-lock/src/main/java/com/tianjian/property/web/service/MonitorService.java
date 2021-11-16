@@ -15,4 +15,6 @@ public interface MonitorService {
     PageResult<DoorVo> selsctAll(Door door, List<Integer> list, Integer pageNum, Integer pageSize);
 
     int updateDoor(Door door);
+
+    PageResult<DoorVo> selectPublicDoor(Door door,List<Integer> types, List<Integer> list, Integer pageNum, Integer pageSize);
 }

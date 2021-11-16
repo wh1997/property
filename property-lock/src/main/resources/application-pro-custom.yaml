@@ -61,6 +61,8 @@ baiwei :
   status :  /EquipmentStatus.ashx
   #查询控制器
   query :  /EquipmentQuery.ashx
+  #查询控制器
+  webLoginURL :  http://client.api.melifego.cn:80/Security/Authentication/Signin
 #智能门禁小程序的微信参数
 lock :
   appid : wxeeee516c3ae0629b

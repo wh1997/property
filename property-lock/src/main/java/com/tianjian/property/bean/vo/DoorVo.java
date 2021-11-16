@@ -2,6 +2,8 @@ package com.tianjian.property.bean.vo;
 
 public class DoorVo {
     private  Integer id;
+    private Integer propertyId;
+    private String propertyName;
     private Integer numId;
     //期数名称
     private String numName;
@@ -21,13 +23,16 @@ public class DoorVo {
     private Integer unitNo;
     //单元名称
     private String unitName;
+    private Integer doorType;
 
     public DoorVo() {
         super();
     }
 
-    public DoorVo(Integer id, Integer numId, String numName, Integer buildingId, String buildingName, Integer floorNo, String roomNo, String doorName, Integer status, Integer unitNo, String unitName) {
+    public DoorVo(Integer id, Integer propertyId, String propertyName, Integer numId, String numName, Integer buildingId, String buildingName, Integer floorNo, String roomNo, String doorName, Integer status, Integer unitNo, String unitName, Integer doorType) {
         this.id = id;
+        this.propertyId = propertyId;
+        this.propertyName = propertyName;
         this.numId = numId;
         this.numName = numName;
         this.buildingId = buildingId;
@@ -38,6 +43,7 @@ public class DoorVo {
         this.status = status;
         this.unitNo = unitNo;
         this.unitName = unitName;
+        this.doorType = doorType;
     }
 
     public Integer getId() {
@@ -46,6 +52,22 @@ public class DoorVo {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Integer getPropertyId() {
+        return propertyId;
+    }
+
+    public void setPropertyId(Integer propertyId) {
+        this.propertyId = propertyId;
+    }
+
+    public String getPropertyName() {
+        return propertyName;
+    }
+
+    public void setPropertyName(String propertyName) {
+        this.propertyName = propertyName;
     }
 
     public Integer getNumId() {
@@ -128,10 +150,20 @@ public class DoorVo {
         this.unitName = unitName;
     }
 
+    public Integer getDoorType() {
+        return doorType;
+    }
+
+    public void setDoorType(Integer doorType) {
+        this.doorType = doorType;
+    }
+
     @Override
     public String toString() {
         return "DoorVo{" +
                 "id=" + id +
+                ", propertyId=" + propertyId +
+                ", propertyName='" + propertyName + '\'' +
                 ", numId=" + numId +
                 ", numName='" + numName + '\'' +
                 ", buildingId=" + buildingId +
@@ -142,6 +174,7 @@ public class DoorVo {
                 ", status=" + status +
                 ", unitNo=" + unitNo +
                 ", unitName='" + unitName + '\'' +
+                ", doorType=" + doorType +
                 '}';
     }
 }

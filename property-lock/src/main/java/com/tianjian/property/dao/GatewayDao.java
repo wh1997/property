@@ -83,7 +83,7 @@ public interface GatewayDao extends BaseDao<Gateway> {
     int updateByGatewayId(String gatewayId);
     @Select({"<script>" +
             " SELECT * " +
-            "FROM tj_gateway WHERE " +
+            "FROM tj_gateway WHERE 1=1 " +
             "<if test='gateway != null'> " +
             "<if test='gateway.gatewayName != null'> AND gateway_name like CONCAT('%',#{gateway.gatewayName},'%')</if>" +
             "<if test='gateway.gatewayMac != null'> AND gateway_mac like CONCAT('%',#{gateway.gatewayMac},'%')</if>" +

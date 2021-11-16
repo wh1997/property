@@ -9,6 +9,7 @@ import com.tianjian.property.utils.TokenUtil;
 import com.tianjian.property.utils.error.ErrorEnum;
 import com.tianjian.property.web.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
@@ -24,16 +25,18 @@ import java.util.concurrent.TimeUnit;
  */
 @Service
 public class LoginServiceImpl  extends HttpService implements LoginService {
+    @Value("${baiwei.webLoginURL}")
+    private  String webLoginURL;
     @Autowired
     private UserDao userDao;
     @Autowired
     private RedisTemplate redisTemplate;
     @Override
-    public LockResult login(String phone) throws Exception {
+    public LockResult login(String phone,String Password) throws Exception {
         HashMap<String, Object> map = new HashMap<>();
         map.put("Identity",phone);
-        map.put("Password","654321asd");
-        Map fromJson = (Map) postResult("http://client.api.melifego.cn/Security/Authentication/Signin?scenario=Mobile", map);
+        map.put("Password",Password);
+        Map fromJson = (Map) postResult(webLoginURL+"?scenario=Mobile", map);
         Map<String,Object> identity = (Map<String, Object>) fromJson.get("Identity");
         if (identity==null){
             return new LockResult(false,"登录失败", ErrorEnum.OPERATION_ERROR.getCode(),"");

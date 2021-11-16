@@ -6,6 +6,7 @@ import io.lettuce.core.dynamic.annotation.Param;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -14,6 +15,11 @@ import java.util.Map;
 @Mapper
 @Repository
 public interface UserDao extends BaseDao<User> {
+    @Select({"<script>" +
+            " SELECT role  " +
+            "FROM tj_user WHERE user_id = #{userId} AND 1 = 1"+
+            "</script>"})
+    Map selectByUserId(Integer userId);
     @Select({"<script>" +
             " SELECT u.id ,u.user_id,u.role,r.id rId, r.parent_id,r.name,r.sort,r.status" +
             " FROM `tj_user` u LEFT JOIN tj_user_role t ON u.user_id= t.user_id " +
@@ -83,14 +89,19 @@ public interface UserDao extends BaseDao<User> {
     List<Map<String,Object>> selectRight(Integer userId);
     @Select({"<script>" +
             "SELECT *  FROM  `tj_user` " +
-            " WHERE  "+
+            " WHERE 1=1 "+
             "<if test='user != null'> " +
             "<if test='user.id != null'> AND id = #{door.id}</if>" +
             "<if test='user.userId != null'> AND user_id = #{user.userId}</if>" +
             "<if test='user.phone != null'> AND phone like CONCAT('%',#{user.phone},'%') </if>" +
-            "<if test='user.name != null'> AND name = like CONCAT('%',#{user.name},'%')</if>" +
+            "<if test='user.name != null'> AND name  like CONCAT('%',#{user.name},'%')</if>" +
             "<if test='user.role != null'> AND role = #{user.role}</if>" +
             "</if>" +
             "</script>"})
     List<User> selectStaff(@Param("user") User user);
+  @Update({"<script>" +
+          "UPDATE `tj_user` SET role = 2 " +
+          " WHERE user_id= #{userId} "+
+          "</script>"})
+    int deleteByUserId(String userId);
 }

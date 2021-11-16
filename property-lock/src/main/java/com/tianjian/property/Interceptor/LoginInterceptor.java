@@ -56,7 +56,11 @@ public class LoginInterceptor implements HandlerInterceptor {
             }
             //判断redis里的token是否存在
             Boolean aBoolean = redisTemplate.hasKey(LockConstants.USER_TOKEN + token);
+            Boolean bBoolean = redisTemplate.hasKey(LockConstants.WEB_USER_TOKEN + token);
             if (!aBoolean){
+                if (bBoolean){
+                    return true;
+                }
                 LockResult lockResult = new LockResult();
                 lockResult.setCode(ErrorEnum.TOKEN_EXPIRE.getCode());
                 lockResult.setErrorMessage(ErrorEnum.TOKEN_EXPIRE.getErrorMsg());
@@ -64,7 +68,7 @@ public class LoginInterceptor implements HandlerInterceptor {
                 writeToResponse(response,lockResult);
                 return false;
             }
-        }
+            }
         return true;
 
     }

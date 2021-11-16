@@ -68,7 +68,6 @@ public class ManageServiceImpl implements ManageService {
         PageResult<LinkedHashMap<String, Object>> pageResult = new PageResult<LinkedHashMap<String, Object>>(pageSize,pageNum,pageList,total,pages);
         return pageResult;
     }
-
     @Override
     public Map BluetoothdDetails(String lockId) {
         HashMap<String, Object> datamap = new HashMap<>();
