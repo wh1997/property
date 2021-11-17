@@ -5,13 +5,15 @@ import com.tianjian.property.bean.User;
 import com.tianjian.property.utils.LockResult;
 import com.tianjian.property.utils.PageResult;
 
+import java.util.Map;
+
 /**
  * @description:
  * @author: ManolinCoder
  * @time: 2021/11/4
  */
 public interface PermissionService {
-    PageResult<User> selectStaff(Integer pageNum, Integer pageSize,User user);
+    PageResult<Map> selectStaff(Integer pageNum, Integer pageSize, User user);
 
     LockResult addStaff(User user);
 

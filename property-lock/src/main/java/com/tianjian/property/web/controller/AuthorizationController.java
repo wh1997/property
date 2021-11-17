@@ -12,10 +12,7 @@ import com.tianjian.property.web.service.AuthorizationService;
 import com.tianjian.property.web.service.SelectRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
@@ -34,12 +31,11 @@ public class AuthorizationController {
     private SelectRoleService selectRoleService;
     /**
      * @Description: 查看所有住户
-     * @Param:
+     * @Param:     TODO  待定  没确定用户的地址
      * @return:
      * @Date: 2021/11/8
      */
-    //TODO  待定  没确定用户的地址
-    @RequestMapping("/select/user")
+    @PostMapping("/select/user")
     public LockResult selectUser(@RequestHeader String token ,@RequestBody Map map) {
         try {
             Integer pageNum = (Integer) map.get("pageNum");
@@ -67,7 +63,7 @@ public class AuthorizationController {
      * @return:
      * @Date: 2021/11/8
      */
-    @RequestMapping("/select/door")
+    @PostMapping("/select/door")
     public LockResult selectDoorByProperty(@RequestHeader String token,@RequestBody Map map ) {
         try {
             Integer appUID = TokenUtil.getAppUID(token);
@@ -94,7 +90,7 @@ public class AuthorizationController {
      * @return:
      * @Date: 2021/11/8
      */
-    @RequestMapping("/add/right")
+    @PostMapping("/add/right")
     public LockResult addRight(@RequestHeader String token ,@RequestBody Map map) {
         try {
             Integer appUID = TokenUtil.getAppUID(token);
@@ -117,7 +113,7 @@ public class AuthorizationController {
      * @return:
      * @Date: 2021/11/8
      */
-    @RequestMapping("/select/right")
+    @PostMapping("/select/right")
     public LockResult selectRight(@RequestHeader String token ,@RequestBody Map map) {
         try {
             Integer pageNum = (Integer) map.get("pageNum");
@@ -139,7 +135,7 @@ public class AuthorizationController {
      * @return:
      * @Date: 2021/11/8
      */
-    @RequestMapping("/delete/right")
+    @PostMapping("/delete/right")
     public LockResult deleteRight(@RequestHeader String token ,@RequestBody Map map) {
         try {
             Integer aId = (Integer) map.get("aId");

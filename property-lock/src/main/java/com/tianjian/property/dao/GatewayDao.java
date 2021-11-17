@@ -1,10 +1,7 @@
 package com.tianjian.property.dao;
 
 import com.tianjian.property.bean.Gateway;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -94,7 +91,7 @@ public interface GatewayDao extends BaseDao<Gateway> {
             "#{list} " +
             "</foreach>" +
             "</script>"})
-    List<Gateway> selectGateway(List<Integer> list, Gateway gateway);
+    List<Gateway> selectGateway(@Param("lists") List<Integer> lists, Gateway gateway);
     @Select({"<script>" +
             " SELECT * " +
             "FROM tj_gateway WHERE " +

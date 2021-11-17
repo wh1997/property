@@ -61,6 +61,10 @@ public class LockLog implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    public LockLog() {
+        super();
+    }
+
     /**
      * @return id
      */

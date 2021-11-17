@@ -34,32 +34,29 @@ public class PermissionServiceImpl extends HttpService implements PermissionServ
     @Autowired
     private RoleDao roleDao;
     @Override
-    public PageResult<User> selectStaff(Integer pageNum, Integer pageSize,User user) {
+    public PageResult<Map> selectStaff(Integer pageNum, Integer pageSize,User user) {
         PageHelper.startPage(pageNum,pageSize);
-        List<User> staff = userDao.selectStaff(user);
-        PageInfo<User> staffPageInfo = new PageInfo<>(staff);
-        List<User> Doorlist = staffPageInfo.getList();
+        List<Map> staff = userDao.selectStaff(user);
+        PageInfo<Map> staffPageInfo = new PageInfo<>(staff);
+        List<Map> Doorlist = staffPageInfo.getList();
         int pages = staffPageInfo.getPages();
         //总共多少条
         long total = staffPageInfo.getTotal();
-        PageResult<User> PageResult = new PageResult<>(pageSize,pageNum,Doorlist,total,pages);
+        PageResult<Map> PageResult = new PageResult<>(pageSize,pageNum,Doorlist,total,pages);
         return PageResult;
     }
 
     @Override
+    @Transactional
     public LockResult addStaff(User user) {
-        String phone = user.getPhone();
-        HashMap<String, Object> map = new HashMap<>();
-        map.put("Identity",phone);
-       // map.put("Password",Password);
-        Map fromJson = (Map) postResult(webLoginURL+"?scenario=Mobile", map);
-        Map<String,Object> identity = (Map<String, Object>) fromJson.get("Identity");
-        if (identity==null){
-            return new LockResult(false,"添加失败,请先注册企业用户", ErrorEnum.OPERATION_ERROR.getCode(),"");
+        Integer userId = user.getUserId();
+        Map map = userDao.selectByUserId(userId);
+        int i=0;
+        if (map!=null){
+            i = userDao.updateByUserId(userId);
+        }else{
+            i = userDao.insertSelective(user);
         }
-        Integer userId = (Integer) identity.get("UserId");
-        user.setUserId(userId);
-        int i = userDao.insertSelective(user);
         if (i>0){
             return new LockResult(true,  "添加成功", ErrorEnum.SUCCESS.getCode(), "");
         }else{

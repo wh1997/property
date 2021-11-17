@@ -11,10 +11,7 @@ import com.tianjian.property.utils.error.ErrorEnum;
 import com.tianjian.property.web.service.MonitorService;
 import com.tianjian.property.web.service.SelectRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +31,7 @@ public class MonitorController {
     private SelectRoleService selectRoleService;
     @Autowired
     private RoomDoorService roomDoorService;
-    @RequestMapping("/select/Property")
+    @PostMapping("/select/Property")
     public LockResult selecProperty(@RequestHeader String token ) throws Exception {
         Integer appUID = TokenUtil.getAppUID(token);
         List<Map> list = selectRoleService.selecProperty(appUID);
@@ -50,7 +47,7 @@ public class MonitorController {
     * @return:  
     * @Date: 2021/11/15 
     */
-    @RequestMapping("/select/door")
+    @PostMapping("/select/door")
     public LockResult selectDoor(@RequestHeader String token ,@RequestBody Map map) throws Exception {
         Integer appUID = TokenUtil.getAppUID(token);
         List<Integer> list = selectRoleService.selectRole(appUID);
@@ -76,7 +73,7 @@ public class MonitorController {
             return new LockResult(true,"获取成功",ErrorEnum.SUCCESS.getCode(),doors);
         }
     }
-    @RequestMapping("/select/publicDoor")
+    @PostMapping("/select/publicDoor")
     public LockResult selectPublicDoor(@RequestHeader String token ,@RequestBody Map map) throws Exception {
         Integer appUID = TokenUtil.getAppUID(token);
         List<Integer> list = selectRoleService.selectRole(appUID);
@@ -109,7 +106,7 @@ public class MonitorController {
     * @return:  
     * @Date: 2021/11/8 
     */
-    @RequestMapping("/update/door")
+    @PostMapping("/update/door")
     public LockResult updateDoor(@RequestHeader String token ,@RequestBody Map map) throws Exception {
         Door door = BeanChangeUtils.mapToBean(map, Door.class);
         int i= monitorServices.updateDoor(door);
@@ -125,7 +122,7 @@ public class MonitorController {
     * @return:
     * @Date: 2021/11/8
     */
-    @RequestMapping("/add/door")
+    @PostMapping("/add/door")
     public LockResult addDoor(@RequestHeader String token ,@RequestBody Map map) throws Exception {
         Integer appUID = TokenUtil.getAppUID(token);
         List<Map> door = (List<Map>) map.get("list");

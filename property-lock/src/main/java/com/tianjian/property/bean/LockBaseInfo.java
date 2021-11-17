@@ -148,6 +148,10 @@ public class LockBaseInfo implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    public LockBaseInfo() {
+        super();
+    }
+
     public LockBaseInfo(Integer id, String lockId, String lockTag, String lockMac, String hardwareVersion, String softwareVersion, Integer lockType, Integer initStatus, Integer maxVolume, Integer maxUser, Integer bleprotocolVer, Integer rfmoduleType, String rfmoduleMac, String aesKey, String adminAuthCode, String generalAuthCode, String tempAuthCode, String createTime, String updateTime, String addPeople, String vendor, Integer status, String remark) {
         this.id = id;
         this.lockId = lockId;

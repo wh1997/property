@@ -30,6 +30,10 @@ public class UserRole implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    public UserRole() {
+        super();
+    }
+
     /**
      * @return id
      */

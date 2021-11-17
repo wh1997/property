@@ -10,9 +10,7 @@ import com.tianjian.property.utils.error.ErrorEnum;
 import com.tianjian.property.web.service.PermissionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
@@ -22,7 +20,7 @@ import java.util.Map;
  * @author: ManolinCoder
  * @time: 2021/11/4
  */
-@Controller
+@RestController
 @RequestMapping("/permission")
 public class PermissionController {
     @Autowired
@@ -33,13 +31,13 @@ public class PermissionController {
     * @return:  
     * @Date: 2021/11/13 
     */
-    @RequestMapping("/select/staff")
+    @PostMapping("/select/all")
     public LockResult selectStaff(@RequestHeader String token ,@RequestBody Map map) {
         try {
             Integer pageNum = (Integer) map.get("pageNum");
             Integer pageSize = (Integer) map.get("pageSize");
             User user = BeanChangeUtils.mapToBean(map, User.class);
-            PageResult<User> pageResult =permissionService.selectStaff(pageNum,pageSize,user);
+            PageResult<Map> pageResult =permissionService.selectStaff(pageNum,pageSize,user);
             if (pageResult.getRows()!=null){
                 return new LockResult(true,  ErrorEnum.SUCCESS.getErrorMsg(), ErrorEnum.SUCCESS.getCode(), pageResult);
             }else {
@@ -56,7 +54,7 @@ public class PermissionController {
     * @return:
     * @Date: 2021/11/13
     */
-    @RequestMapping("/add/staff")
+    @PostMapping("/add/all")
     public LockResult addStaff(@RequestHeader String token ,@RequestBody Map map) {
         try {
             User user = BeanChangeUtils.mapToBean(map, User.class);
@@ -72,7 +70,7 @@ public class PermissionController {
     * @return:
     * @Date: 2021/11/13
     */
-    @RequestMapping("/delete/staff")
+    @PostMapping("/delete/all")
     public LockResult deleteStaff(@RequestHeader String token ,@RequestBody Map map) {
         try {
             String userId = (String) map.get("userId");
@@ -93,7 +91,7 @@ public class PermissionController {
     * @return:
     * @Date: 2021/11/13
     */
-    @RequestMapping("/add/role")
+    @PostMapping("/add/role")
     public LockResult addRole(@RequestHeader String token ,@RequestBody Map map) {
         try {
             Role role = BeanChangeUtils.mapToBean(map, Role.class);
@@ -114,7 +112,7 @@ public class PermissionController {
     * @return:
     * @Date: 2021/11/13
     */
-    @RequestMapping("/update/role")
+    @PostMapping("/update/role")
     public LockResult updateRole(@RequestHeader String token ,@RequestBody Map map) {
         try {
             Role role = BeanChangeUtils.mapToBean(map, Role.class);
@@ -135,7 +133,7 @@ public class PermissionController {
     * @return:
     * @Date: 2021/11/13
     */
-    @RequestMapping("/delete/role")
+    @PostMapping("/delete/role")
     public LockResult deleteRole(@RequestHeader String token ,@RequestBody Map map) {
         try {
             Integer id = (Integer) map.get("id");
@@ -156,7 +154,7 @@ public class PermissionController {
     * @return:
     * @Date: 2021/11/13
     */
-    @RequestMapping("/select/role")
+    @PostMapping("/select/role")
     public LockResult selectRole(@RequestHeader String token ,@RequestBody Map map) {
         try {
             Integer pageNum = (Integer) map.get("pageNum");

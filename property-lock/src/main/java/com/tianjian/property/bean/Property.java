@@ -62,6 +62,10 @@ public class Property implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    public Property() {
+        super();
+    }
+
     /**
      * @return id
      */

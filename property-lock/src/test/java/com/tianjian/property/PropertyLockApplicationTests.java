@@ -1,10 +1,16 @@
 package com.tianjian.property;
 
+import com.tianjian.property.bean.Door;
 import com.tianjian.property.bean.Property;
+import com.tianjian.property.bean.Role;
+import com.tianjian.property.bean.vo.DoorVo;
 import com.tianjian.property.management.service.*;
 import com.tianjian.property.utils.LockResult;
+import com.tianjian.property.utils.PageResult;
 import com.tianjian.property.web.service.LoginService;
 import com.tianjian.property.web.service.ManageService;
+import com.tianjian.property.web.service.MonitorService;
+import com.tianjian.property.web.service.PermissionService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -31,6 +37,10 @@ class PropertyLockApplicationTests {
     private ManageService manageService;
     @Autowired
     private LoginService loginService;
+    @Autowired
+    private PermissionService permissionService;
+    @Autowired
+    private MonitorService monitorService;
     @Test
     void redisceshi()  {
        redisTemplate.opsForValue().set("嘻嘻呵呵","hahahaha");
@@ -82,8 +92,25 @@ class PropertyLockApplicationTests {
     //登录测试
     @Test
     void test9() throws Exception {
-        LockResult login = loginService.login("15873306605");
-        System.out.println(login.getErrorMessage());
+        //LockResult login = loginService.login("15873306605");
+       // System.out.println(login.getErrorMessage());
+    }
+    @Test
+    void test10() throws Exception {
+        Role role = new Role();
+        role.setName("鲁班");
+        PageResult<Role> result = permissionService.selectRole(role, 1, 1);
+        System.out.println(result.getRows().get(0).getName());
+    }
+    @Test
+    void test11() throws Exception {
+        ArrayList<Integer> integers1 = new ArrayList<>();
+        integers1.add(0);
+        integers1.add(1);
+        ArrayList<Integer> integers = new ArrayList<>();
+        integers.add(100008);
+        PageResult<DoorVo> doorVoPageResult = monitorService.selectPublicDoor(new Door(),integers1, integers, 1, 5);
+        System.out.println(doorVoPageResult.getRows());
     }
     @Test
     void test7()  {

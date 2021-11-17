@@ -67,6 +67,10 @@ public class Malfunction implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    public Malfunction() {
+        super();
+    }
+
     /**
      * @return id
      */

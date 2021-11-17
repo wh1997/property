@@ -62,6 +62,10 @@ public class Lock implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    public Lock() {
+        super();
+    }
+
     public Lock(Integer id, Integer doorId, Integer lockStatus, Integer lockFacilityId, Integer lockGatewayId, Integer facilityType, String addTime, String updateTime, String remark) {
         this.id = id;
         this.doorId = doorId;

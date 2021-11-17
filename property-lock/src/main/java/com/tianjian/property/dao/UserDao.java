@@ -1,12 +1,7 @@
 package com.tianjian.property.dao;
 
 import com.tianjian.property.bean.User;
-import com.tianjian.property.bean.vo.DoorVo;
-import io.lettuce.core.dynamic.annotation.Param;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -88,20 +83,53 @@ public interface UserDao extends BaseDao<User> {
             "</script>"})
     List<Map<String,Object>> selectRight(Integer userId);
     @Select({"<script>" +
-            "SELECT *  FROM  `tj_user` " +
-            " WHERE 1=1 "+
+            "SELECT " +
+            "  u.id uId, " +
+            "  u.user_id userId, " +
+            "  u.phone phone, " +
+            "  u.name name, " +
+            "  u.role role,  " +
+            "u.branch_id branchId ," +
+            "p.property_name propertyName"+
+            " FROM " +
+            "  `tj_user` u " +
+            "  LEFT JOIN tj_property p ON u.branch_id = p.branch_id  " +
+            " WHERE u.role=1 "+
             "<if test='user != null'> " +
-            "<if test='user.id != null'> AND id = #{door.id}</if>" +
-            "<if test='user.userId != null'> AND user_id = #{user.userId}</if>" +
-            "<if test='user.phone != null'> AND phone like CONCAT('%',#{user.phone},'%') </if>" +
-            "<if test='user.name != null'> AND name  like CONCAT('%',#{user.name},'%')</if>" +
-            "<if test='user.role != null'> AND role = #{user.role}</if>" +
+            "<if test='user.id != null'> AND u.id = #{user.id}</if>" +
+            "<if test='user.userId != null'> AND u.user_id = #{user.userId}</if>" +
+            "<if test='user.phone != null'> AND u.phone like CONCAT('%',#{user.phone},'%') </if>" +
+            "<if test='user.name != null'> AND u.name  like CONCAT('%',#{user.name},'%')</if>" +
             "</if>" +
             "</script>"})
-    List<User> selectStaff(@Param("user") User user);
+    List<Map> selectStaff( @Param("user") User user);
   @Update({"<script>" +
           "UPDATE `tj_user` SET role = 2 " +
           " WHERE user_id= #{userId} "+
           "</script>"})
     int deleteByUserId(String userId);
+        @Select({"<script>" +
+           "SELECT " +
+            "  u.id uId, " +
+            "  u.user_id userId, " +
+            "  u.phone phone, " +
+            "  u.name name, " +
+            "  u.role role  " +
+            "u.branch_id branchId ," +
+            "p.property_name propertyName"+
+            " FROM " +
+            "  `tj_user` u " +
+            "  INNER JOIN tj_property p ON u.branch_id = p.branch_id  " +
+            " WHERE " +
+            "  d.property_id IN " +
+            "<foreach collection=\"lists\" item=\"list\" index=\"index\" open=\"(\" close=\")\" separator=\",\"> " +
+            "#{list} " +
+            "</foreach>" +
+            "</script>"})
+    List<User> selectUser(@Param("lists") List<Integer> lists);
+    @Update({"<script>" +
+            "UPDATE `tj_user` SET role = 1 " +
+            " WHERE user_id= #{userId} "+
+            "</script>"})
+    int updateByUserId(Integer userId);
 }

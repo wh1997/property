@@ -73,6 +73,10 @@ public class NetworkCard implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    public NetworkCard() {
+        super();
+    }
+
     /**
      * @return id
      */

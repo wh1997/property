@@ -15,10 +15,7 @@ import com.tianjian.property.web.service.ManageService;
 import com.tianjian.property.web.service.SelectRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
@@ -43,7 +40,7 @@ public class ManageController {
     * @return:  
     * @Date: 2021/11/8 
     */
-    @RequestMapping("/bluetooth/delete")
+    @PostMapping("/bluetooth/delete")
     public LockResult deleteBluetooth(@RequestHeader String token ,@RequestBody Map map)  {
         Integer id = (Integer) map.get("id");
         int i=  manageService.deleteBluetooth(id);
@@ -58,7 +55,7 @@ public class ManageController {
     * @return:
     * @Date: 2021/11/8
     */
-    @RequestMapping("/bluetooth/updata")
+    @PostMapping("/bluetooth/updata")
     public LockResult updataBluetooth(@RequestHeader String token ,@RequestBody Map map) throws Exception {
         LockBaseInfo lockBaseInfo = BeanChangeUtils.mapToBean(map, LockBaseInfo.class);
         int i = manageService.updataBluetooth(lockBaseInfo);
@@ -73,7 +70,7 @@ public class ManageController {
     * @return:
     * @Date: 2021/11/8
     */
-    @RequestMapping("/bluetooth/select")
+    @PostMapping("/bluetooth/select")
     public LockResult selectBluetooth(@RequestHeader String token ,@RequestBody Map map) {
         try {
             Integer appUID = TokenUtil.getAppUID(token);
@@ -102,7 +99,7 @@ public class ManageController {
     * @return:
     * @Date: 2021/11/8
     */
-    @RequestMapping("/bluetooth/details")
+    @PostMapping("/bluetooth/details")
     public LockResult bluetoothdDetails(@RequestHeader String token ,@RequestBody Map map) {
         String lockId= (String) map.get("lockId");
         Map details = manageService.BluetoothdDetails(lockId);
@@ -120,7 +117,7 @@ public class ManageController {
     * @return:
     * @Date: 2021/11/8
     */
-    @RequestMapping("/lock/gateway/details")
+    @PostMapping("/lock/gateway/details")
     public LockResult lockGatewayDetails(@RequestHeader String token ,@RequestBody Map map) {
         try {
             Integer lockId= (Integer) map.get("lockId");
@@ -137,7 +134,7 @@ public class ManageController {
     * @return:
     * @Date: 2021/11/8
     */
-    @RequestMapping("/lock/configuration")
+    @PostMapping("/lock/configuration")
     public LockResult configuration(@RequestHeader String token ,@RequestBody Map map) {
         try {
             LockResult result = manageService.configuration(map);
@@ -154,7 +151,7 @@ public class ManageController {
     * @return:
     * @Date: 2021/11/8
     */
-    @RequestMapping("/gateway/select")
+    @PostMapping("/gateway/select")
     public LockResult selectGateway(@RequestHeader String token ,@RequestBody Map map) throws Exception {
         try {
             Integer appUID = TokenUtil.getAppUID(token);
@@ -182,7 +179,7 @@ public class ManageController {
      * @return:
      * @Date: 2021/11/8
      */
-    @RequestMapping("/gateway/update")
+    @PostMapping("/gateway/update")
     public LockResult updateGateway(@RequestHeader String token ,@RequestBody Map map) {
         try {
             Gateway gateway = BeanChangeUtils.mapToBean(map, Gateway.class);
@@ -203,7 +200,7 @@ public class ManageController {
      * @return:
      * @Date: 2021/11/8
      */
-    @RequestMapping("/gateway/delete")
+    @PostMapping("/gateway/delete")
     public LockResult deleteGateway(@RequestHeader String token ,@RequestBody Map map) {
         try {
             String gatewayId = (String) map.get("gatewayId");
@@ -224,7 +221,7 @@ public class ManageController {
      * @return:
      * @Date: 2021/11/8
      */
-    @RequestMapping("/gateway/details")
+    @PostMapping("/gateway/details")
     public LockResult gatewayDetails(@RequestHeader String token ,@RequestBody Map map) {
         try {
             String gatewayId = (String) map.get("gatewayId");

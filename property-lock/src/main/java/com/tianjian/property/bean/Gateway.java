@@ -91,6 +91,10 @@ public class Gateway implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    public Gateway() {
+        super();
+    }
+
     public Gateway(Integer id, String gatewayId, String deviceseq, String gatewayName, String gatewayMac, Integer gatewayType, String hardwareVersion, String softwareVersion, Integer project, String vendor, String createTime, String discardTime, Integer status, String remark) {
         this.id = id;
         this.gatewayId = gatewayId;
