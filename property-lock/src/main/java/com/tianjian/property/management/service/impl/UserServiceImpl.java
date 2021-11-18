@@ -36,7 +36,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<Property> selectPropertyByRole(List<Integer> roleId) {
-        List<Property> properties = rolePropertyDao.selectPropertyByRole(roleId);
+        List<Property> properties = rolePropertyDao.selectPropertyByRole(roleId,"property");
         return properties;
     }
 }

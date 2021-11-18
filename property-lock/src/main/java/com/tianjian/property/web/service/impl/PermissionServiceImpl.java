@@ -65,7 +65,7 @@ public class PermissionServiceImpl extends HttpService implements PermissionServ
     }
 
     @Override
-    public int deleteStaff(String userId) {
+    public int deleteStaff(Integer userId) {
         return userDao.deleteByUserId(userId);
     }
 
@@ -102,9 +102,3 @@ public class PermissionServiceImpl extends HttpService implements PermissionServ
         return PageResult;
     }
 }
-/*
-        rhL1jhNMnhM=
-        rhL1jhNMnhM=
-                Rv2DQUi+0z4=
-                Rv2DQUi+0z4=*/
-//9/byy8/mfaIC2RbBYeDZugt+UoEbGbTkihvpM7eioRPRmqUrUkgmUHpmui3y8OLiSc3sSt2ixTUOvtQfCzNhQA==

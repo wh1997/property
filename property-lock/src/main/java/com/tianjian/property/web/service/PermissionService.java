@@ -17,7 +17,7 @@ public interface PermissionService {
 
     LockResult addStaff(User user);
 
-    int deleteStaff(String userId);
+    int deleteStaff(Integer userId);
 
     int addRole(Role role);
 

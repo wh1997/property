@@ -3,8 +3,8 @@ package com.tianjian.property.bean;
 import java.io.Serializable;
 import javax.persistence.*;
 
-@Table(name = "`tj_role_property`")
-public class RoleProperty implements Serializable {
+@Table(name = "`tj_auth`")
+public class Auth implements Serializable {
     @Id
     @Column(name = "`id`")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,10 +14,13 @@ public class RoleProperty implements Serializable {
     private Integer roleId;
 
     /**
-     * 对应tj_baiwei_old_id表id
+     * 如果模块是property对应tj_baiwei_old_id表id
      */
-    @Column(name = "`property_id`")
-    private Integer propertyId;
+    @Column(name = "`resources_id`")
+    private Integer resourcesId;
+
+    @Column(name = "`type`")
+    private Integer type;
 
     /**
      * 1:未启用0:启用
@@ -27,8 +30,16 @@ public class RoleProperty implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    public RoleProperty() {
+    public Auth() {
         super();
+    }
+
+    public Auth(Integer id, Integer roleId, Integer resourcesId, Integer type, Integer status) {
+        this.id = id;
+        this.roleId = roleId;
+        this.resourcesId = resourcesId;
+        this.type = type;
+        this.status = status;
     }
 
     /**
@@ -59,22 +70,20 @@ public class RoleProperty implements Serializable {
         this.roleId = roleId;
     }
 
-    /**
-     * 获取对应tj_baiwei_old_id表id
-     *
-     * @return property_id - 对应tj_baiwei_old_id表id
-     */
-    public Integer getPropertyId() {
-        return propertyId;
+    public Integer getResourcesId() {
+        return resourcesId;
     }
 
-    /**
-     * 设置对应tj_baiwei_old_id表id
-     *
-     * @param propertyId 对应tj_baiwei_old_id表id
-     */
-    public void setPropertyId(Integer propertyId) {
-        this.propertyId = propertyId;
+    public void setResourcesId(Integer resourcesId) {
+        this.resourcesId = resourcesId;
+    }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
     }
 
     /**
@@ -97,16 +106,12 @@ public class RoleProperty implements Serializable {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", id=").append(id);
-        sb.append(", roleId=").append(roleId);
-        sb.append(", propertyId=").append(propertyId);
-        sb.append(", status=").append(status);
-        sb.append(", serialVersionUID=").append(serialVersionUID);
-        sb.append("]");
-        return sb.toString();
+        return "Auth{" +
+                "id=" + id +
+                ", roleId=" + roleId +
+                ", resourcesId=" + resourcesId +
+                ", type=" + type +
+                ", status=" + status +
+                '}';
     }
 }

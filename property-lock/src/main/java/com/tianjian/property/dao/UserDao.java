@@ -107,7 +107,7 @@ public interface UserDao extends BaseDao<User> {
           "UPDATE `tj_user` SET role = 2 " +
           " WHERE user_id= #{userId} "+
           "</script>"})
-    int deleteByUserId(String userId);
+    int deleteByUserId(Integer userId);
         @Select({"<script>" +
            "SELECT " +
             "  u.id uId, " +

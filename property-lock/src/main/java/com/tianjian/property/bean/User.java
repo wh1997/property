@@ -30,7 +30,7 @@ public class User implements Serializable {
      * 所在小区分支id
      */
     @Column(name = "`branch_id`")
-    private String branchId;
+    private Integer branchId;
     /**
      * 小程序用户角色  1管理员   2普通用户
      */
@@ -61,7 +61,7 @@ public class User implements Serializable {
         super();
     }
 
-    public User(Long id, Integer userId, String phone, String name, String branchId, Integer role, String addTime, String updateTime, String remark) {
+    public User(Long id, Integer userId, String phone, String name, Integer branchId, Integer role, String addTime, String updateTime, String remark) {
         this.id = id;
         this.userId = userId;
         this.phone = phone;
@@ -105,11 +105,11 @@ public class User implements Serializable {
         this.name = name;
     }
 
-    public String getBranchId() {
+    public Integer getBranchId() {
         return branchId;
     }
 
-    public void setBranchId(String branchId) {
+    public void setBranchId(Integer branchId) {
         this.branchId = branchId;
     }
 

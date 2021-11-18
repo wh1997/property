@@ -73,7 +73,7 @@ public class PermissionController {
     @PostMapping("/delete/all")
     public LockResult deleteStaff(@RequestHeader String token ,@RequestBody Map map) {
         try {
-            String userId = (String) map.get("userId");
+            Integer userId = (Integer) map.get("userId");
             int i= permissionService.deleteStaff(userId);
             if (i>0){
                 return new LockResult(true,  "删除成功", ErrorEnum.SUCCESS.getCode(), "");
