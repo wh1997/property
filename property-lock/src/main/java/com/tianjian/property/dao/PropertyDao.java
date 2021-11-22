@@ -30,4 +30,9 @@ public interface PropertyDao extends BaseDao<Property> {
             "</foreach>" +
             "</script>"})
     List<Map> selectProperty(@Param("lists") List<Integer> lists);
+    @Select({"<script>" +
+            "SELECT branch_id branchId, bw_property_id propertyId,property_name propertyName  " +
+            " FROM tj_property WHERE status=0  "+
+            "</script>"})
+    List<Map> selectPropertyAll();
 }

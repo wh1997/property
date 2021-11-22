@@ -13,5 +13,5 @@ import java.util.Map;
 public interface SelectRoleService {
     List<Integer> selectRole(Integer userId);
 
-    List<Map> selecProperty(Integer appUID);
+    List<Map> selecProperty(Integer appUID,Integer status);
 }

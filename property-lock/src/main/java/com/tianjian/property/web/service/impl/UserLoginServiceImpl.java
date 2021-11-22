@@ -1,17 +1,22 @@
 package com.tianjian.property.web.service.impl;
 
+import com.tianjian.property.bean.Auth;
 import com.tianjian.property.bean.User;
+import com.tianjian.property.bean.UserRole;
+import com.tianjian.property.dao.AuthDao;
 import com.tianjian.property.dao.UserDao;
+import com.tianjian.property.dao.UserRoleDao;
 import com.tianjian.property.management.service.impl.HttpService;
 import com.tianjian.property.utils.LockConstants;
 import com.tianjian.property.utils.LockResult;
 import com.tianjian.property.utils.TokenUtil;
 import com.tianjian.property.utils.error.ErrorEnum;
-import com.tianjian.property.web.service.LoginService;
+import com.tianjian.property.web.service.UserLoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.List;
@@ -24,11 +29,15 @@ import java.util.concurrent.TimeUnit;
  * @time: 2021/11/12
  */
 @Service
-public class LoginServiceImpl  extends HttpService implements LoginService {
+public class UserLoginServiceImpl extends HttpService implements UserLoginService {
     @Value("${baiwei.webLoginURL}")
     private  String webLoginURL;
     @Autowired
     private UserDao userDao;
+    @Autowired
+    private UserRoleDao userRoleDao;
+    @Autowired
+    private AuthDao authDao;
     @Autowired
     private RedisTemplate redisTemplate;
     @Override
@@ -56,5 +65,41 @@ public class LoginServiceImpl  extends HttpService implements LoginService {
         }else {
             return new LockResult(true,"登录失败,请先注册", ErrorEnum.OPERATION_ERROR.getCode(),"");
         }
+    }
+
+    @Override
+    public int addRole(UserRole userRole) {
+        //查询该角色是否添加
+        List<UserRole> select = userRoleDao.select(userRole);
+        if (select!=null||select.size()>0){
+            return -1;
+        }
+        return userRoleDao.insertSelective(userRole);
+    }
+
+    @Override
+    public int deleteRole(Integer urId) {
+        return userRoleDao.updateStatus(urId);
+    }
+
+    @Override
+    public List<Map> selectRole(Integer userId) {
+        return userRoleDao.selectRole(userId);
+    }
+
+    @Override
+    @Transactional
+    public int addRight(Auth auth) {
+        return authDao.insertSelective(auth);
+    }
+
+    @Override
+    public int deleteRight(Integer aId,String type) {
+        return authDao.deleteRight(aId,type);
+    }
+
+    @Override
+    public List<Map> propertyRight(List<Integer> roleId) {
+        return authDao.propertyRight(roleId);
     }
 }

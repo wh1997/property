@@ -24,8 +24,8 @@ public interface RolePropertyDao extends BaseDao<Auth> {
     List<Property> selectPropertyByRole(@Param("lists") List<Integer>  lists,@Param("property")String property);
     @Select({"<script>" +
             " SELECT p.bw_property_id " +
-            " FROM `tj_role` r LEFT JOIN tj_auth t ON r.id= t.role_id " +
-            " LEFT JOIN tj_property p ON t.resources_id=p.id  WHERE t.status=0 AND t.type= #{property} AND  r.id IN " +
+            " FROM  tj_auth t  " +
+            " LEFT JOIN tj_property p ON t.resources_id=p.id  WHERE t.status=0 AND p.status=0 AND t.type= #{property} AND  t.role_id IN " +
             "<foreach collection=\"lists\" item=\"list\" index=\"index\" open=\"(\" close=\")\" separator=\",\"> " +
             "#{list} " +
             "</foreach>" +

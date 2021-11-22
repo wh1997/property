@@ -2,8 +2,12 @@ package com.tianjian.property.web.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.tianjian.property.bean.Auth;
+import com.tianjian.property.bean.Module;
 import com.tianjian.property.bean.Role;
 import com.tianjian.property.bean.User;
+import com.tianjian.property.dao.AuthDao;
+import com.tianjian.property.dao.ModuleDao;
 import com.tianjian.property.dao.RoleDao;
 import com.tianjian.property.dao.UserDao;
 import com.tianjian.property.management.service.impl.HttpService;
@@ -27,12 +31,14 @@ import java.util.Map;
  */
 @Service
 public class PermissionServiceImpl extends HttpService implements PermissionService {
-    @Value("${baiwei.webLoginURL}")
-    private  String webLoginURL;
     @Autowired
     private UserDao userDao;
     @Autowired
     private RoleDao roleDao;
+    @Autowired
+    private ModuleDao moduleDao;
+    @Autowired
+    private AuthDao authDao;
     @Override
     public PageResult<Map> selectStaff(Integer pageNum, Integer pageSize,User user) {
         PageHelper.startPage(pageNum,pageSize);
@@ -100,5 +106,48 @@ public class PermissionServiceImpl extends HttpService implements PermissionServ
         long total = staffPageInfo.getTotal();
         PageResult<Role> PageResult = new PageResult<>(pageSize,pageNum,list,total,pages);
         return PageResult;
+    }
+
+    @Override
+    @Transactional
+    public int addModule(Module module) {
+        return moduleDao.insertSelective(module);
+    }
+
+    @Override
+    @Transactional
+    public int deleteModule(Integer id) {
+        return moduleDao.deleteModule(id);
+    }
+
+    @Override
+    @Transactional
+    public int updateModule(Module module) {
+        return moduleDao.updateByPrimaryKeySelective(module);
+    }
+
+    @Override
+    public PageResult<Module> selectModule(Module module,Integer pageNum, Integer pageSize) {
+        PageHelper.startPage(pageNum,pageSize);
+        List<Module> roles = moduleDao.selectModule(module);
+        PageInfo<Module> staffPageInfo = new PageInfo<>(roles);
+        List<Module> list = staffPageInfo.getList();
+        int pages = staffPageInfo.getPages();
+        //总共多少条
+        long total = staffPageInfo.getTotal();
+        PageResult<Module> PageResult = new PageResult<>(pageSize,pageNum,list,total,pages);
+        return PageResult;
+
+    }
+
+    @Override
+    public int  moduleAccredit(Auth auth) {
+        return authDao.insertSelective(auth);
+    }
+
+    @Override
+    public List<Module> selectModuleAccredit(Integer roleId) {
+        //查看管理员用户的角色
+        return authDao.selectModuleAccredit(roleId);
     }
 }

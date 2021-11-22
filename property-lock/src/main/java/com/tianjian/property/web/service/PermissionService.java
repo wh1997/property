@@ -1,10 +1,13 @@
 package com.tianjian.property.web.service;
 
+import com.tianjian.property.bean.Auth;
+import com.tianjian.property.bean.Module;
 import com.tianjian.property.bean.Role;
 import com.tianjian.property.bean.User;
 import com.tianjian.property.utils.LockResult;
 import com.tianjian.property.utils.PageResult;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -26,4 +29,16 @@ public interface PermissionService {
     int deleteRole(Integer id);
 
     PageResult<Role> selectRole(Role role,Integer pageNum, Integer pageSize);
+
+    int addModule(Module module);
+
+    int deleteModule(Integer id);
+
+    int updateModule(Module module);
+
+    PageResult<Module> selectModule(Module module,Integer pageNum, Integer pageSize);
+
+    int moduleAccredit(Auth auth);
+
+    List<Module> selectModuleAccredit(Integer roleId);
 }

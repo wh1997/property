@@ -1,5 +1,7 @@
 package com.tianjian.property.web.controller;
 
+import com.tianjian.property.bean.Auth;
+import com.tianjian.property.bean.Module;
 import com.tianjian.property.bean.Role;
 import com.tianjian.property.bean.User;
 import com.tianjian.property.utils.BeanChangeUtils;
@@ -8,7 +10,9 @@ import com.tianjian.property.utils.PageResult;
 import com.tianjian.property.utils.TokenUtil;
 import com.tianjian.property.utils.error.ErrorEnum;
 import com.tianjian.property.web.service.PermissionService;
+import jdk.nashorn.internal.parser.Token;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -162,6 +166,141 @@ public class PermissionController {
             Role role = BeanChangeUtils.mapToBean(map, Role.class);
             PageResult<Role> result= permissionService.selectRole(role,pageNum,pageSize);
             return new LockResult(true,  "查询成功", ErrorEnum.SUCCESS.getCode(), result);
+        }catch (Exception e){
+            e.printStackTrace();
+            return new LockResult(false,   ErrorEnum.OPERATION_ERROR.getErrorMsg(), ErrorEnum.OPERATION_ERROR.getCode(), "");
+        }
+    }
+    /**
+    * @Description:  添加模块权限
+    * @Param:
+    * @return:
+    * @Date: 2021/11/13
+    */
+    @PostMapping("/add/module")
+    public LockResult addModule(@RequestHeader String token ,@RequestBody Map map) {
+        try {
+            Integer appUID = TokenUtil.getAppUID(token);
+            Module module = BeanChangeUtils.mapToBean(map, Module.class);
+            module.setCreateBy(appUID);
+            int i =permissionService.addModule(module);
+            if (i>0){
+                return new LockResult(true,  "添加成功", ErrorEnum.SUCCESS.getCode(), "");
+            }else{
+                return new LockResult(false,  "添加失败", ErrorEnum.OPERATION_ERROR.getCode(), "");
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            return new LockResult(false,   ErrorEnum.OPERATION_ERROR.getErrorMsg(), ErrorEnum.OPERATION_ERROR.getCode(), "");
+        }
+    }
+    /**
+    * @Description:  删除模块权限
+    * @Param:
+    * @return:
+    * @Date: 2021/11/13
+    */
+    @PostMapping("/delete/module")
+    public LockResult deleteModule(@RequestHeader String token ,@RequestBody Map map) {
+        try {
+            Integer id = (Integer) map.get("id");
+            int i =permissionService.deleteModule(id);
+            if (i>0){
+                return new LockResult(true,  "删除成功", ErrorEnum.SUCCESS.getCode(), "");
+            }else{
+                return new LockResult(false,  "删除失败", ErrorEnum.OPERATION_ERROR.getCode(), "");
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            return new LockResult(false,   ErrorEnum.OPERATION_ERROR.getErrorMsg(), ErrorEnum.OPERATION_ERROR.getCode(), "");
+        }
+    }
+    /**
+    * @Description:  修改模块权限
+    * @Param:
+    * @return:
+    * @Date: 2021/11/13
+    */
+    @PostMapping("/update/module")
+    public LockResult updateModule(@RequestHeader String token ,@RequestBody Map map) {
+        try {
+            Integer appUID = TokenUtil.getAppUID(token);
+            Module module = BeanChangeUtils.mapToBean(map, Module.class);
+            module.setUpdateBy(appUID);
+            int i =permissionService.updateModule(module);
+            if (i>0){
+                return new LockResult(true,  "修改成功", ErrorEnum.SUCCESS.getCode(), "");
+            }else{
+                return new LockResult(false,  "修改失败", ErrorEnum.OPERATION_ERROR.getCode(), "");
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            return new LockResult(false,   ErrorEnum.OPERATION_ERROR.getErrorMsg(), ErrorEnum.OPERATION_ERROR.getCode(), "");
+        }
+    }
+    /**
+    * @Description:  查询模块权限
+    * @Param:
+    * @return:
+    * @Date: 2021/11/13
+    */
+    @PostMapping("/select/module")
+    public LockResult selectModule(@RequestHeader String token ,@RequestBody(required = false) Map map) {
+        try {
+            Integer pageNum = (Integer) map.get("pageNum");
+            Integer pageSize = (Integer) map.get("pageSize");
+            Module module = BeanChangeUtils.mapToBean(map, Module.class);
+            PageResult<Module> result=permissionService.selectModule(module,pageNum,pageSize);
+            if (result!=null){
+                return new LockResult(true,  "查询成功", ErrorEnum.SUCCESS.getCode(), result);
+            }else{
+                return new LockResult(true,  "查询成功没有数据", ErrorEnum.SUCCESS.getCode(), "");
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            return new LockResult(false,   ErrorEnum.OPERATION_ERROR.getErrorMsg(), ErrorEnum.OPERATION_ERROR.getCode(), "");
+        }
+    }
+    /**
+    * @Description:  模块授权
+    * @Param:
+    * @return:
+    * @Date: 2021/11/13
+    */
+    @PostMapping("/module/accredit")
+    public LockResult moduleAccredit(@RequestHeader String token ,@RequestBody Map map) {
+        try {
+            Integer appUID = TokenUtil.getAppUID(token);
+            Auth auth = BeanChangeUtils.mapToBean(map, Auth.class);
+            auth.setPersonId(appUID);
+            auth.setType("module");
+            int i =permissionService.moduleAccredit(auth);
+            if (i>0){
+                return new LockResult(true,  "成功", ErrorEnum.SUCCESS.getCode(), "");
+            }else{
+                return new LockResult(false,  ErrorEnum.OPERATION_ERROR.getErrorMsg(), ErrorEnum.OPERATION_ERROR.getCode(), "");
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            return new LockResult(false,   ErrorEnum.OPERATION_ERROR.getErrorMsg(), ErrorEnum.OPERATION_ERROR.getCode(), "");
+        }
+    }
+    /**
+     * @Description:  查看管理员模块授权
+     * @Param:
+     * @return:
+     * @Date: 2021/11/13
+     */
+    @PostMapping("/select/module/accredit")
+    public LockResult selectModuleAccredit(@RequestHeader String token ,@RequestBody Map map) {
+        try {
+            Integer roleId = (Integer) map.get("roleId");
+            List<Module> result =permissionService.selectModuleAccredit(roleId);
+            if (result !=null){
+                return new LockResult(true,  "查询成功", ErrorEnum.SUCCESS.getCode(), result);
+            }else{
+                return new LockResult(true,   "查询成功,没有权限", ErrorEnum.SUCCESS.getCode(), "");
+            }
         }catch (Exception e){
             e.printStackTrace();
             return new LockResult(false,   ErrorEnum.OPERATION_ERROR.getErrorMsg(), ErrorEnum.OPERATION_ERROR.getCode(), "");

@@ -5,9 +5,8 @@ import com.tianjian.property.bean.Property;
 import com.tianjian.property.bean.Role;
 import com.tianjian.property.bean.vo.DoorVo;
 import com.tianjian.property.management.service.*;
-import com.tianjian.property.utils.LockResult;
 import com.tianjian.property.utils.PageResult;
-import com.tianjian.property.web.service.LoginService;
+import com.tianjian.property.web.service.UserLoginService;
 import com.tianjian.property.web.service.ManageService;
 import com.tianjian.property.web.service.MonitorService;
 import com.tianjian.property.web.service.PermissionService;
@@ -32,11 +31,11 @@ class PropertyLockApplicationTests {
     @Autowired
     private GatewayService gatewayService;
     @Autowired
-    private UserService userService;
+    private com.tianjian.property.management.service.UserService userService;
     @Autowired
     private ManageService manageService;
     @Autowired
-    private LoginService loginService;
+    private UserLoginService loginService;
     @Autowired
     private PermissionService permissionService;
     @Autowired

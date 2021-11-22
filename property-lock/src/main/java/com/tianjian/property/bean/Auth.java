@@ -18,9 +18,14 @@ public class Auth implements Serializable {
      */
     @Column(name = "`resources_id`")
     private Integer resourcesId;
+    /**
+     * 添加人
+     */
+    @Column(name = "`person_id`")
+    private Integer personId;
 
     @Column(name = "`type`")
-    private Integer type;
+    private String type;
 
     /**
      * 1:未启用0:启用
@@ -34,12 +39,21 @@ public class Auth implements Serializable {
         super();
     }
 
-    public Auth(Integer id, Integer roleId, Integer resourcesId, Integer type, Integer status) {
+    public Auth(Integer id, Integer roleId, Integer resourcesId, Integer personId, String type, Integer status) {
         this.id = id;
         this.roleId = roleId;
         this.resourcesId = resourcesId;
+        this.personId = personId;
         this.type = type;
         this.status = status;
+    }
+
+    public Integer getPersonId() {
+        return personId;
+    }
+
+    public void setPersonId(Integer personId) {
+        this.personId = personId;
     }
 
     /**
@@ -78,11 +92,11 @@ public class Auth implements Serializable {
         this.resourcesId = resourcesId;
     }
 
-    public Integer getType() {
+    public String getType() {
         return type;
     }
 
-    public void setType(Integer type) {
+    public void setType(String type) {
         this.type = type;
     }
 
@@ -110,6 +124,7 @@ public class Auth implements Serializable {
                 "id=" + id +
                 ", roleId=" + roleId +
                 ", resourcesId=" + resourcesId +
+                ", personId=" + personId +
                 ", type=" + type +
                 ", status=" + status +
                 '}';

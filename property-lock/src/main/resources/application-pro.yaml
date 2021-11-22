@@ -67,6 +67,8 @@ pagehelper:
   reasonable: false
   #支持通过mapper接口传递参数
   support-methods-arguments: true
+  #如果 pageSize=0 就会查询出全部的结果（相当于没有执行分页查询）
+  page-size-zero: true
   params:
     count: countSql
 

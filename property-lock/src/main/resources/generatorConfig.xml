@@ -41,7 +41,7 @@
 
         <!-- jdbc连接-->
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="jdbc:mysql://39.99.248.253/tianjian_lock" userId="root"
+                        connectionURL="jdbc:mysql://8.134.123.207/tianjian_lock" userId="root"
                         password="Tagen2020@!#%"/>
 
         <!-- 类型转换 -->
@@ -51,7 +51,7 @@
         </javaTypeResolver>
 
         <!-- 生成实体类地址 -->
-        <javaModelGenerator targetPackage="com.tianjian.property.bean.tj" targetProject="src/main/java">
+        <javaModelGenerator targetPackage="com.tianjian.property.bean" targetProject="src/main/java">
             <!-- 是否让schema作为包的后缀 -->
             <property name="enableSubPackages" value="false"/>
             <!-- 从数据库返回的值去掉前后空格 -->
@@ -65,16 +65,14 @@
 
         <!-- 生成接口dao -->
         <!--dao类产生不成功，原因未明 -->
-        <javaClientGenerator targetPackage="com.tianjian.property.dao.tj" targetProject="src/main/java" type="XMLMAPPER">
+        <javaClientGenerator targetPackage="com.tianjian.property.dao" targetProject="src/main/java" type="XMLMAPPER">
             <property name="enableSubPackages" value="false"/>
         </javaClientGenerator>
 
         <!-- table可以有多个,每个数据库中的表都可以写一个table，tableName表示要匹配的数据库表,也可以在tableName属性中通过使用%通配符来匹配所有数据库表,只有匹配的表才会自动生成文件 enableSelectByPrimaryKey相应的配置表示是否生成相应的接口 -->
         <!--由于会覆盖原来的类，原则上只在新表使用创建器，不建议旧表用产生器，产生代码后务必细心检查 by James-->
         <!--需要产生新Model类时，改以下的表名即可 -by James-->
-
-
-        <table tableName="tj_lockbaseinfo">
+        <table tableName="tj_module">
             <!-- 是否只生成POJO对象 -->
             <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
         </table>

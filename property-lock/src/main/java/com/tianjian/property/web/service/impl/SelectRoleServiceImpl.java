@@ -37,12 +37,17 @@ public class SelectRoleServiceImpl implements SelectRoleService {
         return properties;
     }
     @Override
-    public List<Map> selecProperty(Integer userId){
-        //查询用户的角色
-        List<Integer> list = userDao.selectRoleByUserId(userId);
-        //查询该角色管理的项目(百为项目id)
-        List<Integer> properties = rolePropertyDao.selectPropertyByRoleId(list,"property");
-        List<Map> doors = propertyDao.selectProperty(properties);
-        return doors;
+    public List<Map> selecProperty(Integer userId,Integer status){
+        if (status==0){
+            List<Map> doors = propertyDao.selectPropertyAll();
+            return doors;
+        }else {
+            //查询用户的角色
+            List<Integer> list = userDao.selectRoleByUserId(userId);
+            //查询该角色管理的项目(百为项目id)
+            List<Integer> properties = rolePropertyDao.selectPropertyByRoleId(list,"property");
+            List<Map> doors = propertyDao.selectProperty(properties);
+            return doors;
+        }
     }
 }

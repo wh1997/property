@@ -184,6 +184,8 @@ public class RoomDoorServiceImpl implements RoomDoorService {
                 }
                 //返回门锁的Mac信息
                 map.putAll(lockBaseInfoMap);
+                //锁表的id
+                map.put("lId",lock.getId());
             }
             return map;
         }else {

@@ -46,7 +46,7 @@ public interface UserDao extends BaseDao<User> {
     @Select({"<script>" +
             "SELECT role_id  FROM  `tj_user` u " +
             " INNER JOIN  tj_user_role r ON u.user_id = r.user_id " +
-            " WHERE u.user_id " +
+            " WHERE r.status=0 AND u.user_id " +
             " = #{userId}" +
             "</script>"})
     List<Integer> selectRoleByUserId(Integer userId);

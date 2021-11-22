@@ -32,9 +32,10 @@ public class MonitorController {
     @Autowired
     private RoomDoorService roomDoorService;
     @PostMapping("/select/Property")
-    public LockResult selecProperty(@RequestHeader String token ) throws Exception {
+    public LockResult selecProperty(@RequestHeader String token ,@RequestBody(required = false) Map map) throws Exception {
         Integer appUID = TokenUtil.getAppUID(token);
-        List<Map> list = selectRoleService.selecProperty(appUID);
+        Integer status = (Integer) map.get("status");
+        List<Map> list = selectRoleService.selecProperty(appUID,status);
         if (list==null){
             return new LockResult(false,"没有小区查询权限,请添加权限", ErrorEnum.RIGHT.getCode(), "");
         }

@@ -21,6 +21,11 @@ public class UserRole implements Serializable {
      */
     @Column(name = "`role_id`")
     private Integer roleId;
+    /**
+     * 角色id
+     */
+    @Column(name = "`add_person`")
+    private Integer addPerson;
 
     /**
      * 1:未启用0:启用
@@ -32,6 +37,14 @@ public class UserRole implements Serializable {
 
     public UserRole() {
         super();
+    }
+
+    public UserRole(Integer id, Integer userId, Integer roleId, Integer addPerson, Integer status) {
+        this.id = id;
+        this.userId = userId;
+        this.roleId = roleId;
+        this.addPerson = addPerson;
+        this.status = status;
     }
 
     /**
@@ -84,6 +97,14 @@ public class UserRole implements Serializable {
         this.roleId = roleId;
     }
 
+    public Integer getAddPerson() {
+        return addPerson;
+    }
+
+    public void setAddPerson(Integer addPerson) {
+        this.addPerson = addPerson;
+    }
+
     /**
      * 获取1:未启用0:启用
      *
@@ -104,16 +125,12 @@ public class UserRole implements Serializable {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", id=").append(id);
-        sb.append(", userId=").append(userId);
-        sb.append(", roleId=").append(roleId);
-        sb.append(", status=").append(status);
-        sb.append(", serialVersionUID=").append(serialVersionUID);
-        sb.append("]");
-        return sb.toString();
+        return "UserRole{" +
+                "id=" + id +
+                ", userId=" + userId +
+                ", roleId=" + roleId +
+                ", addPerson=" + addPerson +
+                ", status=" + status +
+                '}';
     }
 }
