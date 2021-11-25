@@ -1,16 +1,16 @@
 package com.tianjian.property.dao;
 
 import com.tianjian.property.bean.LockUser;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 import org.apache.ibatis.annotations.Mapper;
-import tk.mybatis.mapper.common.MySqlMapper;
 
 import java.util.List;
 import java.util.Map;
 @Mapper
 @Repository
-public interface LockUserDao extends BaseDao<LockUser> , MySqlMapper<LockUser> {
+public interface LockUserDao extends BaseDao<LockUser> {
     @Select({"<script>" +
             " SELECT " +
             " l.id id," +
@@ -39,5 +39,5 @@ public interface LockUserDao extends BaseDao<LockUser> , MySqlMapper<LockUser> {
             " ORDER BY " +
             " l.lock_user_id "+
             "</script>"})
-    List<Map> lockUserDao(LockUser lockUser);
+    List<Map> lockUserDao(@Param("lockUser") LockUser lockUser);
 }

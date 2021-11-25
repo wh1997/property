@@ -6,7 +6,6 @@ import com.tianjian.property.bean.Door;
 import com.tianjian.property.bean.LockAuthorization;
 import com.tianjian.property.bean.LockUser;
 import com.tianjian.property.bean.User;
-import com.tianjian.property.bean.vo.DoorVo;
 import com.tianjian.property.dao.DoorDao;
 import com.tianjian.property.dao.LockAuthorizationDao;
 import com.tianjian.property.dao.LockUserDao;
