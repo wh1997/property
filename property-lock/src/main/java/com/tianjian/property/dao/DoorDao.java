@@ -270,4 +270,22 @@ public interface DoorDao extends BaseDao<Door> {
             "ORDER  BY property_id ASC ,building_id ASC ,num_id ASC,unit_no ASC ,floor_no ASC , room_no ASC"+
             "</script>"})
     List<DoorVo> selectPublicDoor(@Param("door")Door door,@Param("types")List<Integer> types,@Param("lists") List<Integer> lists);
+    @Select({"<script>" +
+            " SELECT " +
+            "  d.id , " +
+            "  d.property_id propertyId, " +
+            "  d.door_type doorType, " +
+            "  b.lock_mac lockMac, " +
+            "  b.lock_id lockId " +
+            " FROM tj_door d " +
+            " INNER JOIN tj_lock l " +
+            " ON d.id=l.door_id " +
+            " INNER JOIN tj_lockbaseinfo b " +
+            " ON l.lock_facility_id=b.id " +
+            " WHERE  WHERE d.`status` !=3 " +
+            " AND l.lock_status=0  " +
+            " AND b.`status` =0 " +
+            " d.id=#{doorId}" +
+            "</script>"})
+    List<Map> selectlock(Integer doorId);
 }

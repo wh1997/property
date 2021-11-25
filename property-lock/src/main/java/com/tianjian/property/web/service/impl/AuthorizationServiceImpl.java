@@ -4,10 +4,12 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.tianjian.property.bean.Door;
 import com.tianjian.property.bean.LockAuthorization;
+import com.tianjian.property.bean.LockUser;
 import com.tianjian.property.bean.User;
 import com.tianjian.property.bean.vo.DoorVo;
 import com.tianjian.property.dao.DoorDao;
 import com.tianjian.property.dao.LockAuthorizationDao;
+import com.tianjian.property.dao.LockUserDao;
 import com.tianjian.property.dao.UserDao;
 import com.tianjian.property.utils.PageResult;
 import com.tianjian.property.web.service.AuthorizationService;
@@ -31,6 +33,8 @@ public class AuthorizationServiceImpl implements AuthorizationService {
     private UserDao userDao;
     @Autowired
     private LockAuthorizationDao lockAuthorizationDao;
+    @Autowired
+    private LockUserDao lockUserDao;
     @Override
     public PageResult<User> selectUser(Integer pageNum, Integer pageSize, List<Integer> propertyList) {
         PageHelper.startPage(pageNum,pageSize);
@@ -77,5 +81,36 @@ public class AuthorizationServiceImpl implements AuthorizationService {
     @Transactional
     public int deleteRight(Integer aId) {
         return lockAuthorizationDao.updateStatus(aId);
+    }
+
+    @Override
+    @Transactional
+    public int addLockuser(LockUser lockUser) {
+        List<LockUser> select = lockUserDao.select(lockUser);
+        if (select !=null){
+            return -1 ;
+        }else {
+            return lockUserDao.insertSelective(lockUser) ;
+        }
+    }
+
+    @Override
+    @Transactional
+    public int deleteLockuser(Integer id) {
+        LockUser lockUser = new LockUser();
+        lockUser.setId(id);
+        lockUser.setStatus(1);
+        return lockUserDao.updateByPrimaryKeySelective(lockUser);
+    }
+
+    @Override
+    @Transactional
+    public int updateLockuser(LockUser lockUser) {
+        return lockUserDao.updateByPrimaryKeySelective(lockUser);
+    }
+
+    @Override
+    public List<Map> selectLockuser(LockUser lockUser) {
+        return lockUserDao.lockUserDao(lockUser);
     }
 }

@@ -1,7 +1,6 @@
 package com.tianjian.property.management.service.impl;
 
 import com.alibaba.fastjson.JSON;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.tianjian.property.bean.Door;
@@ -17,7 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.text.ParseException;
 import java.util.*;
 
 @Service
@@ -46,41 +44,6 @@ public class RoomDoorServiceImpl implements RoomDoorService {
         long total = doorVoPageInfo.getTotal();
         PageResult<DoorVo> doorVoPageResult = new PageResult<>(pageSize,pageNum,Doorlist,total,pages);
         return doorVoPageResult;
-        // if (all.size()>0){
-        //    //查询公寓门有哪些楼栋
-        //    List<String> bulidingnameList =doorDao.selectBulidingid(propertyid,3,null);
-        //    if(bulidingnameList.size()<=0){
-        //        return null;
-        //    }else {
-        //        ArrayList<String> siteList = new ArrayList<>();
-        //        for (int j = 0; j <bulidingnameList.size() ; j++) {
-        //            String bulidingname = bulidingnameList.get(j);
-        //            //查询公寓门有哪些单元
-        //            List<String> unitnameList = doorDao.selectunitname(propertyid,bulidingname,null);
-        //            for (int i = 0; i <unitnameList.size() ; i++) {
-        //                String unitname = unitnameList.get(i);
-        //                siteList.add(bulidingname+"-"+unitname);
-        //            }
-        //        }
-        //        Map<String, List<DoorVo>> doorVoMap = new LinkedHashMap<>();
-        //        for (int k = 0; k <siteList.size() ; k++) {
-
-        //            String site = siteList.get(k);
-        //            ArrayList<DoorVo> doorVos = new ArrayList<>();
-        //            for (int l = 0; l <list.size() ; l++) {
-        //                DoorVo doorVo = list.get(l);
-        //                String siteall= doorVo.getBulidingname()+"-"+doorVo.getUnitname();
-        //                if (site.equals(siteall)){
-        //                    doorVos.add(doorVo);
-        //                }
-        //            }
-        //            doorVoMap.put(site,doorVos);
-        //        }
-        //        return doorVoMap;
-        //    }
-        //}else {
-        //    return null;
-        //}
     }
     //根据房间门搜索房间
     @Override

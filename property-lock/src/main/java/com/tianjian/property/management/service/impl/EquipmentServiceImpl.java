@@ -43,7 +43,6 @@ private String  addBluetooth;
     @Override
     @Transactional
     public LockResult addBluetooth(Map lockBaseInfo, Map lockAuthCode, String hardwareVersion, String softwareVersion, Integer doorid, String addpeople) throws Exception {
-        System.out.println(doorid);
         Lock locks = lockDao.selectByDoorid(doorid);
         if (locks!=null){
             return new LockResult(false,"重复添加",200,"");
@@ -107,7 +106,7 @@ private String  addBluetooth;
             //请求成功了往门锁基本信息表里添加门锁基本信息
             LockBaseInfo LockBaseInfo = new LockBaseInfo(null,lockId, lockInfoBase.getLockTag(), lockInfoBase.getLockMac(), hardwareVersion, softwareVersion, lockInfoBase.getLockType(),
                     lockInfoBase.getInitStatus(), lockInfoBase.getMaxVolume(), lockInfoBase.getMaxUser(), lockInfoBase.getBleProtocolVer(), lockInfoBase.getRfModuleType(),
-                    lockInfoBase.getRfModuleMac(), aesKey,adminAuthCode,generalAuthCode, tempAuthCode,null, null,  addpeople, "慧享佳", 1, null);
+                    lockInfoBase.getRfModuleMac(), aesKey,adminAuthCode,generalAuthCode, tempAuthCode,null, null,  addpeople, "慧享佳", 0, null);
             lockBaseInfoDao.inster(LockBaseInfo);
             //往锁表里添加基本信息
             Lock lock = new Lock(null, doorid, 0, LockBaseInfo.getId(), -1, 0, null, null, null);

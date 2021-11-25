@@ -222,7 +222,7 @@ public interface LockBaseInfoDao extends BaseDao<LockBaseInfo> {
     List<LinkedHashMap<String, Object>> selectBluetooth( List<Integer> lists, LockBaseInfo lockBaseInfo,String doorName);
     @Select({"<script>" +
             " SELECT * " +
-            "FROM tj_lockbaseinfo WHERE lock_mac = #{lockMac}"+
+            " FROM tj_lockbaseinfo WHERE status!=2 AND lock_mac = #{lockMac}"+
             "</script>"})
     LockBaseInfo selectByMac(String lockMac);
 }

@@ -51,7 +51,7 @@ public interface UserDao extends BaseDao<User> {
             "</script>"})
     List<Integer> selectRoleByUserId(Integer userId);
     @Select({"<script>" +
-            "SELECT * " +
+            "SELECT  " +
 //            " u.id uId,  " +
 //            " u.user_id userId,  " +
 //            " u.phone phone,  " +
@@ -73,13 +73,13 @@ public interface UserDao extends BaseDao<User> {
             " d.room_no roomNo,  " +
             " d.door_name doorName,  " +
             " d.door_type doorType,  " +
-            " d.STATUS dStatus "+
+            " d.status dStatus "+
             "FROM `tj_user` u  " +
             " INNER JOIN tj_lock_authorization a  " +
             " ON u.user_id = a.user_id  " +
             " INNER JOIN tj_door d " +
             " ON d.id=a.door_id   " +
-            " WHERE a.user_status = 0 AND u.user_id = #{userId} "+
+            " WHERE d.`status`!=3 AND a.user_status = 0 AND u.user_id = #{userId} "+
             "</script>"})
     List<Map<String,Object>> selectRight(Integer userId);
     @Select({"<script>" +
@@ -103,13 +103,13 @@ public interface UserDao extends BaseDao<User> {
             "</if>" +
             "</script>"})
     List<Map> selectStaff( @Param("user") User user);
-  @Update({"<script>" +
+    @Update({"<script>" +
           "UPDATE `tj_user` SET role = 2 " +
           " WHERE user_id= #{userId} "+
           "</script>"})
     int deleteByUserId(Integer userId);
-        @Select({"<script>" +
-           "SELECT " +
+    @Select({"<script>" +
+            "SELECT " +
             "  u.id uId, " +
             "  u.user_id userId, " +
             "  u.phone phone, " +

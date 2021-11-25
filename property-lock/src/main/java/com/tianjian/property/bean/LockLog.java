@@ -14,8 +14,8 @@ public class LockLog implements Serializable {
     /**
      * 门id
      */
-    @Column(name = "`lock_id`")
-    private Integer lockId;
+    @Column(name = "`door_id`")
+    private Integer doorId;
 
     /**
      * 门锁类型
@@ -51,7 +51,12 @@ public class LockLog implements Serializable {
      * 添加时间
      */
     @Column(name = "`add_time`")
-    private Date addTime;
+    private String addTime;
+    /**
+     * 开锁状态 0成功  1失败
+     */
+    @Column(name = "`status`")
+    private Integer status;
 
     /**
      * 备注
@@ -84,8 +89,8 @@ public class LockLog implements Serializable {
      *
      * @return lock_id - 门id
      */
-    public Integer getLockId() {
-        return lockId;
+    public Integer getDoorId() {
+        return doorId;
     }
 
     /**
@@ -93,8 +98,8 @@ public class LockLog implements Serializable {
      *
      * @param lockId 门id
      */
-    public void setLockId(Integer lockId) {
-        this.lockId = lockId;
+    public void setDoorId(Integer lockId) {
+        this.doorId = lockId;
     }
 
     /**
@@ -192,7 +197,7 @@ public class LockLog implements Serializable {
      *
      * @return add_time - 添加时间
      */
-    public Date getAddTime() {
+    public String getAddTime() {
         return addTime;
     }
 
@@ -201,8 +206,16 @@ public class LockLog implements Serializable {
      *
      * @param addTime 添加时间
      */
-    public void setAddTime(Date addTime) {
+    public void setAddTime(String addTime) {
         this.addTime = addTime;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
     /**
@@ -225,21 +238,17 @@ public class LockLog implements Serializable {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", id=").append(id);
-        sb.append(", lockId=").append(lockId);
-        sb.append(", lockType=").append(lockType);
-        sb.append(", lockMac=").append(lockMac);
-        sb.append(", recordTime=").append(recordTime);
-        sb.append(", propertyId=").append(propertyId);
-        sb.append(", userId=").append(userId);
-        sb.append(", addTime=").append(addTime);
-        sb.append(", remark=").append(remark);
-        sb.append(", serialVersionUID=").append(serialVersionUID);
-        sb.append("]");
-        return sb.toString();
+        return "LockLog{" +
+                "id=" + id +
+                ", lockId=" + doorId +
+                ", lockType=" + lockType +
+                ", lockMac='" + lockMac + '\'' +
+                ", recordTime='" + recordTime + '\'' +
+                ", propertyId=" + propertyId +
+                ", userId=" + userId +
+                ", addTime='" + addTime + '\'' +
+                ", status='" + status + '\'' +
+                ", remark='" + remark + '\'' +
+                '}';
     }
 }
