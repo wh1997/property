@@ -74,11 +74,12 @@ public class AuthorizationController {
             if (propertyList==null){
                 return new LockResult(false,"没有权限,请添加权限", ErrorEnum.RIGHT.getCode(), "");
             }
-            PageResult<Door> door= authorizationService.selectDoorByProperty(propertyList,pageNum,pageSize);
-            if (door==null){
+            Door bean = BeanChangeUtils.mapToBean(map, Door.class);
+            PageResult<Door> door= authorizationService.selectDoorByProperty(propertyList,bean,pageNum,pageSize);
+            if (door!=null){
                 return new LockResult(true,  ErrorEnum.SUCCESS.getErrorMsg(), ErrorEnum.SUCCESS.getCode(), door);
             }else {
-                return new LockResult(false,  ErrorEnum.COMMON_ERROR.getErrorMsg(), ErrorEnum.COMMON_ERROR.getCode(), "");
+                return new LockResult(true,  "查询成功,没有数据", ErrorEnum.SUCCESS.getCode(), "");
             }
         } catch (Exception e){
             e.printStackTrace();

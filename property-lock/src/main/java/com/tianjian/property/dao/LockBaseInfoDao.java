@@ -113,7 +113,7 @@ public interface LockBaseInfoDao extends BaseDao<LockBaseInfo> {
             " a.create_time createTime,a.update_time updateTime,a.add_people addPeople,a.vendor,a.status,a.remark, "+
             " b.property_id propertyId,b.property_name propertyName,b.num_id numId,b.num_name numName,b.building_id buildingId,"+
             " b.building_name buildingName,b.unit_no unitNo,b.unit_name unitName, b.floor_no floorNo,b.room_no roomNo,b.door_name doorName,"+
-            " door_id doorId, "+
+            " b.door_id doorId, b.lock_gateway_id lockGatewayId,"+
             " b.lId lId "+
             " FROM "+
             " tj_lockbaseinfo a " +

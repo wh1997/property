@@ -50,4 +50,19 @@ public class SelectRoleServiceImpl implements SelectRoleService {
             return doors;
         }
     }
+
+    @Override
+    public List<Integer> selecPropertyId(Integer appUID, Integer status) {
+        if (status==0){
+            List<Integer> doors = propertyDao.selectPropertyAllAddressId();
+            return doors;
+        }else {
+            //查询用户的角色
+            List<Integer> list = userDao.selectRoleByUserId(appUID);
+            //查询该角色管理的项目(百为项目id)
+            List<Integer> properties = rolePropertyDao.selectPropertyByRoleId(list,"property");
+            List<Integer> doors = propertyDao.selectPropertyAddressId(properties);
+            return doors;
+        }
+    }
 }

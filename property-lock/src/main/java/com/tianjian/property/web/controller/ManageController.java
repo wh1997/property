@@ -65,7 +65,7 @@ public class ManageController {
         return new LockResult(false,"修改失败", ErrorEnum.OPERATION_ERROR.getCode(), "");
     }
     /**
-    * @Description: 查看蓝牙门锁信息
+    * @Description: 查看蓝牙门锁设备信息
     * @Param:
     * @return:
     * @Date: 2021/11/8
@@ -143,7 +143,22 @@ public class ManageController {
             e.printStackTrace();
             return new LockResult(false,  ErrorEnum.COMMON_ERROR.getErrorMsg(), ErrorEnum.COMMON_ERROR.getCode(), "");
         }
-
+    }
+    /**
+    * @Description: 读取蓝牙门锁设置信息
+    * @Param:
+    * @return:
+    * @Date: 2021/11/8
+    */
+    @PostMapping("/lock/information")
+    public LockResult information(@RequestHeader String token ,@RequestBody Map map) {
+        try {
+            LockResult result = manageService.information(map);
+            return result;
+        } catch (Exception e){
+            e.printStackTrace();
+            return new LockResult(false,  ErrorEnum.COMMON_ERROR.getErrorMsg(), ErrorEnum.COMMON_ERROR.getCode(), "");
+        }
     }
     /**
     * @Description: 查看网关信息

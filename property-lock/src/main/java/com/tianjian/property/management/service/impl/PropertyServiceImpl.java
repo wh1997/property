@@ -21,33 +21,6 @@ public class PropertyServiceImpl implements PropertyService {
     private PropertyDao propertyDao;
     @Autowired
     private UserService userService;
-/*    @Autowired
-    private RoleService userService;*/
-    @Value("${baiwei.url}")
-    private String url;
-/*
-    //TODO 小程序端直接对接
-    @Override
-    public List getBuildings(Integer parkId) {
-        String credentialId="6811833670T5FHF9N";
-        String header="BuildingId,ParkId,Term,BuildingNo,Name";
-        Map resultMap = HttpClientUtil.BWdoGet(url + "/Buildings/parkId:" + parkId + "?page=0", credentialId, header);
-        List result = (List) resultMap.get("result");
-        return result;
-
-
-    }
-  //TODO 小程序端直接对接
-    @Override
-    public List getApartments(Integer buildingId) {
-        String credentialId="6811833670T5FHF9N";
-        String header="ApartmentId,BuildingId,ApartmentNo,DoorNo";
-        Map resultMap = HttpClientUtil.BWdoGet(url + "/Apartments/buildingId:" + buildingId + "?page=0", credentialId, header);
-        List result = (List) resultMap.get("result");
-        return result;
-    }
-*/
-
     @Override
     public List getProperty(Integer appUID) {
         //根据登录用户id查询角色
@@ -55,5 +28,10 @@ public class PropertyServiceImpl implements PropertyService {
         //获取能获取的园区信息
         List<Property> list = userService.selectPropertyByRole(roleId);
         return  list;
+    }
+
+    @Override
+    public List<Property> getListBySelect() {
+        return propertyDao.selectByStatus();
     }
 }

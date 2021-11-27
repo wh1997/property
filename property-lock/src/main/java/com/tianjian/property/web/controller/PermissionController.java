@@ -271,10 +271,10 @@ public class PermissionController {
     public LockResult moduleAccredit(@RequestHeader String token ,@RequestBody Map map) {
         try {
             Integer appUID = TokenUtil.getAppUID(token);
-            Auth auth = BeanChangeUtils.mapToBean(map, Auth.class);
-            auth.setPersonId(appUID);
-            auth.setType("module");
-            int i =permissionService.moduleAccredit(auth);
+            Integer roleId = (Integer) map.get("roleId");
+            List<Integer> resourcesId = (List<Integer>) map.get("resourcesId");
+            String type = (String) map.get("type");
+            int i =permissionService.moduleAccredit(appUID,roleId,resourcesId,type);
             if (i>0){
                 return new LockResult(true,  "成功", ErrorEnum.SUCCESS.getCode(), "");
             }else{

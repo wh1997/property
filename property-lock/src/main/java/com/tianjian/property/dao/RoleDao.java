@@ -24,6 +24,7 @@ public interface RoleDao extends BaseDao<Role> {
             "FROM tj_role WHERE 1=1 "+
             "<if test='role != null'> " +
             "<if test='role.id != null'> AND id = #{role.id}</if>" +
+            "<if test='role.status != null'> AND status = #{role.status}</if>" +
             "<if test='role.parentId != null'> AND parent_id = #{role.parentId}</if>" +
             "<if test='role.name != null'> AND name  like CONCAT('%',#{role.name},'%')</if>" +
             "</if>" +

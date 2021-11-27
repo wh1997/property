@@ -19,7 +19,7 @@ public interface  AuthorizationService {
 
     int addRight(LockAuthorization lockAuthorization);
 
-    PageResult<Door> selectDoorByProperty(List<Integer> propertyList, Integer pageNum, Integer pageSize);
+    PageResult<Door> selectDoorByProperty(List<Integer> propertyList,Door door, Integer pageNum, Integer pageSize);
 
     PageResult<Map<String, Object>> selectRight(Integer userId,Integer pageNum, Integer pageSize);
 

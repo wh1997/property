@@ -14,4 +14,6 @@ public interface SelectRoleService {
     List<Integer> selectRole(Integer userId);
 
     List<Map> selecProperty(Integer appUID,Integer status);
+
+    List<Integer> selecPropertyId(Integer appUID,Integer status);
 }

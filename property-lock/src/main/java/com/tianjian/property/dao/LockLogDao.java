@@ -25,6 +25,7 @@ public interface LockLogDao extends BaseDao<LockLog> {
             "<if test='lockLog.addTime != null'> AND add_time  <![CDATA[ >= ]]> #{lockLog.addTime}</if>" +
             "<if test='lockLog.status != null'> AND status  = #{lockLog.status}</if>" +
             "</if>" +
+            "ORDER BY record_time DESC"+
             "</script>"})
     List<LockLog> openLockLog(@Param("lockLog") LockLog lockLog);
 }

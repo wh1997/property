@@ -49,9 +49,9 @@ public class UserLoginController {
     public LockResult addRole(@RequestHeader String token, @RequestBody Map map)  {
         try {
             Integer appUID = TokenUtil.getAppUID(token);
-            UserRole userRole = BeanChangeUtils.mapToBean(map, UserRole.class);
-            userRole.setAddPerson(appUID);
-            int i =userLoginService.addRole(userRole);
+            List<Integer> roleId = (List<Integer>) map.get("roleId");
+            Integer userId = (Integer) map.get("userId");
+            int i =userLoginService.addRole(appUID,roleId,userId);
             if (i>0){
                 return new LockResult(true,"添加成功", ErrorEnum.SUCCESS.getCode(),"");
             }else if (i==-1){
@@ -72,7 +72,7 @@ public class UserLoginController {
     @PostMapping("/delete/role")
     public LockResult deleteRole(@RequestHeader String token, @RequestBody Map map)  {
         try {
-            Integer urId = (Integer) map.get("urId");
+            List<Integer> urId = (List<Integer>) map.get("urId");
             int i =userLoginService.deleteRole(urId);
             if (i>0){
                 return new LockResult(true,"删除成功", ErrorEnum.SUCCESS.getCode(),"");
@@ -103,17 +103,19 @@ public class UserLoginController {
             return new LockResult(false,"查询失败", ErrorEnum.OPERATION_ERROR.getCode(),"");
         }
     }
-    /**
+   /* *//**
     * @Description: 角色添加权限
     * @Param:
     * @return:
     * @Date: 2021/11/18
-    */
+    *//*
     @PostMapping("/add/right")
     public LockResult addRight(@RequestHeader String token, @RequestBody Map map)  {
         try {
-            Auth auth = BeanChangeUtils.mapToBean(map, Auth.class);
-            int i=userLoginService.addRight(auth);
+            Integer appUID = TokenUtil.getAppUID(token);
+            Integer roleId = (Integer) map.get("roleId");
+            List<Integer> resourcesId = (List<Integer>) map.get("resourcesId");
+            int i=userLoginService.addRight(appUID,roleId,resourcesId);
             if (i>0){
                 return new LockResult(true,"添加成功", ErrorEnum.SUCCESS.getCode(),"");
             }else {
@@ -122,7 +124,7 @@ public class UserLoginController {
         }catch (Exception e){
             return new LockResult(false,"添加失败", ErrorEnum.OPERATION_ERROR.getCode(),"");
         }
-    }
+    }*/
     /**
     * @Description: 角色删除权限
     * @Param:
@@ -132,16 +134,16 @@ public class UserLoginController {
     @PostMapping("/delete/right")
     public LockResult deleteRight(@RequestHeader String token, @RequestBody Map map)  {
         try {
-            Integer aId = (Integer) map.get("aId");
+            List<Integer> aId = (List<Integer>) map.get("aId");
             String type = (String) map.get("type");
             int i=userLoginService.deleteRight(aId,type);
             if (i>0){
-                return new LockResult(true,"添加成功", ErrorEnum.SUCCESS.getCode(),"");
+                return new LockResult(true,"删除成功", ErrorEnum.SUCCESS.getCode(),"");
             }else {
-                return new LockResult(false,"添加失败", ErrorEnum.OPERATION_ERROR.getCode(),"");
+                return new LockResult(false,"删除失败", ErrorEnum.OPERATION_ERROR.getCode(),"");
             }
         }catch (Exception e){
-            return new LockResult(false,"添加失败", ErrorEnum.OPERATION_ERROR.getCode(),"");
+            return new LockResult(false,"删除失败", ErrorEnum.OPERATION_ERROR.getCode(),"");
         }
     }
     /**
@@ -158,10 +160,11 @@ public class UserLoginController {
             if (result!=null){
                 return new LockResult(true,"查询成功", ErrorEnum.SUCCESS.getCode(),result);
             }else {
-                return new LockResult(true,"查询成功,没有数据", ErrorEnum.OPERATION_ERROR.getCode(),"");
+                return new LockResult(true,"查询成功,没有数据", ErrorEnum.SUCCESS.getCode(),"");
             }
         }catch (Exception e){
-            return new LockResult(false,"添加失败", ErrorEnum.OPERATION_ERROR.getCode(),"");
+            e.printStackTrace();
+            return new LockResult(false,"查询失败", ErrorEnum.OPERATION_ERROR.getCode(),"");
         }
     }
 

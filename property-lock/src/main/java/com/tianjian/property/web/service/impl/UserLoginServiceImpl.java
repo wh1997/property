@@ -18,6 +18,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -68,17 +69,27 @@ public class UserLoginServiceImpl extends HttpService implements UserLoginServic
     }
 
     @Override
-    public int addRole(UserRole userRole) {
-        //查询该角色是否添加
-        List<UserRole> select = userRoleDao.select(userRole);
-        if (select!=null||select.size()>0){
-            return -1;
+    @Transactional
+    public int addRole(Integer appUID, List<Integer> roleId, Integer userId) {
+        ArrayList<UserRole> list = new ArrayList<>();
+        for (int i = 0; i <roleId.size() ; i++) {
+            UserRole userRole = new UserRole();
+            userRole.setUserId(userId);
+            userRole.setRoleId(roleId.get(i));
+            userRole.setAddPerson(appUID);
+            userRole.setStatus(0);
+            //查询该角色是否添加
+            UserRole tUserRole1 = userRoleDao.selectOne(userRole);
+            if (tUserRole1!=null){
+                return -1;
+            }
+            list.add(userRole);
         }
-        return userRoleDao.insertSelective(userRole);
+        return userRoleDao.batchInsert(list);
     }
 
     @Override
-    public int deleteRole(Integer urId) {
+    public int deleteRole(List<Integer> urId) {
         return userRoleDao.updateStatus(urId);
     }
 
@@ -87,14 +98,23 @@ public class UserLoginServiceImpl extends HttpService implements UserLoginServic
         return userRoleDao.selectRole(userId);
     }
 
-    @Override
+    /*@Override
     @Transactional
-    public int addRight(Auth auth) {
-        return authDao.insertSelective(auth);
-    }
+    public int addRight(Integer appUID, Integer roleId, List<Integer> resourcesId) {
+        ArrayList<Auth> auths = new ArrayList<>();
+        for (int i = 0; i <resourcesId.size() ; i++) {
+            Auth auth = new Auth();
+            auth.setPersonId(appUID);
+            auth.setResourcesId(resourcesId.get(i));
+            auth.setRoleId(roleId);
+            auth.setStatus(0);
+            auth.setType("module");
+        }
+        return authDao.insertList(auths);
+    }*/
 
     @Override
-    public int deleteRight(Integer aId,String type) {
+    public int deleteRight(List<Integer> aId,String type) {
         return authDao.deleteRight(aId,type);
     }
 

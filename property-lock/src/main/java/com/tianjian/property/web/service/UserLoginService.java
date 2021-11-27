@@ -15,15 +15,17 @@ import java.util.Map;
 public interface UserLoginService {
     LockResult login(String phone,String Password) throws Exception;
 
-    int addRole(UserRole userRole);
+   
 
-    int deleteRole(Integer urId);
+    int deleteRole(List<Integer> urId);
 
     List<Map> selectRole(Integer userId);
 
-    int addRight(Auth auth);
+    /*int addRight(Integer appUID, Integer roleId, List<Integer> resourcesId);*/
 
-    int deleteRight(Integer aId,String type);
+    int deleteRight(List<Integer> aId,String type);
 
     List<Map> propertyRight(List<Integer> roleId);
+
+    int addRole(Integer appUID, List<Integer> roleId, Integer userId);
 }

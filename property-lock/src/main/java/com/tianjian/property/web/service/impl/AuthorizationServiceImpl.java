@@ -47,9 +47,9 @@ public class AuthorizationServiceImpl implements AuthorizationService {
         return PageResult;
     }
     @Override
-    public PageResult<Door> selectDoorByProperty(List<Integer> propertyList, Integer pageNum, Integer pageSize) {
+    public PageResult<Door> selectDoorByProperty(List<Integer> propertyList,Door door, Integer pageNum, Integer pageSize) {
         PageHelper.startPage(pageNum,pageSize);
-        List<Door> doors = doorDao.selectDoorByProperty(propertyList);
+        List<Door> doors = doorDao.selectDoorByProperty(propertyList,door);
         PageInfo<Door> doorVoPageInfo = new PageInfo<>(doors);
         List<Door> Doorlist = doorVoPageInfo.getList();
         int pages = doorVoPageInfo.getPages();

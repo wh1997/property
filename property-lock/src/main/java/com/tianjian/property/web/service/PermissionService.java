@@ -38,7 +38,9 @@ public interface PermissionService {
 
     PageResult<Module> selectModule(Module module,Integer pageNum, Integer pageSize);
 
-    int moduleAccredit(Auth auth);
+    int moduleAccredit(Integer appUID, Integer roleId, List<Integer> resourcesId,String type);
 
     List<Module> selectModuleAccredit(Integer roleId);
+
+
 }

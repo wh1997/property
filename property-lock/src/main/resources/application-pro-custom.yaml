@@ -49,6 +49,8 @@ apartment :
   BluetoothdDetails : hxjSynLockInfo
   #设置门锁系统参数
   configuration : hxjSetParam
+  #读取门锁系统参数
+  information : hxjSynLockInfo
 baiwei :
   url : http://client.api.melifego.cn:80
   #百为微信登录获取参数url

@@ -36,6 +36,8 @@ public class ManageServiceImpl implements ManageService {
     private  String bluetoothdDetails;
     @Value("${apartment.configuration}")
     private  String configuration;
+    @Value("${apartment.information}")
+    private  String information;
     @Autowired
     private LockBaseInfoDao lockBaseInfoDao;
     @Autowired
@@ -113,7 +115,18 @@ public class ManageServiceImpl implements ManageService {
             return new LockResult(false,"设置失败: "+ reason, ErrorEnum.OPERATION_ERROR.getCode(),"");
         }
     }
-
+    @Override
+    public LockResult information(Map map) {
+        //发送请求
+        Map result = gatewayService.bindinggateway(information, map);
+        Integer resultCode = (Integer) result.get("resultCode");
+        String reason = (String) result.get("reason");
+        if (resultCode==0){
+            return new LockResult(true,"设置成功", ErrorEnum.SUCCESS.getCode(),"");
+        }else{
+            return new LockResult(false,"设置失败: "+ reason, ErrorEnum.OPERATION_ERROR.getCode(),"");
+        }
+    }
     @Override
     public PageResult selectGateway(List<Integer> propertyList, Gateway gateway, Integer pageNum, Integer pageSize) {
         PageHelper.startPage(pageNum,pageSize);

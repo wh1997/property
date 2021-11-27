@@ -1,5 +1,7 @@
 package com.tianjian.property.management.service;
 
+import com.tianjian.property.bean.Property;
+
 import java.util.List;
 import java.util.Map;
 
@@ -14,4 +16,6 @@ public interface PropertyService {
     List getApartments(Integer buildingId);*/
 
     List getProperty(Integer appUID);
+
+    List<Property> getListBySelect();
 }

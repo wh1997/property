@@ -44,10 +44,9 @@ public interface UserDao extends BaseDao<User> {
             "</script>"})
     int insert(User role);
     @Select({"<script>" +
-            "SELECT role_id  FROM  `tj_user` u " +
+            "SELECT r.role_id  FROM  `tj_user` u " +
             " INNER JOIN  tj_user_role r ON u.user_id = r.user_id " +
-            " WHERE r.status=0 AND u.user_id " +
-            " = #{userId}" +
+            " WHERE r.status=0 AND u.user_id = #{userId}" +
             "</script>"})
     List<Integer> selectRoleByUserId(Integer userId);
     @Select({"<script>" +
@@ -114,14 +113,14 @@ public interface UserDao extends BaseDao<User> {
             "  u.user_id userId, " +
             "  u.phone phone, " +
             "  u.name name, " +
-            "  u.role role  " +
-            "u.branch_id branchId ," +
+            "  u.role role , " +
+            " u.branch_id branchId ," +
             "p.property_name propertyName"+
             " FROM " +
             "  `tj_user` u " +
             "  INNER JOIN tj_property p ON u.branch_id = p.branch_id  " +
             " WHERE " +
-            "  d.property_id IN " +
+            "  p.bw_property_id IN " +
             "<foreach collection=\"lists\" item=\"list\" index=\"index\" open=\"(\" close=\")\" separator=\",\"> " +
             "#{list} " +
             "</foreach>" +

@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -141,8 +142,18 @@ public class PermissionServiceImpl extends HttpService implements PermissionServ
     }
 
     @Override
-    public int  moduleAccredit(Auth auth) {
-        return authDao.insertSelective(auth);
+    public int  moduleAccredit(Integer appUID, Integer roleId, List<Integer> resourcesId,String type) {
+        ArrayList<Auth> auths = new ArrayList<>();
+        for (int i = 0; i <resourcesId.size() ; i++) {
+            Auth auth = new Auth();
+            auth.setPersonId(appUID);
+            auth.setResourcesId(resourcesId.get(i));
+            auth.setRoleId(roleId);
+            auth.setStatus(0);
+            auth.setType(type);
+            auths.add(auth);
+        }
+        return authDao.insertAuthList(auths);
     }
 
     @Override

@@ -32,4 +32,6 @@ public interface ManageService {
     int updateGateway(Gateway gateway);
 
     Map gatewayDetails(String gatewayId);
+
+    LockResult information(Map map);
 }
