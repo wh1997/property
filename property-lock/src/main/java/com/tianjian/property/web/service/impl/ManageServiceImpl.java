@@ -85,6 +85,7 @@ public class ManageServiceImpl implements ManageService {
     public Map lockGatewayDetails(Integer lockId) {
         HashMap<String, Object> resultMap = new HashMap<>();
         Map map=  lockDao.lockSelectGateway(lockId);
+        System.out.println(map);
         Integer doorId = (Integer) map.get("doorId");
         String gatewayId = (String) map.get("gatewayId");
         Map<String, Object> door = doorDao.selectDoor(doorId);
@@ -121,10 +122,11 @@ public class ManageServiceImpl implements ManageService {
         Map result = gatewayService.bindinggateway(information, map);
         Integer resultCode = (Integer) result.get("resultCode");
         String reason = (String) result.get("reason");
+        Map data = (Map) result.get("data");
         if (resultCode==0){
-            return new LockResult(true,"设置成功", ErrorEnum.SUCCESS.getCode(),"");
+            return new LockResult(true,"获取成功", ErrorEnum.SUCCESS.getCode(),data);
         }else{
-            return new LockResult(false,"设置失败: "+ reason, ErrorEnum.OPERATION_ERROR.getCode(),"");
+            return new LockResult(false,"获取失败: "+ reason, ErrorEnum.OPERATION_ERROR.getCode(),"");
         }
     }
     @Override

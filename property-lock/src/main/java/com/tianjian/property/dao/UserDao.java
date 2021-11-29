@@ -51,11 +51,6 @@ public interface UserDao extends BaseDao<User> {
     List<Integer> selectRoleByUserId(Integer userId);
     @Select({"<script>" +
             "SELECT  " +
-//            " u.id uId,  " +
-//            " u.user_id userId,  " +
-//            " u.phone phone,  " +
-//            " u.name name,  " +
-//            " u.role role,  " +
             " a.id aId,  " +
             " a.user_status userStatus,  " +
             " a.add_person addPerson,  " +
@@ -102,10 +97,6 @@ public interface UserDao extends BaseDao<User> {
             "</if>" +
             "</script>"})
     List<Map> selectStaff( @Param("user") User user);
-    @Update({"<script>" +
-          "UPDATE `tj_user` SET role = 2 " +
-          " WHERE user_id= #{userId} "+
-          "</script>"})
     int deleteByUserId(Integer userId);
     @Select({"<script>" +
             "SELECT " +

@@ -11,7 +11,7 @@ import java.util.Map;
 @Repository
 public interface GatewayDao extends BaseDao<Gateway> {
     @Select({"<script>" +
-            " SELECT id gatewayId,gateway_name gatewayName, gateway_mac gatewayMac,deviceseq " +
+            " SELECT id lockGatewayId,gateway_name gatewayName, gateway_mac gatewayMac,deviceseq " +
             "FROM tj_gateway WHERE id = #{id} AND status != 5"+
             "</script>"})
     Map<String,Object> findById(Integer id);

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface LockAuthorizationDao extends BaseDao<LockAuthorization> {
     @Update({"<script>" +
-            "UPDATE tj_lock_authorization  SET status =1  WHERE id=#{aId}"+
+            "UPDATE tj_lock_authorization  SET user_status =1  WHERE id=#{aId}"+
             "</script>"})
     int updateStatus(Integer aId);
 }

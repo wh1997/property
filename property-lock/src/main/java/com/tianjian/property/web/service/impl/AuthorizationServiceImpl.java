@@ -85,8 +85,8 @@ public class AuthorizationServiceImpl implements AuthorizationService {
     @Override
     @Transactional
     public int addLockuser(LockUser lockUser) {
-        List<LockUser> select = lockUserDao.select(lockUser);
-        if (select !=null){
+        List<LockUser> select = lockUserDao.selectRepetition(lockUser);
+        if (select.size()>0){
             return -1 ;
         }else {
             return lockUserDao.insertSelective(lockUser) ;
@@ -95,11 +95,22 @@ public class AuthorizationServiceImpl implements AuthorizationService {
 
     @Override
     @Transactional
-    public int deleteLockuser(Integer id) {
+    public int deleteLockuser(Integer userId,Integer doorId,Integer appUID) {
+        System.out.println(doorId);
         LockUser lockUser = new LockUser();
-        lockUser.setId(id);
-        lockUser.setStatus(1);
-        return lockUserDao.updateByPrimaryKeySelective(lockUser);
+        lockUser.setDoorId(doorId);
+        lockUser.setUserId(userId);
+        List<LockUser> lockUsers = lockUserDao.selectRepetition(lockUser);
+        LockUser lockUser1 = lockUsers.get(0);
+        Integer lockUserId = lockUser1.getLockUserId();
+        System.out.println(lockUser1);
+        System.out.println(lockUserId);
+        if (lockUserId!=900){
+            lockUser.setAddPerson(appUID);
+            return lockUserDao.deleteLockuser(lockUser);
+        }else {
+            return 0;
+        }
     }
 
     @Override

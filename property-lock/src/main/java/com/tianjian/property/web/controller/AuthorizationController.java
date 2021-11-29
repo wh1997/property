@@ -11,6 +11,7 @@ import com.tianjian.property.utils.TokenUtil;
 import com.tianjian.property.utils.error.ErrorEnum;
 import com.tianjian.property.web.service.AuthorizationService;
 import com.tianjian.property.web.service.SelectRoleService;
+import jdk.nashorn.internal.parser.Token;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -141,6 +142,7 @@ public class AuthorizationController {
     public LockResult deleteRight(@RequestHeader String token ,@RequestBody Map map) {
         try {
             Integer aId = (Integer) map.get("aId");
+            System.out.println(aId);
             int i =authorizationService.deleteRight(aId);
             if (i>0){
                 return new LockResult(true, "操作成功", ErrorEnum.SUCCESS.getCode(), null);
@@ -161,12 +163,14 @@ public class AuthorizationController {
     @PostMapping("/add/lockuser")
     public LockResult addLockuser(@RequestHeader String token ,@RequestBody Map map) {
         try {
+            Integer appUID = TokenUtil.getAppUID(token);
             LockUser lockUser = BeanChangeUtils.mapToBean(map, LockUser.class);
+            lockUser.setAddPerson(appUID);
             int i =authorizationService.addLockuser(lockUser);
             if (i>0){
                 return new LockResult(true, "添加成功", ErrorEnum.SUCCESS.getCode(), null);
             }else if (i==-1){
-                return new LockResult(false, "添加失败,该已存在", ErrorEnum.SUCCESS.getCode(), null);
+                return new LockResult(false, "添加失败,该锁用户已存在", ErrorEnum.SUCCESS.getCode(), null);
             }else{
                 return new LockResult(false, "添加失败", ErrorEnum.SUCCESS.getCode(), null);
             }
@@ -184,12 +188,14 @@ public class AuthorizationController {
     @PostMapping("/delete/lockuser")
     public LockResult deleteLockuser(@RequestHeader String token ,@RequestBody Map map) {
         try {
-            Integer id = (Integer) map.get("id");
-            int i =authorizationService.deleteLockuser(id);
+            Integer appUID = TokenUtil.getAppUID(token);
+            Integer userId = (Integer) map.get("userId");
+            Integer doorId = (Integer) map.get("doorId");
+            int i =authorizationService.deleteLockuser(userId,doorId,appUID);
             if (i>0){
                 return new LockResult(true, "删除成功", ErrorEnum.SUCCESS.getCode(), null);
             }else{
-                return new LockResult(false, "删除失败", ErrorEnum.SUCCESS.getCode(), null);
+                return new LockResult(false, "删除失败", ErrorEnum.COMMON_ERROR.getCode(), null);
             }
         } catch (Exception e){
             e.printStackTrace();

@@ -49,6 +49,7 @@ public class TokenUtil {
 	}
 
 	public static void main(String[] args) throws Exception {
-		String filename= RandomStringUtils.randomAlphanumeric(16);
+		String filename= RandomStringUtils.randomAlphanumeric(17);
+		System.out.println(filename);
 	}
 }

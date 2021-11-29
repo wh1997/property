@@ -2,29 +2,39 @@ package com.tianjian.property.web.controller;
 
 import com.tianjian.property.bean.Auth;
 import com.tianjian.property.bean.UserRole;
+import com.tianjian.property.config.RequestResult;
 import com.tianjian.property.utils.BeanChangeUtils;
 import com.tianjian.property.utils.LockResult;
+import com.tianjian.property.utils.RSAUtils;
 import com.tianjian.property.utils.TokenUtil;
 import com.tianjian.property.utils.error.ErrorEnum;
 import com.tianjian.property.web.service.UserLoginService;
+import lombok.extern.slf4j.Slf4j;
 import org.jose4j.lang.JoseException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.KeyPair;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @description:
  * @author: ManolinCoder
  * @time: 2021/11/12
  */
+@Slf4j
 @RestController
 @RequestMapping("/web/user")
 public class UserLoginController {
+    private  static String USER_KEY="userKey_";
     @Autowired
     private UserLoginService userLoginService;
-    
+    @Autowired
+    private RedisTemplate redisTemplate;
+
     /** 
     * @Description: 登录接口 
     * @Param:  
@@ -33,10 +43,18 @@ public class UserLoginController {
     */
     @PostMapping("/login")
     public LockResult login(@RequestBody Map map) throws Exception {
-        String phone = (String) map.get("phone");
-        String Password = (String) map.get("password");
-        LockResult login = userLoginService.login(phone, Password);
-        return  login;
+        try {
+            String phone = (String) map.get("phone");
+            String Password = (String) map.get("password");
+        /*    // 获取私钥(暂时固定密码)
+            String privateKey = (String) redisTemplate.opsForValue().get(USER_KEY + phone);
+            // 解析密码
+            String password = new String(RSAUtils.decryptByPrivateKey(Password, privateKey));*/
+            LockResult login = userLoginService.login(phone, Password);
+            return  login;
+        }catch (Exception e){
+            return new LockResult(false,"登录失败,请重新登录", ErrorEnum.OPERATION_ERROR.getCode(),"");
+        }
     }
     
     /** 
@@ -167,5 +185,20 @@ public class UserLoginController {
             return new LockResult(false,"查询失败", ErrorEnum.OPERATION_ERROR.getCode(),"");
         }
     }
-
+    @GetMapping(value = "/getloginkey/{phone}")
+    public LockResult getLoginPublicKey(@PathVariable(required = false) String phone) throws Exception {
+        // 数据转换
+    /*    if(null == userName){
+            log.error("没有输入用户名");
+            throw new BusinessException(ErrorEnum.PARAMETER_NONE_ERROR, "请输入用户名");
+        }*/
+        // 初始化秘钥
+        KeyPair key = RSAUtils.initKey();
+        // 私钥存入缓存
+        redisTemplate.opsForValue().set(USER_KEY + phone, RSAUtils.getPrivateKey(key));
+        // 设置缓存时间十分钟
+        redisTemplate.expire(USER_KEY + phone, 60 * 10, TimeUnit.SECONDS);
+        // 公钥返回前端
+        return new LockResult(true,"获取成功",0,RSAUtils.getPublicKey(key));
+    }
 }

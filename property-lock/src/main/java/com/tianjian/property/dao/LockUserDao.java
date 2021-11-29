@@ -3,6 +3,7 @@ package com.tianjian.property.dao;
 import com.tianjian.property.bean.LockUser;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Repository;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -40,4 +41,18 @@ public interface LockUserDao extends BaseDao<LockUser> {
             " l.lock_user_id "+
             "</script>"})
     List<Map> lockUserDao(@Param("lockUser") LockUser lockUser);
+    @Select({"<script>" +
+            " SELECT *" +
+            " FROM tj_lock_user WHERE 1=1 " +
+            "<if test='lockUser != null'> " +
+            "<if test='lockUser.userId != null'> AND user_id = #{lockUser.userId}</if>" +
+            "<if test='lockUser.doorId != null'> AND door_id = #{lockUser.doorId}</if>" +
+            "</if>" +
+            "</script>"})
+    List<LockUser> selectRepetition(@Param("lockUser")LockUser lockUser);
+    @Update({"<script>" +
+            "UPDATE `tj_lock_user` SET status = 1 ,add_person = #{lockUser.addPerson}" +
+            " WHERE user_id= #{lockUser.userId} AND door_id = #{lockUser.doorId}"+
+            "</script>"})
+    int deleteLockuser(@Param("lockUser")LockUser lockUser);
 }

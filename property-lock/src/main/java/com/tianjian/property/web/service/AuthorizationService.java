@@ -27,7 +27,7 @@ public interface  AuthorizationService {
 
     int addLockuser(LockUser lockUser);
 
-    int deleteLockuser(Integer id);
+    int deleteLockuser(Integer userId,Integer doorId,Integer appUID);
 
     int updateLockuser(LockUser lockUser);
 
