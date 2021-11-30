@@ -181,7 +181,7 @@ public class GatewayServiceImpl extends HttpService implements GatewayService  {
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor=Exception.class)
     public Map LockBindingGateway(String lockId, String gatewayId, Integer doorID, Integer gateway, Integer lock) {
         Lock lock2 = lockDao.selectByDoorid(doorID);
         Integer lockGatewayId = lock2.getLockGatewayId();
@@ -201,7 +201,7 @@ public class GatewayServiceImpl extends HttpService implements GatewayService  {
                 //添加锁信息
                 lockDao.updateByLockToGateway(doorID,lock,gateway);
                 //修改门的状态
-                doorDao.updateDoorStatus(doorID);
+                doorDao.updateDoorStatus(doorID,1);
                 return bindinggateway;
             }
         return bindinggateway;
@@ -214,7 +214,7 @@ public class GatewayServiceImpl extends HttpService implements GatewayService  {
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor=Exception.class)
     public Map LockUnBindingGateway(String lockId, Integer lock, Integer bluetoothLockId) {
         HashMap<String, Object> datamap = new HashMap<>();
         //是	string 门锁id

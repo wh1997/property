@@ -82,7 +82,6 @@ public class GatewayController {
     * @Date: 2021/6/22 
     */
     public LockResult LockBindingGateway(@RequestBody Map map){
-        try {
             //门锁id
             String lockId = (String) map.get("lockId");
             //网关id
@@ -101,11 +100,6 @@ public class GatewayController {
                 return new LockResult(true,ErrorEnum.SUCCESS.getErrorMsg(),ErrorEnum.SUCCESS.getCode(),result);
             }
             return new LockResult(false,"绑定失败:"+reason,ErrorEnum.OPERATION_ERROR.getCode(),result);
-        }catch (Exception e){
-            e.printStackTrace();
-            return new LockResult(false,ErrorEnum.SYSTEM_ERROR.getErrorMsg(),ErrorEnum.SYSTEM_ERROR.getCode(),null);
-        }
-
     }
     @PostMapping("/delete")
     

@@ -41,8 +41,9 @@ private DoorDao  doorDao;
 @Value("${apartment.addBluetooth}")
 private String  addBluetooth;
     @Override
-    @Transactional
+    @Transactional(rollbackFor=Exception.class)
     public LockResult addBluetooth(Map lockBaseInfo, Map lockAuthCode, String hardwareVersion, String softwareVersion, Integer doorid, String addpeople) throws Exception {
+        //查询该门是否添加了锁
         Lock locks = lockDao.selectByDoorid(doorid);
         if (locks!=null){
             return new LockResult(false,"重复添加",200,"");
@@ -89,30 +90,41 @@ private String  addBluetooth;
         datamap.put("hardwareVersion",hardwareVersion);
         //是	string 蓝牙模块的软件版本号 ,可以通过小程序插件、APP的SDK添加门锁时获取到
         datamap.put("softwareVersion",softwareVersion);
+        //慧享佳添加蓝牙门锁
         Map result = gatewayService.bindinggateway(addBluetooth, datamap);
         Integer resultCode = (Integer) result.get("resultCode");
         String reason = (String) result.get("reason");
         Map data = (Map) result.get("data");
-        //门锁id
+        //慧享佳门锁id
         String lockId = (String) data.get("lockId");
         if (resultCode==0){
-             LockBaseInfoVo lockInfoBase = BeanChangeUtils.mapToBean(lockBaseInfo, LockBaseInfoVo.class);
+            LockBaseInfoVo lockInfoBase = BeanChangeUtils.mapToBean(lockBaseInfo, LockBaseInfoVo.class);
             String lockMac = lockInfoBase.getLockMac();
             LockBaseInfo lockBaseInfoMac= lockBaseInfoDao.selectByMac(lockMac);
             if(lockBaseInfoMac!=null){
-                return new LockResult(false, "该门锁已添加请先删除", ErrorEnum.OPERATION_ERROR.getCode(),"");
-            }
-            // LockAuthCode lockAuthCodeBean = BeanChangeUtils.mapToBean(lockAuthCode, LockAuthCode.class);
-            //请求成功了往门锁基本信息表里添加门锁基本信息
-            LockBaseInfo LockBaseInfo = new LockBaseInfo(null,lockId, lockInfoBase.getLockTag(), lockInfoBase.getLockMac(), hardwareVersion, softwareVersion, lockInfoBase.getLockType(),
-                    lockInfoBase.getInitStatus(), lockInfoBase.getMaxVolume(), lockInfoBase.getMaxUser(), lockInfoBase.getBleProtocolVer(), lockInfoBase.getRfModuleType(),
-                    lockInfoBase.getRfModuleMac(), aesKey,adminAuthCode,generalAuthCode, tempAuthCode,null, null,  addpeople, "慧享佳", 0, null);
-            lockBaseInfoDao.inster(LockBaseInfo);
+                Integer id = lockBaseInfoMac.getId();
+                LockBaseInfo LockBaseInfo = new LockBaseInfo(id,lockId, lockInfoBase.getLockTag(), lockInfoBase.getLockMac(), hardwareVersion, softwareVersion, lockInfoBase.getLockType(),
+                        lockInfoBase.getInitStatus(), lockInfoBase.getMaxVolume(), lockInfoBase.getMaxUser(), lockInfoBase.getBleProtocolVer(), lockInfoBase.getRfModuleType(),
+                        lockInfoBase.getRfModuleMac(), aesKey,adminAuthCode,generalAuthCode, tempAuthCode,null, null,  addpeople, "慧享佳", 0, null);
+                lockBaseInfoDao.updateByPrimaryKeySelective(LockBaseInfo);
+                //往锁表里添加基本信息
+                Lock lock = new Lock(null, doorid, 0, id, -1, 0, null, null, null);
+                lockDao.inster(lock);
+                doorDao.updateDoorStatus(doorid,1);
+                return new LockResult(true, ErrorEnum.SUCCESS.getErrorMsg(), ErrorEnum.SUCCESS.getCode(),result);
+            }else {
+                // LockAuthCode lockAuthCodeBean = BeanChangeUtils.mapToBean(lockAuthCode, LockAuthCode.class);
+                //请求成功了往门锁基本信息表里添加门锁基本信息
+                LockBaseInfo LockBaseInfo = new LockBaseInfo(null, lockId, lockInfoBase.getLockTag(), lockInfoBase.getLockMac(), hardwareVersion, softwareVersion, lockInfoBase.getLockType(),
+                        lockInfoBase.getInitStatus(), lockInfoBase.getMaxVolume(), lockInfoBase.getMaxUser(), lockInfoBase.getBleProtocolVer(), lockInfoBase.getRfModuleType(),
+                        lockInfoBase.getRfModuleMac(), aesKey, adminAuthCode, generalAuthCode, tempAuthCode, null, null, addpeople, "慧享佳", 0, null);
+                lockBaseInfoDao.inster(LockBaseInfo);
             //往锁表里添加基本信息
             Lock lock = new Lock(null, doorid, 0, LockBaseInfo.getId(), -1, 0, null, null, null);
             lockDao.inster(lock);
-            doorDao.updateDoorStatus(doorid);
+            doorDao.updateDoorStatus(doorid,1);
             return new LockResult(true, ErrorEnum.SUCCESS.getErrorMsg(), ErrorEnum.SUCCESS.getCode(),result);
+            }
         }else{
             return new LockResult(false,reason,200,result);
         }

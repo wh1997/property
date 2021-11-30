@@ -49,57 +49,6 @@ public class RoomDoorController {
             return new LockResult(false,ErrorEnum.SYSTEM_ERROR.getErrorMsg(),ErrorEnum.SYSTEM_ERROR.getCode(),null);
         }
     }
-    /**
-    * @Description:根据房间门搜索房间    TODO  弃用接口与 根据小区搜索房间(房间门列表)重复
-    * @Param: [cityid 城市id, areaid  区域id, propertyid  小区id, roomno   房间号]
-    * @return: com.tagen.lock.utils.LockResult
-    * @Date: 2021/5/25
-    */
-/*    @PostMapping("/roomno")
-    public LockResult findBypropertynameOrRoomno(@RequestBody Map map){
-        try {
-            Integer propertyid = (Integer) map.get("propertyId");
-            String roomno = (String) map.get("roomNo");
-            Integer pageNum = (Integer) map.get("pageNum");
-            Integer pageSize = (Integer) map.get("pageSize");
-            Map<String, List<DoorVo>> doors  = roomDoorService.selsctRoomnoAndPropertyname(propertyid,roomno,pageNum,pageSize);
-            if(doors!=null){
-                return new LockResult(true,"获取成功",ErrorEnum.SUCCESS.getCode(),doors);
-            }else {
-                return new LockResult(true,"获取成功,没有数据",ErrorEnum.SUCCESS.getCode(),null);
-            }
-        }catch (Exception e){
-            e.printStackTrace();
-            return new LockResult(false,ErrorEnum.SYSTEM_ERROR.getErrorMsg(),ErrorEnum.SYSTEM_ERROR.getCode(),null);
-        }
-    }*/
-  /*  *//**TODO 弃用  与all接口重复
-    * @Description:根据小区,楼栋,单元名称搜索房间
-    * @Param: [cityid 城市id, areaid  区域id, propertyid   小区id, bulidingid  楼栋id , unitname   单元名称]
-    * @return: com.tagen.lock.utils.LockResult
-    * @Date: 2021/5/25
-    *//*
-    @PostMapping("/screendoor")
-    public LockResult screenRoomDoor(@RequestBody Map map){
-        try {
-            Integer propertyid = (Integer) map.get("propertyId");
-            Integer bulidingid = (Integer) map.get("bulidingId");
-            String unitname = (String) map.get("unitName");
-            Integer pageNum = (Integer) map.get("pageNum");
-            Integer pageSize = (Integer) map.get("pageSize");
-            Map<String, List<DoorVo>>  doors  = roomDoorService.screenRoomDoor(propertyid,bulidingid,unitname, pageNum, pageSize);
-            if(doors!=null){
-                return new LockResult(true,"获取成功",ErrorEnum.SUCCESS.getCode(),doors);
-            }else {
-                return new LockResult(true,"获取成功,没有数据",ErrorEnum.SUCCESS.getCode(),null);
-            }
-        }catch (Exception e){
-            e.printStackTrace();
-            return new LockResult(false,ErrorEnum.SYSTEM_ERROR.getErrorMsg(),ErrorEnum.SYSTEM_ERROR.getCode(),null);
-        }
-
-    }*/
-
     @PostMapping("/Search")
     /**
     * @Description:  关键字搜素

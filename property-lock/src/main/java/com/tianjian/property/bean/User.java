@@ -9,7 +9,7 @@ public class User implements Serializable {
     @Id
     @Column(name = "`id`")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     /**
      * 用户id
@@ -61,7 +61,7 @@ public class User implements Serializable {
         super();
     }
 
-    public User(Long id, Integer userId, String phone, String name, Integer branchId, Integer role, String addTime, String updateTime, String remark) {
+    public User(Integer id, Integer userId, String phone, String name, Integer branchId, Integer role, String addTime, String updateTime, String remark) {
         this.id = id;
         this.userId = userId;
         this.phone = phone;
@@ -73,11 +73,11 @@ public class User implements Serializable {
         this.remark = remark;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

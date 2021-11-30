@@ -142,6 +142,7 @@ public interface LockBaseInfoDao extends BaseDao<LockBaseInfo> {
             "  LEFT JOIN tj_door d ON l.door_id = d.id   " +
             " ) b ON a.id = b.lock_facility_id  " +
             " WHERE "+
+            " a.`status`  !=2 AND b.lock_status=0 AND b.`status` != 3 AND "+
             " a.id = #{equipmentId} "+
             "</script>"})
     Map selectById(Integer equipmentId);
@@ -174,10 +175,9 @@ public interface LockBaseInfoDao extends BaseDao<LockBaseInfo> {
             "  tj_lock l " +
             "  LEFT JOIN tj_door d ON l.door_id = d.id   " +
             " ) b ON a.id = b.lock_facility_id  " +
-            "WHERE lock_tag LIKE #{keyWord} OR lock_mac LIKE #{keyWord} OR lock_id LIKE #{keyWord} AND a.`status` != 2  AND property_id = #{propertyId}   " +
+            "WHERE lock_tag LIKE #{keyWord} OR lock_mac LIKE #{keyWord} OR lock_id LIKE #{keyWord} AND a.`status` != 2 AND b.lock_status=0 AND b.`status` != 3  AND property_id = #{propertyId}   " +
             "ORDER  BY building_name DESC ,unit_name DESC ,room_no DESC  "})
     List<LinkedHashMap<String, Object>> fuzzySearch(Integer propertyId,String keyWord);
-
     @Select({"<script>"+
             "SELECT" +
             " id bluetoothLockId,lock_id lockId,lock_tag lockTag,lock_mac lockMac, a.`status` ,door_id doorId,property_name propertyName," +
@@ -207,17 +207,18 @@ public interface LockBaseInfoDao extends BaseDao<LockBaseInfo> {
             " FROM " +
             "  tj_lock l " +
             "  INNER JOIN tj_door d ON l.door_id = d.id   " +
-            " ) b ON a.id = b.lock_facility_id   WHERE 1=1 " +
+            " ) b ON a.id = b.lock_facility_id   WHERE " +
+            " a.`status`  !=2 AND b.lock_status=0 AND b.`status` != 3  "+
             "<if test='lockBaseInfo != null'> " +
-            "<if test='lockBaseInfo.lockMac != null'> AND lock_mac like CONCAT('%',#{lockBaseInfo.lockMac},'%')</if>" +
-            "<if test='lockBaseInfo.status != null'> AND status = #{lockBaseInfo.status}  </if>" +
+            "<if test='lockBaseInfo.lockMac != null'> AND a.lock_mac like CONCAT('%',#{lockBaseInfo.lockMac},'%')</if>" +
+            "<if test='lockBaseInfo.status != null'> AND a.status = #{lockBaseInfo.status}  </if>" +
             "</if>" +
-            "<if test='doorName != null'> AND door_name = CONCAT('%',#{lockBaseInfo.doorName},'%')</if>" +
-            " AND property_id IN"+
+            "<if test='doorName != null'> AND b.door_name = CONCAT('%',#{lockBaseInfo.doorName},'%')</if>" +
+            " AND b.property_id IN"+
             "<foreach collection=\"lists\" item=\"list\" index=\"index\" open=\"(\" close=\")\" separator=\",\"> " +
             "#{list} " +
             "</foreach>" +
-            " ORDER  BY building_name DESC ,unit_name DESC ,room_no DESC  "+
+            " ORDER  BY b.building_name DESC ,b.unit_name DESC ,b.room_no DESC  "+
             "</script>"})
     List<LinkedHashMap<String, Object>> selectBluetooth( List<Integer> lists, LockBaseInfo lockBaseInfo,String doorName);
     @Select({"<script>" +

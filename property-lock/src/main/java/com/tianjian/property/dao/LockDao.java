@@ -42,7 +42,7 @@ public interface LockDao extends BaseDao<Lock> {
             "</trim>"+
             "</script>"})
     void inster(Lock lock);
-    @Update({"UPDATE tj_lock SET `Lock_gateway_id`=-1 WHERE id = #{lock}"})
+    @Update({"UPDATE tj_lock SET `Lock_gateway_id`=-1  WHERE id = #{lock}"})
     void updateGatewayId(Integer lock);
     @Select({"SELECT * FROM  tj_lock  WHERE Lock_gateway_id = #{id}"})
     List<Lock> selectByGatewayId(Integer id);
@@ -61,4 +61,6 @@ public interface LockDao extends BaseDao<Lock> {
             " WHERE  l.lock_facility_id= #{lockId}" +
             "</script>"})
     Map lockSelectGateway(Integer lockId);
+    @Update({"UPDATE tj_lock SET `lock_status`=1  WHERE id = #{lock}"})
+    int updateStatus(Integer lock);
 }

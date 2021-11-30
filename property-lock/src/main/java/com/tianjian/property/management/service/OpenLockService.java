@@ -6,6 +6,7 @@ import com.tianjian.property.utils.PageResult;
 import com.tianjian.property.utils.error.BusinessException;
 
 import java.text.ParseException;
+import java.util.Map;
 
 /**
  * @description:
@@ -15,5 +16,5 @@ import java.text.ParseException;
 public interface OpenLockService {
     LockResult openLock(Integer userId, Integer lockId, Integer lockUserId) throws ParseException, BusinessException;
 
-    PageResult<LockLog> openLockLog(LockLog lockLog, Integer pageNum, Integer pageSize);
+    PageResult<Map> openLockLog(LockLog lockLog, Integer pageNum, Integer pageSize);
 }

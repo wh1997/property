@@ -59,7 +59,7 @@ public class OpenLockController {
             Integer pageNum = (Integer) map.get("pageNum");
             Integer pageSize = (Integer) map.get("pageSize");
             LockLog lockLog = BeanChangeUtils.mapToBean(map, LockLog.class);
-            PageResult<LockLog> result=openLockService.openLockLog(lockLog,pageNum,pageSize);
+            PageResult<Map> result=openLockService.openLockLog(lockLog,pageNum,pageSize);
             if (result.getRows()!=null){
                 return new LockResult(true,ErrorEnum.SUCCESS.getErrorMsg(),ErrorEnum.SUCCESS.getCode(),result);
             }else {

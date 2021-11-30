@@ -1,6 +1,7 @@
 package com.tianjian.property.management.service.impl;
 
 import com.tianjian.property.bean.Door;
+import com.tianjian.property.bean.Lock;
 import com.tianjian.property.dao.DoorDao;
 import com.tianjian.property.dao.LockBaseInfoDao;
 import com.tianjian.property.dao.LockDao;
@@ -34,19 +35,25 @@ public class LockBaseInfoServiceImpl implements LockBaseInfoService {
     @Value("${apartment.theRemoteUnlock}")
     private  String theRemoteUnlock;
     @Override
-    @Transactional
+    @Transactional(rollbackFor=Exception.class)
     public LockResult updateStatus(String lockId, Integer lock, Integer id, Integer status) {
         //先删除蓝牙门锁绑定的网关
         Map map = gatewayService.LockUnBindingGateway(lockId, lock, id);
         Integer resultCode = (Integer) map.get("resultCode");
         if(resultCode==0){
-            //修改蓝牙门锁的转态为废弃(删除)
-            int i = lockBaseInfoDao.updateStatus(id, status);
-            if (i>=0){
-               return new LockResult(true, ErrorEnum.SUCCESS.getErrorMsg(),ErrorEnum.SUCCESS.getCode(),"");
+            Lock lock1 = lockDao.selectByDoorid(lock);
+            Integer doorId = lock1.getDoorId();
+            //修改门的状态为无锁
+            int i = doorDao.updateDoorStatus(doorId,3);
+            //修改门锁网关绑定
+            int o = lockDao.updateStatus(lock);
+            if (i>=0&&o>0){
+                return new LockResult(true, ErrorEnum.SUCCESS.getErrorMsg(),ErrorEnum.SUCCESS.getCode(),"");
+            }else {
+                return new LockResult(false, ErrorEnum.OPERATION_ERROR.getErrorMsg(),ErrorEnum.OPERATION_ERROR.getCode(),"");
             }
         }
-        return new LockResult(false, ErrorEnum.SYSTEM_ERROR.getErrorMsg(),ErrorEnum.SYSTEM_ERROR.getCode(),"");
+        return new LockResult(false, ErrorEnum.OPERATION_ERROR.getErrorMsg(),ErrorEnum.OPERATION_ERROR.getCode(),"");
     }
 
     @Override

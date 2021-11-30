@@ -9,6 +9,7 @@ import com.tianjian.property.utils.LockResult;
 import com.tianjian.property.utils.PageResult;
 import com.tianjian.property.utils.TokenUtil;
 import com.tianjian.property.utils.error.ErrorEnum;
+import org.jose4j.lang.JoseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,8 +34,7 @@ public class EquipmentController {
     * @return: com.tagen.lock.utils.LockResult
     * @Date: 2021/5/30
     */
-    public LockResult addLock(@RequestBody Map map, @RequestHeader String token){
-        try {
+    public LockResult addLock(@RequestBody Map map, @RequestHeader String token) throws Exception {
             Map lockInfoBaseMap =  (Map) map.get("lockInfoBase");
             Map lockAuthCodeMap = (Map) map.get("lockAuthCode");
             String hardwareVersion = (String) map.get("hardwareVersion");
@@ -42,10 +42,6 @@ public class EquipmentController {
             Integer doorid = (Integer) map.get("doorId");
             Integer appUID = TokenUtil.getAppUID(token);
             return equipmentService.addBluetooth(lockInfoBaseMap, lockAuthCodeMap, hardwareVersion, softwareVersion,doorid,appUID.toString());
-        }catch (Exception e){
-            e.printStackTrace();
-            return new LockResult(false,ErrorEnum.SYSTEM_ERROR.getErrorMsg(),ErrorEnum.SYSTEM_ERROR.getCode(),null);
-        }
     }
     @PostMapping("/list")
     

@@ -30,7 +30,6 @@ public class LockBaseInfoController {
     * @Date: 2021/6/22 
     */
     public LockResult updateStatus(@RequestBody Map map){
-        try {
             //门锁设备id
             Integer id = (Integer) map.get("id");
             //要修改的状态
@@ -40,10 +39,6 @@ public class LockBaseInfoController {
             //门锁id(厂家生成的id)
             String lockId= (String) map.get("lockId");
             return lockBaseInfoService.updateStatus(lockId, lock, id, status);
-        }catch (Exception e){
-            e.printStackTrace();
-            return new LockResult(false, ErrorEnum.SYSTEM_ERROR.getErrorMsg(),ErrorEnum.SYSTEM_ERROR.getCode(),null);
-        }
     }
     @PostMapping("/open/lock")
     

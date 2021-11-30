@@ -47,6 +47,9 @@ public class OpenLockServiceImpl implements OpenLockService {
     @Transactional
     public LockResult openLock(Integer userId, Integer doorId, Integer lockUserId) throws ParseException, BusinessException {
         List<Map> selectlock = doorDao.selectlock(doorId);
+        if (selectlock.size()==0){
+            return new LockResult(false, "开门失败,请先绑定门锁",ErrorEnum.OPERATION_ERROR.getCode(),"");
+        }
         Map map = selectlock.get(0);
         Integer id = (Integer) map.get("id");
         Integer propertyId = (Integer) map.get("propertyId");
@@ -91,15 +94,15 @@ public class OpenLockServiceImpl implements OpenLockService {
         }
 
     @Override
-    public PageResult<LockLog> openLockLog(LockLog lockLog,Integer pageNum,Integer pageSize) {
+    public PageResult<Map> openLockLog(LockLog lockLog,Integer pageNum,Integer pageSize) {
         PageHelper.startPage(pageNum,pageSize);
-        List<LockLog> rows = lockLogDao.openLockLog(lockLog);
-        PageInfo<LockLog> staffPageInfo = new PageInfo<>(rows);
-        List<LockLog> row = staffPageInfo.getList();
+        List<Map> rows = lockLogDao.openLockLog(lockLog);
+        PageInfo<Map> staffPageInfo = new PageInfo<>(rows);
+        List<Map> row = staffPageInfo.getList();
         int pages = staffPageInfo.getPages();
         //总共多少条
         long total = staffPageInfo.getTotal();
-        PageResult<LockLog> PageResult = new PageResult<>(pageSize,pageNum,row,total,pages);
+        PageResult<Map> PageResult = new PageResult<>(pageSize,pageNum,row,total,pages);
         return PageResult;
     }
 }

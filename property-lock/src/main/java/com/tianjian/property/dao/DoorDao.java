@@ -188,9 +188,9 @@ public interface DoorDao extends BaseDao<Door> {
     @Select({"SELECT * FROM  tj_door  WHERE id = #{doorID}"})
     Door selectById(Integer doorID);
     @Update({"<script>" +
-            "UPDATE tj_door SET status =1  WHERE id=#{doorID}"+
+            "UPDATE tj_door SET status =#{status}  WHERE id=#{doorID}"+
             "</script>"})
-    int updateDoorStatus(Integer doorID);
+    int updateDoorStatus(Integer doorID,Integer status);
     @Select({"<script>" +
             "SELECT  status FROM tj_door WHERE id=#{doorID}"+
             "</script>"})

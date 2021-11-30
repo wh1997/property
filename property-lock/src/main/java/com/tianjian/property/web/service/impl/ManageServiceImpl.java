@@ -75,8 +75,7 @@ public class ManageServiceImpl implements ManageService {
         HashMap<String, Object> datamap = new HashMap<>();
         //	是	string 门锁id
         datamap.put("lockId",lockId);
-        //TODO 用户开锁ID   待定
-        datamap.put("delLockUserId",901);
+        datamap.put("delLockUserId",900);
         //发送请求
         Map bindinggateway = gatewayService.bindinggateway(bluetoothdDetails, datamap);
         return bindinggateway;
@@ -85,7 +84,6 @@ public class ManageServiceImpl implements ManageService {
     public Map lockGatewayDetails(Integer lockId) {
         HashMap<String, Object> resultMap = new HashMap<>();
         Map map=  lockDao.lockSelectGateway(lockId);
-        System.out.println(map);
         Integer doorId = (Integer) map.get("doorId");
         String gatewayId = (String) map.get("gatewayId");
         Map<String, Object> door = doorDao.selectDoor(doorId);

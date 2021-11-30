@@ -7,13 +7,27 @@ import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 @Repository
 public interface LockLogDao extends BaseDao<LockLog> {
     @Select({"<script>" +
-            " SELECT *  " +
-            "FROM tj_lock_log WHERE  1=1  "+
+            " SELECT  l.id id, " +
+            " l.door_id doorId, " +
+            " l.lock_type lockType, " +
+            " l.lock_mac lockMac, " +
+            " l.record_time recordTime, " +
+            " l.property_id propertyId, " +
+            " l.user_id userId, " +
+            " l.add_time addTime, " +
+            " l.`status` status, " +
+            " l.remark remark, " +
+            " u.`name`  name" +
+            " FROM tj_lock_log  l "+
+            " INNER JOIN tj_user u "+
+            " ON l.user_id=u.user_id "+
+            " WHERE  1=1 "+
             "<if test='lockLog != null'> " +
             "<if test='lockLog.id != null'> AND id = #{lockLog.id}</if>" +
             "<if test='lockLog.doorId != null'> AND door_id = #{lockLog.doorId}</if>" +
@@ -27,5 +41,5 @@ public interface LockLogDao extends BaseDao<LockLog> {
             "</if>" +
             "ORDER BY record_time DESC"+
             "</script>"})
-    List<LockLog> openLockLog(@Param("lockLog") LockLog lockLog);
+    List<Map> openLockLog(@Param("lockLog") LockLog lockLog);
 }
