@@ -18,6 +18,11 @@ public interface LockDao extends BaseDao<Lock> {
             "FROM tj_lock WHERE door_id = #{doorid} AND lock_status=0 "+
             "</script>"})
     Lock selectByDoorid(Integer doorid);
+    @Select({"<script>" +
+            " SELECT * " +
+            "FROM tj_lock WHERE lock_facility_id = #{lockFacilityId} AND lock_status=0 "+
+            "</script>"})
+    Lock selectByLockFacilityId(Integer lockFacilityId);
     @Insert({"<script>" +
             " INSERT INTO tj_lock" +
             "<trim prefix=\"(\" suffix=\")\" suffixOverrides=\",\">"+

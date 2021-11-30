@@ -100,7 +100,7 @@ public interface LockBaseInfoDao extends BaseDao<LockBaseInfo> {
             "  INNER JOIN tj_door d ON l.door_id = d.id   " +
             " ) b ON a.id = b.lock_facility_id   WHERE " +
             "<if test='keyWord !=null'> lock_tag LIKE #{keyWord} OR lock_mac LIKE #{keyWord} OR lock_id LIKE #{keyWord} AND </if>" +
-            "  a.status != 2  AND property_id = #{propertyId} "+
+            "  a.status != 2  AND b.lock_status=0 AND b.`status`!=3 AND property_id = #{propertyId} "+
             " ORDER  BY building_name DESC ,unit_name DESC ,room_no DESC  "+
             "</script>"})
     List<LinkedHashMap<String, Object>> selectByPropertyId(Integer propertyId,String keyWord);

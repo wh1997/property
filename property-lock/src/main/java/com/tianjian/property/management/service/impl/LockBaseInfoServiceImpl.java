@@ -2,19 +2,24 @@ package com.tianjian.property.management.service.impl;
 
 import com.tianjian.property.bean.Door;
 import com.tianjian.property.bean.Lock;
-import com.tianjian.property.dao.DoorDao;
-import com.tianjian.property.dao.LockBaseInfoDao;
-import com.tianjian.property.dao.LockDao;
+import com.tianjian.property.bean.LockLog;
+import com.tianjian.property.dao.*;
 import com.tianjian.property.management.service.GatewayService;
 import com.tianjian.property.management.service.LockBaseInfoService;
+import com.tianjian.property.utils.DateUtils;
 import com.tianjian.property.utils.LockResult;
+import com.tianjian.property.utils.error.BusinessException;
 import com.tianjian.property.utils.error.ErrorEnum;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.ParseException;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -23,6 +28,7 @@ import java.util.Map;
  * @time: 2021/6/22
  */
 @Service
+@Slf4j
 public class LockBaseInfoServiceImpl implements LockBaseInfoService {
     @Autowired
     public LockBaseInfoDao lockBaseInfoDao;
@@ -30,6 +36,10 @@ public class LockBaseInfoServiceImpl implements LockBaseInfoService {
     public LockDao lockDao;
     @Autowired
     public DoorDao doorDao;
+    @Autowired
+    public UserDao userDao;
+    @Autowired
+    public LockLogDao lockLogDao;
     @Autowired
     public GatewayService gatewayService;
     @Value("${apartment.theRemoteUnlock}")
@@ -41,13 +51,14 @@ public class LockBaseInfoServiceImpl implements LockBaseInfoService {
         Map map = gatewayService.LockUnBindingGateway(lockId, lock, id);
         Integer resultCode = (Integer) map.get("resultCode");
         if(resultCode==0){
-            Lock lock1 = lockDao.selectByDoorid(lock);
+            Lock lock1 = lockDao.selectByLockFacilityId(lock);
             Integer doorId = lock1.getDoorId();
+            Integer id1 = lock1.getId();
             //修改门的状态为无锁
             int i = doorDao.updateDoorStatus(doorId,3);
             //修改门锁网关绑定
-            int o = lockDao.updateStatus(lock);
-            if (i>=0&&o>0){
+            int o = lockDao.updateStatus(id1);
+            if (i>=0&&o>=0){
                 return new LockResult(true, ErrorEnum.SUCCESS.getErrorMsg(),ErrorEnum.SUCCESS.getCode(),"");
             }else {
                 return new LockResult(false, ErrorEnum.OPERATION_ERROR.getErrorMsg(),ErrorEnum.OPERATION_ERROR.getCode(),"");
@@ -57,10 +68,15 @@ public class LockBaseInfoServiceImpl implements LockBaseInfoService {
     }
 
     @Override
-    public Map openLock(String lockId, Integer lockUserId, Integer doorID) {
-      Door door= doorDao.selectById(doorID);
-        Integer doortype = door.getDoorType();
-        if(doortype!=0){
+    public LockResult openLock(String lockId, Integer lockUserId, Integer doorID,Integer userId) throws Exception {
+        List<Map> selectlock= doorDao.selectlock(doorID);
+        Map map = selectlock.get(0);
+        Integer id = (Integer) map.get("id");
+        Integer propertyId = (Integer) map.get("propertyId");
+        Integer doorType = (Integer) map.get("doorType");
+        String lockMac = (String) map.get("lockMac");
+        Integer status = (Integer) map.get("status");
+        if(status!=0){
             HashMap<String, Object> datamap = new HashMap<>();
             //是	string 门锁id
             datamap.put("lockId",lockId);
@@ -70,14 +86,34 @@ public class LockBaseInfoServiceImpl implements LockBaseInfoService {
             //2001~49999	普通用户
             //50000~52000	普通用户（人脸识别）
             datamap.put("lockUserId",lockUserId);
-
             //开锁
             Map result = gatewayService.bindinggateway(theRemoteUnlock,datamap);
-            return result;
+            Integer resultCode = (Integer) result.get("resultCode");
+            String reason = (String) result.get("reason");
+            Date date = new Date();
+            String s = DateUtils.dateToString(date);
+            LockLog lockLog = new LockLog();
+            lockLog.setDoorId(id);
+            lockLog.setLockType(doorType);
+            lockLog.setLockMac(lockMac);
+            lockLog.setRecordTime(s);
+            lockLog.setPropertyId(propertyId);
+            lockLog.setUserId(userId);
+            lockLog.setAddTime(s);
+            if (resultCode==0){
+                lockLog.setStatus(0);
+                int i = lockLogDao.insertSelective(lockLog);
+                if (i<=0){
+                    log.warn("开锁数据添加失败数据为: "+lockLog.toString());
+                }
+                return new LockResult(true, "开门成功",ErrorEnum.SUCCESS.getCode(),"");
+            }else {
+                lockLog.setStatus(1);
+                lockLogDao.insertSelective(lockLog);
+                return new LockResult(false, reason,ErrorEnum.SYSTEM_ERROR.getCode(),"");
+            }
+        }else {
+            return new LockResult(false, "房间有人请勿开锁",ErrorEnum.OPERATION_ERROR.getCode(),"");
         }
-        HashMap<String, Object> map = new HashMap<>();
-        map.put("resultCode",500);
-        map.put("reason","房间有人请勿开锁");
-        return map;
     }
 }

@@ -1,6 +1,7 @@
 package com.tianjian.property.dao;
 
 import com.tianjian.property.bean.LockLog;
+import com.tianjian.property.bean.vo.LockLogVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -41,5 +42,5 @@ public interface LockLogDao extends BaseDao<LockLog> {
             "</if>" +
             "ORDER BY record_time DESC"+
             "</script>"})
-    List<Map> openLockLog(@Param("lockLog") LockLog lockLog);
+    List<LockLogVo> openLockLog(@Param("lockLog") LockLog lockLog);
 }

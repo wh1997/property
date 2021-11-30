@@ -2,6 +2,7 @@ package com.tianjian.property.management.controller;
 
 import com.tianjian.property.bean.LockLog;
 import com.tianjian.property.bean.Module;
+import com.tianjian.property.bean.vo.LockLogVo;
 import com.tianjian.property.management.service.OpenLockService;
 import com.tianjian.property.utils.BeanChangeUtils;
 import com.tianjian.property.utils.LockResult;
@@ -59,7 +60,7 @@ public class OpenLockController {
             Integer pageNum = (Integer) map.get("pageNum");
             Integer pageSize = (Integer) map.get("pageSize");
             LockLog lockLog = BeanChangeUtils.mapToBean(map, LockLog.class);
-            PageResult<Map> result=openLockService.openLockLog(lockLog,pageNum,pageSize);
+            PageResult<LockLogVo> result=openLockService.openLockLog(lockLog,pageNum,pageSize);
             if (result.getRows()!=null){
                 return new LockResult(true,ErrorEnum.SUCCESS.getErrorMsg(),ErrorEnum.SUCCESS.getCode(),result);
             }else {

@@ -293,6 +293,7 @@ public interface DoorDao extends BaseDao<Door> {
             "  d.id , " +
             "  d.property_id propertyId, " +
             "  d.door_type doorType, " +
+            "  d.status status, "+
             "  b.lock_mac lockMac, " +
             "  b.lock_id lockId " +
             " FROM tj_door d " +

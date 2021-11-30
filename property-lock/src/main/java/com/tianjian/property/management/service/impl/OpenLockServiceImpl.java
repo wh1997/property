@@ -4,6 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.tianjian.property.bean.LockLog;
 import com.tianjian.property.bean.Module;
+import com.tianjian.property.bean.vo.LockLogVo;
 import com.tianjian.property.dao.DoorDao;
 import com.tianjian.property.dao.LockLogDao;
 import com.tianjian.property.management.service.GatewayService;
@@ -94,15 +95,15 @@ public class OpenLockServiceImpl implements OpenLockService {
         }
 
     @Override
-    public PageResult<Map> openLockLog(LockLog lockLog,Integer pageNum,Integer pageSize) {
+    public PageResult<LockLogVo> openLockLog(LockLog lockLog,Integer pageNum,Integer pageSize) {
         PageHelper.startPage(pageNum,pageSize);
-        List<Map> rows = lockLogDao.openLockLog(lockLog);
-        PageInfo<Map> staffPageInfo = new PageInfo<>(rows);
-        List<Map> row = staffPageInfo.getList();
+        List<LockLogVo> rows = lockLogDao.openLockLog(lockLog);
+        PageInfo<LockLogVo> staffPageInfo = new PageInfo<>(rows);
+        List<LockLogVo> row = staffPageInfo.getList();
         int pages = staffPageInfo.getPages();
         //总共多少条
         long total = staffPageInfo.getTotal();
-        PageResult<Map> PageResult = new PageResult<>(pageSize,pageNum,row,total,pages);
+        PageResult<LockLogVo> PageResult = new PageResult<>(pageSize,pageNum,row,total,pages);
         return PageResult;
     }
 }
