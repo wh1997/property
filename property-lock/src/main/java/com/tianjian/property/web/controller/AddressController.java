@@ -41,43 +41,48 @@ public class AddressController {
      */
     @PostMapping(value = "/relationlist")
     public LockResult relationList(@RequestHeader String token, @RequestBody Map map) throws JoseException {
-        Integer appUID = TokenUtil.getAppUID(token);
-        Integer status = (Integer) map.get("status");
-        List<Integer> addressIds = selectRoleService.selecPropertyId(appUID,status);
-        if (null==addressIds){
-            return new LockResult(false,  ErrorEnum.RIGHT.getErrorMsg(), ErrorEnum.RIGHT.getCode(), "");
-        }
-        // 提取入参
-        List<Address> address = addressService.getListByIds(addressIds);
-        List<AddressVo> addressVOS = BeanChangeUtils.listBeanChange(address, AddressVo.class);
-        // 提取省市区
-        List<AddressVo> province = new ArrayList<>(); // 省
-        List<AddressVo> city = new ArrayList<>(); // 市
-        List<AddressVo> area = new ArrayList<>(); // 区
-        for(int i = 0; i < addressVOS.size(); i++){
-            switch (addressVOS.get(i).getLevel()){
-                case 1:
-                    province.add(addressVOS.get(i));
-                    break;
-                case 2:
-                    city.add(addressVOS.get(i));
-                    break;
-                case 3:
-                    area.add(addressVOS.get(i));
-                    break;
-                default:
-                    log.warn("ID为：" + addressVOS.get(i).getId() + "的地址级别错误");
-                    break;
+        try{
+            Integer appUID = TokenUtil.getAppUID(token);
+            Integer status = (Integer) map.get("status");
+            List<Integer> addressIds = selectRoleService.selecPropertyId(appUID,status);
+            if (null==addressIds){
+                return new LockResult(false,  ErrorEnum.RIGHT.getErrorMsg(), ErrorEnum.RIGHT.getCode(), "");
             }
+            // 提取入参
+            List<Address> address = addressService.getListByIds(addressIds);
+            List<AddressVo> addressVOS = BeanChangeUtils.listBeanChange(address, AddressVo.class);
+            // 提取省市区
+            List<AddressVo> province = new ArrayList<>(); // 省
+            List<AddressVo> city = new ArrayList<>(); // 市
+            List<AddressVo> area = new ArrayList<>(); // 区
+            for(int i = 0; i < addressVOS.size(); i++){
+                switch (addressVOS.get(i).getLevel()){
+                    case 1:
+                        province.add(addressVOS.get(i));
+                        break;
+                    case 2:
+                        city.add(addressVOS.get(i));
+                        break;
+                    case 3:
+                        area.add(addressVOS.get(i));
+                        break;
+                    default:
+                        log.warn("ID为：" + addressVOS.get(i).getId() + "的地址级别错误");
+                        break;
+                }
+            }
+            // 查询所有有效的小区
+            List<Property> propertyS = propertyService.getListBySelect();
+            Map<String, Object> resultMap = new HashMap<>();
+            // 封装返回数据
+            resultMap.put("province", province);
+            resultMap.put("city", city);
+            resultMap.put("area", area);
+            resultMap.put("property", propertyS);
+            return new LockResult(true,  ErrorEnum.SUCCESS.getErrorMsg(), ErrorEnum.SUCCESS.getCode(), resultMap);
+        }catch (Exception e){
+            e.printStackTrace();
+            return new LockResult(true,  ErrorEnum.OPERATION_ERROR.getErrorMsg(), ErrorEnum.OPERATION_ERROR.getCode(), "");
         }
-        // 查询所有有效的小区
-        List<Property> propertyS = propertyService.getListBySelect();
-        Map<String, Object> resultMap = new HashMap<>();
-        // 封装返回数据
-        resultMap.put("province", province);
-        resultMap.put("city", city);
-        resultMap.put("area", area);
-        resultMap.put("property", propertyS);
-        return new LockResult(true,  ErrorEnum.SUCCESS.getErrorMsg(), ErrorEnum.SUCCESS.getCode(), resultMap);
     }
 }

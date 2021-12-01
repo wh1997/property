@@ -10,12 +10,15 @@ import com.tianjian.property.dao.DoorDao;
 import com.tianjian.property.dao.LockAuthorizationDao;
 import com.tianjian.property.dao.LockUserDao;
 import com.tianjian.property.dao.UserDao;
+import com.tianjian.property.utils.DateUtils;
 import com.tianjian.property.utils.PageResult;
 import com.tianjian.property.web.service.AuthorizationService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -25,6 +28,7 @@ import java.util.Map;
  * @time: 2021/11/4
  */
 @Service
+@Slf4j
 public class AuthorizationServiceImpl implements AuthorizationService {
     @Autowired
     private DoorDao doorDao;
@@ -60,7 +64,7 @@ public class AuthorizationServiceImpl implements AuthorizationService {
     }
 
     @Override
-    public PageResult<Map<String, Object>> selectRight(Integer userId, Integer pageNum, Integer pageSize) {
+    public PageResult<Map<String, Object>> selectRight(Integer userId, Integer pageNum, Integer pageSize) throws Exception {
         PageHelper.startPage(pageNum,pageSize);
         List<Map<String, Object>> maps = userDao.selectRight(userId);
         PageInfo<Map<String, Object>> rightPageInfo = new PageInfo<>(maps);
@@ -72,8 +76,23 @@ public class AuthorizationServiceImpl implements AuthorizationService {
         return PageResult;
     }
     @Override
-    @Transactional
+    public PageResult<Map<String, Object>> ordinarySelectRight(Integer userId, Integer pageNum, Integer pageSize) throws Exception {
+        PageHelper.startPage(pageNum,pageSize);
+        List<Map<String, Object>> maps = userDao.ordinarySelectRight(userId);
+        PageInfo<Map<String, Object>> rightPageInfo = new PageInfo<>(maps);
+        List<Map<String, Object>> Doorlist = rightPageInfo.getList();
+        int pages = rightPageInfo.getPages();
+        //总共多少条
+        long total = rightPageInfo.getTotal();
+        PageResult<Map<String, Object>> PageResult = new PageResult<>(pageSize,pageNum,Doorlist,total,pages);
+        return PageResult;
+    }
+    @Override
+    @Transactional(rollbackFor=Exception.class)
     public int addRight(LockAuthorization lockAuthorization) {
+        Integer doorId = lockAuthorization.getDoorId();
+        //将房间状态改为在住
+        doorDao.updateDoorStatus(doorId,0);
         return lockAuthorizationDao.insertSelective(lockAuthorization);
     }
     @Override
@@ -96,7 +115,6 @@ public class AuthorizationServiceImpl implements AuthorizationService {
     @Override
     @Transactional
     public int deleteLockuser(Integer userId,Integer doorId,Integer appUID) {
-        System.out.println(doorId);
         LockUser lockUser = new LockUser();
         lockUser.setDoorId(doorId);
         lockUser.setUserId(userId);

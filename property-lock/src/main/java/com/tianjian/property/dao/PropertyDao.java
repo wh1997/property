@@ -49,8 +49,9 @@ public interface PropertyDao extends BaseDao<Property> {
             "</script>"})
     List<Integer> selectPropertyAllAddressId();
     @Select({"<script>" +
-            " SELECT branch_id,bw_property_id,address_id,property_name,status "  +
+            " SELECT * "  +
             " FROM tj_property WHERE status=0  "+
             "</script>"})
     List<Property> selectByStatus();
+
 }

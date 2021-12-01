@@ -140,6 +140,12 @@ public class PermissionServiceImpl extends HttpService implements PermissionServ
         return PageResult;
 
     }
+    @Override
+    public List<Module> selectLimitModule(List lists) {
+        List<Module> roles = moduleDao.selectLimitModule(lists);
+        return roles;
+
+    }
 
     @Override
     public int  moduleAccredit(Integer appUID, Integer roleId, List<Integer> resourcesId,String type) {

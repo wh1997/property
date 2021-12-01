@@ -10,6 +10,7 @@ import com.tianjian.property.utils.PageResult;
 import com.tianjian.property.utils.TokenUtil;
 import com.tianjian.property.utils.error.ErrorEnum;
 import com.tianjian.property.web.service.PermissionService;
+import com.tianjian.property.web.service.SelectRoleService;
 import jdk.nashorn.internal.parser.Token;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -29,7 +30,9 @@ import java.util.Map;
 public class PermissionController {
     @Autowired
     private PermissionService permissionService;
-    /** 
+    @Autowired
+    private SelectRoleService selectRoleService;
+    /**
     * @Description: 查询所有用户
     * @Param:  
     * @return:  
@@ -251,6 +254,31 @@ public class PermissionController {
             Integer pageSize = (Integer) map.get("pageSize");
             Module module = BeanChangeUtils.mapToBean(map, Module.class);
             PageResult<Module> result=permissionService.selectModule(module,pageNum,pageSize);
+            if (result!=null){
+                return new LockResult(true,  "查询成功", ErrorEnum.SUCCESS.getCode(), result);
+            }else{
+                return new LockResult(true,  "查询成功没有数据", ErrorEnum.SUCCESS.getCode(), "");
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            return new LockResult(false,   ErrorEnum.OPERATION_ERROR.getErrorMsg(), ErrorEnum.OPERATION_ERROR.getCode(), "");
+        }
+    }
+    /**
+    * @Description:  查询模块权限
+    * @Param:
+    * @return:
+    * @Date: 2021/11/13
+    */
+    @PostMapping("/select/limit/module")
+    public LockResult selectLimitModule(@RequestHeader String token ,@RequestBody(required = false) Map map) {
+        try {
+            Integer appUID = TokenUtil.getAppUID(token);
+            List<Integer> lists = selectRoleService.selectRoleId(appUID);
+            if (lists==null){
+                return new LockResult(false,"没有权限,请添加权限", ErrorEnum.RIGHT.getCode(), "");
+            }
+            List<Module> result=permissionService.selectLimitModule(lists);
             if (result!=null){
                 return new LockResult(true,  "查询成功", ErrorEnum.SUCCESS.getCode(), result);
             }else{

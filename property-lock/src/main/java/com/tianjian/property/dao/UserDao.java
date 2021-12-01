@@ -4,6 +4,7 @@ import com.tianjian.property.bean.User;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -73,9 +74,39 @@ public interface UserDao extends BaseDao<User> {
             " ON u.user_id = a.user_id  " +
             " INNER JOIN tj_door d " +
             " ON d.id=a.door_id   " +
-            " WHERE d.`status`!=3 AND a.user_status = 0 AND u.user_id = #{userId} "+
+            " WHERE " +
+            "  d.`status`!=3 AND a.user_status = 0  AND u.user_id = #{userId} "+
             "</script>"})
-    List<Map<String,Object>> selectRight(Integer userId);
+    List<Map<String,Object>> selectRight(@Param("userId")Integer userId);
+    @Select({"<script>" +
+            "SELECT  " +
+            " a.id aId,  " +
+            " a.user_status userStatus,  " +
+            " a.add_person addPerson,  " +
+            " a.enter_time enterTime,  " +
+            " a.leava_time leavaTime,  " +
+            " a.opendoor_status opendoorStatus,  " +
+            " d.id dId,  " +
+            " d.property_id propertyId,  " +
+            " d.property_name propertyName,  " +
+            " d.num_name numName,  " +
+            " d.building_name buildingName,  " +
+            " d.unit_name unitName,  " +
+            " d.floor_no floorNo,  " +
+            " d.room_no roomNo,  " +
+            " d.door_name doorName,  " +
+            " d.door_type doorType,  " +
+            " d.status dStatus "+
+            "FROM `tj_user` u  " +
+            " INNER JOIN tj_lock_authorization a  " +
+            " ON u.user_id = a.user_id  " +
+            " INNER JOIN tj_door d " +
+            " ON d.id=a.door_id   " +
+            " WHERE " +
+            " ( a.leava_time <![CDATA[ <= ]]>  CURDATE() OR a.leava_time IS null )  "+
+            " AND  d.`status`!=3 AND a.user_status = 0  AND u.user_id = #{userId} "+
+            "</script>"})
+    List<Map<String,Object>> ordinarySelectRight(@Param("userId")Integer userId);
     @Select({"<script>" +
             "SELECT " +
             "  u.id uId, " +
@@ -106,7 +137,7 @@ public interface UserDao extends BaseDao<User> {
             "  u.name name, " +
             "  u.role role , " +
             " u.branch_id branchId ," +
-            "p.property_name propertyName"+
+            " p.property_name propertyName "+
             " FROM " +
             "  `tj_user` u " +
             "  INNER JOIN tj_property p ON u.branch_id = p.branch_id  " +

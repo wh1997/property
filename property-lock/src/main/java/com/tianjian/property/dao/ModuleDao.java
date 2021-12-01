@@ -34,4 +34,16 @@ public interface ModuleDao extends BaseDao<Module>  {
             "</if>" +
             "</script>"})
     List<Module> selectModule(@Param("module") Module module);
+    @Select({"<script>" +
+            " SELECT m.* FROM `tj_auth` a " +
+            " INNER JOIN tj_module m ON " +
+            " a.resources_id = m.id WHERE " +
+            " a.`status` = 0 AND m.`status` = 0 " +
+            " AND a.role_id in  " +
+            " <foreach collection=\"lists\" item=\"list\" index=\"index\" open=\"(\" close=\")\" separator=\",\"> " +
+            " #{list} " +
+            " </foreach>" +
+            " GROUP BY a.id " +
+            "</script>"})
+    List<Module> selectLimitModule(@Param("lists")List lists);
 }

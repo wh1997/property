@@ -32,9 +32,18 @@ public class SelectRoleServiceImpl implements SelectRoleService {
     public List<Integer> selectRole(Integer userId){
         //查询用户的角色
         List<Integer> list = userDao.selectRoleByUserId(userId);
+        if (list.size()>0){
+            List<Integer> properties = rolePropertyDao.selectPropertyByRoleId(list,"property");
+            return properties;
+        }
         //查询该角色管理的项目(百为项目id)
-        List<Integer> properties = rolePropertyDao.selectPropertyByRoleId(list,"property");
-        return properties;
+       return null;
+    }
+    @Override
+    public List<Integer> selectRoleId(Integer userId){
+        //查询用户的角色
+        List<Integer> list = userDao.selectRoleByUserId(userId);
+        return list;
     }
     @Override
     public List<Map> selecProperty(Integer userId,Integer status){
@@ -44,10 +53,14 @@ public class SelectRoleServiceImpl implements SelectRoleService {
         }else {
             //查询用户的角色
             List<Integer> list = userDao.selectRoleByUserId(userId);
-            //查询该角色管理的项目(百为项目id)
-            List<Integer> properties = rolePropertyDao.selectPropertyByRoleId(list,"property");
-            List<Map> doors = propertyDao.selectProperty(properties);
-            return doors;
+            if (list.size()>0){
+                //查询该角色管理的项目(百为项目id)
+                List<Integer> properties = rolePropertyDao.selectPropertyByRoleId(list,"property");
+                List<Map> doors = propertyDao.selectProperty(properties);
+                return doors;
+
+            }
+            return null;
         }
     }
 
@@ -59,10 +72,16 @@ public class SelectRoleServiceImpl implements SelectRoleService {
         }else {
             //查询用户的角色
             List<Integer> list = userDao.selectRoleByUserId(appUID);
-            //查询该角色管理的项目(百为项目id)
-            List<Integer> properties = rolePropertyDao.selectPropertyByRoleId(list,"property");
-            List<Integer> doors = propertyDao.selectPropertyAddressId(properties);
-            return doors;
+            if (list.size()>0){
+                //查询该角色管理的项目(百为项目id)
+                List<Integer> properties = rolePropertyDao.selectPropertyByRoleId(list,"property");
+                if (properties.size()>0){
+                    List<Integer> doors = propertyDao.selectPropertyAddressId(properties);
+                    return doors;
+                }
+               return null;
+            }
+            return null;
         }
     }
 }

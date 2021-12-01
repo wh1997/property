@@ -5,7 +5,9 @@ import com.tianjian.property.bean.LockAuthorization;
 import com.tianjian.property.bean.LockUser;
 import com.tianjian.property.bean.User;
 import com.tianjian.property.utils.PageResult;
+import com.tianjian.property.utils.error.BusinessException;
 
+import java.text.ParseException;
 import java.util.List;
 import java.util.Map;
 
@@ -21,7 +23,9 @@ public interface  AuthorizationService {
 
     PageResult<Door> selectDoorByProperty(List<Integer> propertyList,Door door, Integer pageNum, Integer pageSize);
 
-    PageResult<Map<String, Object>> selectRight(Integer userId,Integer pageNum, Integer pageSize);
+    PageResult<Map<String, Object>> selectRight(Integer userId,Integer pageNum, Integer pageSize) throws Exception;
+
+    PageResult<Map<String, Object>> ordinarySelectRight(Integer userId,Integer pageNum, Integer pageSize) throws Exception;
 
     int deleteRight(Integer aId);
 

@@ -30,6 +30,9 @@ public class Property implements Serializable {
     @Column(name = "`tj_oldProperty_id`")
     private Integer tjOldpropertyId;
 
+    @Column(name = "`address_id`")
+    private Integer addressId;
+
     /**
      * 项目名称
      */
@@ -147,6 +150,14 @@ public class Property implements Serializable {
         return propertyName;
     }
 
+    public Integer getAddressId() {
+        return addressId;
+    }
+
+    public void setAddressId(Integer addressId) {
+        this.addressId = addressId;
+    }
+
     /**
      * 设置项目名称
      *
@@ -230,21 +241,17 @@ public class Property implements Serializable {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", id=").append(id);
-        sb.append(", branchId=").append(branchId);
-        sb.append(", bwPropertyId=").append(bwPropertyId);
-        sb.append(", tjOldpropertyId=").append(tjOldpropertyId);
-        sb.append(", propertyName=").append(propertyName);
-        sb.append(", addTime=").append(addTime);
-        sb.append(", updateTime=").append(updateTime);
-        sb.append(", status=").append(status);
-        sb.append(", remark=").append(remark);
-        sb.append(", serialVersionUID=").append(serialVersionUID);
-        sb.append("]");
-        return sb.toString();
+        return "Property{" +
+                "id=" + id +
+                ", branchId=" + branchId +
+                ", bwPropertyId=" + bwPropertyId +
+                ", tjOldpropertyId=" + tjOldpropertyId +
+                ", addressId=" + addressId +
+                ", propertyName='" + propertyName + '\'' +
+                ", addTime='" + addTime + '\'' +
+                ", updateTime='" + updateTime + '\'' +
+                ", status=" + status +
+                ", remark='" + remark + '\'' +
+                '}';
     }
 }

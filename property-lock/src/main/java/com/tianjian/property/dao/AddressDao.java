@@ -2,6 +2,7 @@ package com.tianjian.property.dao;
 
 import com.tianjian.property.bean.Address;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 
@@ -17,15 +18,15 @@ import java.util.List;
 public interface AddressDao extends BaseDao<Address>{
     @Select({"<script>" +
             " WITH RECURSIVE TEMP AS ( " +
-            " SELECT * FROM T_ADDRESS T WHERE 1 = 1 " +
+            " SELECT * FROM tj_address T WHERE 1 = 1 " +
             "<if test='addressIds != null and addressIds.size() > 0'>" +
             " AND T.id in " +
             "<foreach collection=\"addressIds\" item=\"addressId\" index=\"index\" open=\"(\" close=\")\" separator=\",\"> " +
             "#{addressId} " +
             "</foreach>" +
             "</if>" +
-            " UNION ALL SELECT T0.* FROM TEMP,T_ADDRESS T0 WHERE TEMP.parent_id=T0.id ) " +
+            " UNION ALL SELECT T0.* FROM TEMP,tj_address T0 WHERE TEMP.parent_id=T0.id ) " +
             " SELECT DISTINCT * FROM TEMP  ORDER BY level, sort DESC " +
             "</script>"})
-    List<Address> selectWithParentByIds(List<Integer> addressIds);
+    List<Address> selectWithParentByIds(@Param("addressIds") List<Integer> addressIds);
 }

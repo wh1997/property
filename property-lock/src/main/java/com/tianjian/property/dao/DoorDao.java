@@ -94,18 +94,6 @@ public interface DoorDao extends BaseDao<Door> {
            "</trim>"+
            "</script>"})
    int insert(Door door);
-/*    @Select({"<script>" +
-            " SELECT id  " +
-            "FROM tj_door WHERE 1=1 " +
-            "<if test='propertyId !=null'>AND property_id = #{propertyId} </if>" +
-            "<if test='numId !=null'>AND num_id = #{numId} </if>" +
-            "<if test='buildingId !=null'>AND building_id = #{buildingId} </if>" +
-            "<if test='unitNo !=null'>AND unit_no = #{unitNo} </if>" +
-            "<if test='unitName !=null'>AND unit_name = #{unitName} </if>" +
-            "<if test='floorNo !=null'>AND floor_no = #{floorNo} </if>" +
-            "<if test='roomNo !=null'>AND room_no = #{roomNo} </if>" +
-            "</script>"})
-   Integer selectRepetition(Door door);*/
     @Select({"<script>" +
             " SELECT * " +
             "FROM tj_door WHERE 1=1" +
@@ -178,11 +166,6 @@ public interface DoorDao extends BaseDao<Door> {
            "#{door.createPerson}" +
            ")" +
            "</foreach>"+
-         /*  "ON DUPLICATE KEY UPDATE"+
-           " property_id = VALUES(property_id),property_name = VALUES(property_name),num_id = VALUES(num_id),num_name = VALUES(num_name),"+
-           "building_id = VALUES(building_id),building_name = VALUES(building_name),unit_no = VALUES(unit_no),"+
-           "unit_name = VALUES(unit_name),floor_no = VALUES(floor_no),room_no = VALUES(room_no),"+
-           "door_name = VALUES(door_name),door_type = VALUES(door_type),status = VALUES(status),create_person = VALUES(create_person)"+*/
            "</script>"})
     void addDoor(@Param("list") List<Door> list);
     @Select({"SELECT * FROM  tj_door  WHERE id = #{doorID}"})
@@ -232,12 +215,15 @@ public interface DoorDao extends BaseDao<Door> {
     List<DoorVo> selectPageDoor(Door door, List<Integer> lists);
     @Select({"<script>" +
             "SELECT * " +
-            " FROM tj_door WHERE status!=3 AND property_id IN "+
+            " FROM tj_door WHERE status!=3 "+
+            "<if test='door != null'> " +
+            "<if test='door.id != null'> AND id = #{door.id}</if>" +
+            "<if test='door.propertyId == null'> AND property_id IN " +
             "<foreach collection=\"lists\" item=\"list\" index=\"index\" open=\"(\" close=\")\" separator=\",\"> " +
             "#{list} " +
             "</foreach>" +
-            "<if test='door != null'> " +
-            "<if test='door.id != null'> AND id = #{door.id}</if>" +
+            "</if>" +
+            "<if test='door.propertyId != null'> AND property_id = #{door.propertyId}</if>" +
             "<if test='door.numId != null'> AND num_id = #{door.numId}</if>" +
             "<if test='door.buildingId != null'> AND building_id = #{door.buildingId}</if>" +
             "<if test='door.unitNo != null'> AND unit_no = #{door.unitNo}</if>" +
@@ -248,11 +234,11 @@ public interface DoorDao extends BaseDao<Door> {
             "<if test='door.updateTime != null'> AND update_time = #{door.updateTime}</if>" +
             "<if test='door.createPerson != null'> AND create_person = #{door.createPerson}</if>" +
             "<if test='door.remark != null'> AND remark = #{door.remark}</if>" +
-            "<if test='door.propertyName != null'> OR property_name  like CONCAT('%',#{door.propertyName},'%')</if>" +
-            "<if test='door.numName != null'> OR num_name like CONCAT('%',#{door.numName},'%') </if>" +
-            "<if test='door.buildingName != null'> OR building_name like CONCAT('%',#{door.buildingName},'%') </if>" +
-            "<if test='door.unitName != null'> OR unit_name like CONCAT('%',#{door.unitName},'%') </if>" +
-            "<if test='door.doorName != null'> OR door_name like CONCAT('%',#{door.doorName},'%')</if>" +
+            "<if test='door.propertyName != null'> AND property_name  like CONCAT('%',#{door.propertyName},'%')</if>" +
+            "<if test='door.numName != null'> AND num_name like CONCAT('%',#{door.numName},'%') </if>" +
+            "<if test='door.buildingName != null'> AND building_name like CONCAT('%',#{door.buildingName},'%') </if>" +
+            "<if test='door.unitName != null'> AND unit_name like CONCAT('%',#{door.unitName},'%') </if>" +
+            "<if test='door.doorName != null'> AND door_name like CONCAT('%',#{door.doorName},'%')</if>" +
             "</if>" +
             "</script>"})
     List<Door> selectDoorByProperty(@Param("lists") List<Integer> lists,@Param("door")Door door);
@@ -271,11 +257,11 @@ public interface DoorDao extends BaseDao<Door> {
             "<if test='door.updateTime != null'> AND update_time = #{door.updateTime}</if>" +
             "<if test='door.createPerson != null'> AND create_person = #{door.createPerson}</if>" +
             "<if test='door.remark != null'> AND remark = #{door.remark}</if>" +
-            "<if test='door.propertyName != null'> OR property_name  like CONCAT('%',#{door.propertyName},'%')</if>" +
-            "<if test='door.numName != null'> OR num_name like CONCAT('%',#{door.numName},'%') </if>" +
-            "<if test='door.buildingName != null'> OR building_name like CONCAT('%',#{door.buildingName},'%') </if>" +
-            "<if test='door.unitName != null'> OR unit_name like CONCAT('%',#{door.unitName},'%') </if>" +
-            "<if test='door.doorName != null'> OR door_name like CONCAT('%',#{door.doorName},'%')</if>" +
+            "<if test='door.propertyName != null'> AND property_name  like CONCAT('%',#{door.propertyName},'%')</if>" +
+            "<if test='door.numName != null'> AND num_name like CONCAT('%',#{door.numName},'%') </if>" +
+            "<if test='door.buildingName != null'> AND building_name like CONCAT('%',#{door.buildingName},'%') </if>" +
+            "<if test='door.unitName != null'> AND unit_name like CONCAT('%',#{door.unitName},'%') </if>" +
+            "<if test='door.doorName != null'> AND door_name like CONCAT('%',#{door.doorName},'%')</if>" +
             "</if>" +
             " AND door_type IN " +
             "<foreach collection=\"types\" item=\"type\" index=\"index\" open=\"(\" close=\")\" separator=\",\"> " +

@@ -133,6 +133,28 @@ public class AuthorizationController {
         }
     }
     /**
+     * @Description: 查看住户的所有门禁权限
+     * @Param:
+     * @return:
+     * @Date: 2021/11/8
+     */
+    @PostMapping("/ordinary/select/right")
+    public LockResult ordinarySelectRight(@RequestHeader String token ,@RequestBody Map map) {
+        try {
+            Integer pageNum = (Integer) map.get("pageNum");
+            Integer pageSize = (Integer) map.get("pageSize");
+            Integer userId = (Integer) map.get("userId");
+            PageResult<Map<String,Object>> resultMap=authorizationService.ordinarySelectRight(userId,pageNum,pageSize);
+            if (resultMap==null){
+                return new LockResult(true, "查询成功,请添加开锁权限", ErrorEnum.SUCCESS.getCode(), "");
+            }
+            return new LockResult(true, "查询成功", ErrorEnum.SUCCESS.getCode(), resultMap);
+        } catch (Exception e){
+            e.printStackTrace();
+            return new LockResult(false,  ErrorEnum.COMMON_ERROR.getErrorMsg(), ErrorEnum.COMMON_ERROR.getCode(), "");
+        }
+    }
+    /**
      * @Description: 删除授权
      * @Param:
      * @return:
@@ -142,7 +164,6 @@ public class AuthorizationController {
     public LockResult deleteRight(@RequestHeader String token ,@RequestBody Map map) {
         try {
             Integer aId = (Integer) map.get("aId");
-            System.out.println(aId);
             int i =authorizationService.deleteRight(aId);
             if (i>0){
                 return new LockResult(true, "操作成功", ErrorEnum.SUCCESS.getCode(), null);
