@@ -6,7 +6,10 @@ import com.tianjian.property.dao.UserDao;
 import com.tianjian.property.management.service.PhoneLoginService;
 import com.tianjian.property.utils.HttpUtils;
 import com.tianjian.property.utils.LockConstants;
+import com.tianjian.property.utils.LockResult;
 import com.tianjian.property.utils.TokenUtil;
+import com.tianjian.property.utils.error.ErrorEnum;
+import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +39,7 @@ public class PhoneLoginServiceImpl extends HttpService implements PhoneLoginServ
     private UserDao userDao;
     //进行微信授权登陆
     @Override
-    public HashMap<String, Object> wechatLogin(String encryptedData, String iv, String code) throws Exception {
+    public LockResult wechatLogin(String encryptedData, String iv, String code) throws Exception {
         //存储返回结果
         HashMap<String, Object> resultMap = new HashMap<>();
         Map<String, String> phoneMap = getPhone(encryptedData, iv, code);
@@ -51,30 +54,13 @@ public class PhoneLoginServiceImpl extends HttpService implements PhoneLoginServ
         //判断用户是否存在 如果是204则表示用户已存在如果是404则表示用户不存在需要注册
         Integer status = HttpUtils.doGetExists(url + "/Security/Users/Exists/*:"+phone);
         if (404==status){
-            //进行注册的接口
-            Map fromJson = (Map) postResult(url + "/Security/Users/Register?token=wechat:" + token, map);
-            Integer userId = (Integer) fromJson.get("UserId");
-            if(null!=userId){
-            //往角色表里添加角色
-                User user = new User();
-                user.setUserId(userId);
-                user.setRole(2);
-                //往角色表里面添加数据
-                int i = userDao.insert(user);
-                if (1!=i){
-                    resultMap.put("code",403);
-                    resultMap.put("errorMessage","注册失败");
-                    return resultMap;
-                }
-            }
+            return new LockResult(false,"登录失败,请到管理处登记", ErrorEnum.OPERATION_ERROR.getCode(),"");
         }
         //登录接口
         Map hashMap = (Map) postResult(url + "/Security/Authentication/Signin/wechat?scenario=Mobile" + token, map);
         Map<String,Object> identity = (Map<String, Object>) hashMap.get("Identity");
         if(null ==identity){
-            resultMap.put("code",400);
-            resultMap.put("errorMessage","登录失败");
-            return resultMap;
+            return new LockResult(false,"登录失败", ErrorEnum.OPERATION_ERROR.getCode(),"");
         }
         Integer userId = (Integer) identity.get("UserId");
         String FullName = (String) identity.get("FullName");
@@ -109,7 +95,7 @@ public class PhoneLoginServiceImpl extends HttpService implements PhoneLoginServ
         resultMap.put("code",200);
         resultMap.put("errorMessage","登录成功");
         resultMap.put("date",datemap);
-        return resultMap;
+        return new LockResult(true,"登录成功", ErrorEnum.SUCCESS.getCode(),resultMap);
     }
 
     @Override

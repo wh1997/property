@@ -28,10 +28,13 @@ public interface LockUserDao extends BaseDao<LockUser> {
             " d.room_no roomNo,  " +
             " d.door_name doorName,  " +
             " d.door_type doorType,  " +
-            " d.status dStatus "+
+            " d.status dStatus, "+
+            " u.`name` name "+
             " FROM tj_lock_user  l " +
             " INNER JOIN tj_door d " +
             " ON l.door_id=d.id " +
+            " INNER JOIN tj_user u " +
+            " ON u.user_id= l.user_id  " +
             " WHERE l.`status`=0 AND d.status!=3 " +
             "<if test='lockUser != null'> " +
             "<if test='lockUser.userId != null'> AND l.user_id = #{lockUser.userId}</if>" +
@@ -43,7 +46,7 @@ public interface LockUserDao extends BaseDao<LockUser> {
     List<Map> lockUserDao(@Param("lockUser") LockUser lockUser);
     @Select({"<script>" +
             " SELECT *" +
-            " FROM tj_lock_user WHERE 1=1 " +
+            " FROM tj_lock_user WHERE 1=1 AND status = 0  " +
             "<if test='lockUser != null'> " +
             "<if test='lockUser.userId != null'> AND user_id = #{lockUser.userId}</if>" +
             "<if test='lockUser.doorId != null'> AND door_id = #{lockUser.doorId}</if>" +

@@ -2,7 +2,9 @@ package com.tianjian.property.management.controller;
 
 import com.tianjian.property.bean.LockLog;
 import com.tianjian.property.bean.Module;
+import com.tianjian.property.bean.UseropenLock;
 import com.tianjian.property.bean.vo.LockLogVo;
+import com.tianjian.property.bean.vo.PasswordLock;
 import com.tianjian.property.management.service.OpenLockService;
 import com.tianjian.property.utils.BeanChangeUtils;
 import com.tianjian.property.utils.LockResult;
@@ -66,6 +68,59 @@ public class OpenLockController {
             }else {
                 return new LockResult(true,"没有开门数据",ErrorEnum.SUCCESS.getCode(),"");
             }
+        }catch (Exception e){
+            e.printStackTrace();
+            return new LockResult(false,ErrorEnum.SYSTEM_ERROR.getErrorMsg(),ErrorEnum.SYSTEM_ERROR.getCode(),null);
+        }
+    }
+    /**
+     * @Description: 看房密码
+     * @Param: [map]
+     * @return: com.tagen.lock.utils.LockResult
+     * @Date: 2021/6/23
+     */
+    @PostMapping("/user/password/openLock")
+    public LockResult passwordKey(@RequestHeader String token, @RequestBody Map map){
+        try {
+            Integer appUID = TokenUtil.getAppUID(token);
+            PasswordLock passwordLock = BeanChangeUtils.mapToBean(map, PasswordLock.class);
+            Integer doorId = (Integer) map.get("doorId");
+            return openLockService.passwordKey(passwordLock,doorId,appUID);
+        }catch (Exception e){
+            e.printStackTrace();
+            return new LockResult(false,ErrorEnum.SYSTEM_ERROR.getErrorMsg(),ErrorEnum.SYSTEM_ERROR.getCode(),null);
+        }
+    }
+    /**
+     * @Description: 查看房间密码
+     * @Param: [map]
+     * @return: com.tagen.lock.utils.LockResult
+     * @Date: 2021/6/23
+     */
+    @PostMapping("/user/select/password")
+    public LockResult selectPassword(@RequestHeader String token, @RequestBody Map map){
+        try {
+            Integer doorId = (Integer) map.get("doorId");
+            return openLockService.selectPassword(doorId);
+        }catch (Exception e){
+            e.printStackTrace();
+            return new LockResult(false,ErrorEnum.SYSTEM_ERROR.getErrorMsg(),ErrorEnum.SYSTEM_ERROR.getCode(),null);
+        }
+    }
+    /**
+     * @Description: 删除看房密码
+     * @Param: [map]
+     * @return: com.tagen.lock.utils.LockResult
+     * @Date: 2021/6/23
+     */
+    @PostMapping("/user/delete/password")
+    public LockResult deletePassword(@RequestHeader String token, @RequestBody Map map){
+        try {
+            Integer appUID = TokenUtil.getAppUID(token);
+            Integer doorId = (Integer) map.get("doorId");
+            String lockId = (String) map.get("lockId");
+            String keyContent = (String) map.get("keyContent");
+            return openLockService.deletePassword(appUID,doorId,lockId,keyContent);
         }catch (Exception e){
             e.printStackTrace();
             return new LockResult(false,ErrorEnum.SYSTEM_ERROR.getErrorMsg(),ErrorEnum.SYSTEM_ERROR.getCode(),null);

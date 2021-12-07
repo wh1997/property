@@ -14,44 +14,37 @@ public class UseropenLock implements Serializable {
     /**
      * 门id
      */
+    @Column(name = "`door_id`")
+    private Integer doorId;
+    /**
+     * 慧享佳锁id
+     */
     @Column(name = "`lock_id`")
-    private Integer lockId;
+    private String lockId;
 
     /**
      * 用户id
      */
-    @Column(name = "`user_id`")
-    private Integer userId;
-
-    /**
-     * 开锁方式
-     */
-    @Column(name = "`lock_type`")
-    private Integer lockType;
+    @Column(name = "`lock_user_id`")
+    private Integer lockUserId;
 
     /**
      * 卡号或密码
      */
-    @Column(name = "`key`")
-    private String key;
-
-    /**
-     * 开锁状态
-     */
-    @Column(name = "`status`")
-    private Integer status;
+    @Column(name = "`keyContent`")
+    private String keyContent;
 
     /**
      * 有效起始时间
      */
     @Column(name = "`validstart_time`")
-    private String validstartTime;
+    private Long validstartTime;
 
     /**
      * 有效结束时间
      */
     @Column(name = "`validend_time`")
-    private String validendTime;
+    private Long validendTime;
 
     /**
      * 数据添加时间
@@ -64,6 +57,16 @@ public class UseropenLock implements Serializable {
      */
     @Column(name = "`update_time`")
     private String updateTime;
+    /**
+     * 数据添加(修改)人
+     */
+    @Column(name = "`add_person`")
+    private Integer addPerson;
+    /**
+     * 数据修改时间
+     */
+    @Column(name = "`status`")
+    private Integer status;
 
     /**
      * 备注
@@ -77,219 +80,117 @@ public class UseropenLock implements Serializable {
         super();
     }
 
-    /**
-     * @return id
-     */
     public Integer getId() {
         return id;
     }
 
-    /**
-     * @param id
-     */
     public void setId(Integer id) {
         this.id = id;
     }
 
-    /**
-     * 获取门id
-     *
-     * @return lock_id - 门id
-     */
-    public Integer getLockId() {
+    public Integer getDoorId() {
+        return doorId;
+    }
+
+    public void setDoorId(Integer doorId) {
+        this.doorId = doorId;
+    }
+
+    public String getLockId() {
         return lockId;
     }
 
-    /**
-     * 设置门id
-     *
-     * @param lockId 门id
-     */
-    public void setLockId(Integer lockId) {
+    public void setLockId(String lockId) {
         this.lockId = lockId;
     }
 
-    /**
-     * 获取用户id
-     *
-     * @return user_id - 用户id
-     */
-    public Integer getUserId() {
-        return userId;
+    public Integer getLockUserId() {
+        return lockUserId;
     }
 
-    /**
-     * 设置用户id
-     *
-     * @param userId 用户id
-     */
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setLockUserId(Integer userId) {
+        this.lockUserId = userId;
     }
 
-    /**
-     * 获取开锁方式
-     *
-     * @return lock_type - 开锁方式
-     */
-    public Integer getLockType() {
-        return lockType;
+    public String getKeyContent() {
+        return keyContent;
     }
 
-    /**
-     * 设置开锁方式
-     *
-     * @param lockType 开锁方式
-     */
-    public void setLockType(Integer lockType) {
-        this.lockType = lockType;
+    public void setKeyContent(String key) {
+        this.keyContent = key;
     }
 
-    /**
-     * 获取卡号或密码
-     *
-     * @return key - 卡号或密码
-     */
-    public String getKey() {
-        return key;
-    }
-
-    /**
-     * 设置卡号或密码
-     *
-     * @param key 卡号或密码
-     */
-    public void setKey(String key) {
-        this.key = key == null ? null : key.trim();
-    }
-
-    /**
-     * 获取开锁状态
-     *
-     * @return status - 开锁状态
-     */
-    public Integer getStatus() {
-        return status;
-    }
-
-    /**
-     * 设置开锁状态
-     *
-     * @param status 开锁状态
-     */
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
-
-    /**
-     * 获取有效起始时间
-     *
-     * @return validstart_time - 有效起始时间
-     */
-    public String getValidstartTime() {
+    public Long getValidstartTime() {
         return validstartTime;
     }
 
-    /**
-     * 设置有效起始时间
-     *
-     * @param validstartTime 有效起始时间
-     */
-    public void setValidstartTime(String validstartTime) {
+    public void setValidstartTime(Long validstartTime) {
         this.validstartTime = validstartTime;
     }
 
-    /**
-     * 获取有效结束时间
-     *
-     * @return validend_time - 有效结束时间
-     */
-    public String getValidendTime() {
+    public Long getValidendTime() {
         return validendTime;
     }
 
-    /**
-     * 设置有效结束时间
-     *
-     * @param validendTime 有效结束时间
-     */
-    public void setValidendTime(String validendTime) {
+    public void setValidendTime(Long validendTime) {
         this.validendTime = validendTime;
     }
 
-    /**
-     * 获取数据添加时间
-     *
-     * @return add_time - 数据添加时间
-     */
     public String getAddTime() {
         return addTime;
     }
 
-    /**
-     * 设置数据添加时间
-     *
-     * @param addTime 数据添加时间
-     */
     public void setAddTime(String addTime) {
         this.addTime = addTime;
     }
 
-    /**
-     * 获取数据修改时间
-     *
-     * @return update_time - 数据修改时间
-     */
     public String getUpdateTime() {
         return updateTime;
     }
 
-    /**
-     * 设置数据修改时间
-     *
-     * @param updateTime 数据修改时间
-     */
     public void setUpdateTime(String updateTime) {
         this.updateTime = updateTime;
     }
 
-    /**
-     * 获取备注
-     *
-     * @return remark - 备注
-     */
+    public Integer getAddPerson() {
+        return addPerson;
+    }
+
+    public void setAddPerson(Integer addPerson) {
+        this.addPerson = addPerson;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
     public String getRemark() {
         return remark;
     }
 
-    /**
-     * 设置备注
-     *
-     * @param remark 备注
-     */
     public void setRemark(String remark) {
-        this.remark = remark == null ? null : remark.trim();
+        this.remark = remark;
     }
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", id=").append(id);
-        sb.append(", lockId=").append(lockId);
-        sb.append(", userId=").append(userId);
-        sb.append(", lockType=").append(lockType);
-        sb.append(", key=").append(key);
-        sb.append(", status=").append(status);
-        sb.append(", validstartTime=").append(validstartTime);
-        sb.append(", validendTime=").append(validendTime);
-        sb.append(", addTime=").append(addTime);
-        sb.append(", updateTime=").append(updateTime);
-        sb.append(", remark=").append(remark);
-        sb.append(", serialVersionUID=").append(serialVersionUID);
-        sb.append("]");
-        return sb.toString();
+        return "UseropenLock{" +
+                "id=" + id +
+                ", doorId=" + doorId +
+                ", lockId='" + lockId + '\'' +
+                ", userId=" + lockUserId +
+                ", key='" + keyContent + '\'' +
+                ", validstartTime='" + validstartTime + '\'' +
+                ", validendTime='" + validendTime + '\'' +
+                ", addTime='" + addTime + '\'' +
+                ", updateTime='" + updateTime + '\'' +
+                ", addPerson=" + addPerson +
+                ", status=" + status +
+                ", remark='" + remark + '\'' +
+                '}';
     }
 }

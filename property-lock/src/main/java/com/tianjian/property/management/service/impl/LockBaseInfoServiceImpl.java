@@ -53,12 +53,15 @@ public class LockBaseInfoServiceImpl implements LockBaseInfoService {
         if(resultCode==0){
             Lock lock1 = lockDao.selectByLockFacilityId(lock);
             Integer doorId = lock1.getDoorId();
+            Integer lockFacilityId = lock1.getLockFacilityId();
             Integer id1 = lock1.getId();
             //修改门的状态为无锁
             int i = doorDao.updateDoorStatus(doorId,3);
             //修改门锁网关绑定
             int o = lockDao.updateStatus(id1);
-            if (i>=0&&o>=0){
+            //修改锁的状态为废弃
+            int p = lockBaseInfoDao.updateStatus(lockFacilityId,2);
+            if (i>=0&&o>=0&&p>=0){
                 return new LockResult(true, ErrorEnum.SUCCESS.getErrorMsg(),ErrorEnum.SUCCESS.getCode(),"");
             }else {
                 return new LockResult(false, ErrorEnum.OPERATION_ERROR.getErrorMsg(),ErrorEnum.OPERATION_ERROR.getCode(),"");

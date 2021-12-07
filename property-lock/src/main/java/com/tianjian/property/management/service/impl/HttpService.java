@@ -26,4 +26,11 @@ public class HttpService {
         log.info("请求地址："+url+"请求返回值为："+result.toString());
         return result.get("result");
     }
+    public Object staffPostResult(String url,Map map){
+        String json = JSON.toJSONString(map);
+        log.info(url+"请求的参数为："+json);
+        Map result = HttpClientUtil.baiwdoPostJson("https://staff.api.melifego.cn/Apartments/Members/Query?page=1%7C20", json);
+        log.info(url+"请求返回值为："+result.toString());
+        return result.get("result");
+    }
 }

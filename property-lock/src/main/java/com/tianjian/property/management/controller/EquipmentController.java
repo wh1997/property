@@ -94,32 +94,4 @@ public class EquipmentController {
             return new LockResult(false,ErrorEnum.SYSTEM_ERROR.getErrorMsg(),ErrorEnum.SYSTEM_ERROR.getCode(),null);
         }
     }
-//    /**
-//    * @Description: 模糊搜索设备    TODO 接口重复不用
-//    * @Param: [map]
-//    * @return: com.tagen.lock.utils.LockResult
-//    * @Date: 2021/6/21
-//    */
-//    @PostMapping("/fuzzy/search")
-//    public LockResult fuzzySearch(@RequestBody Map map){
-//        try {
-//            //获取设备的类型 1蓝牙锁 2网关  3网卡
-//            Integer equipmentType = (Integer) map.get("equipmentType");
-//            //所在项目id
-//            Integer propertyId = (Integer) map.get("propertyId");
-//            //搜索关键字
-//            String KeyWord = (String) map.get("KeyWord");
-//            Integer pageNum = (Integer) map.get("pageNum");
-//            Integer pageSize = (Integer) map.get("pageSize");
-//            Object result= equipmentService.fuzzySearch( propertyId,equipmentType, KeyWord,pageNum,pageSize);
-//            if (result==null){
-//                return new LockResult(true,"查询成功没有数据",ErrorEnum.SUCCESS.getCode(),result);
-//            }
-//            return new LockResult(true,ErrorEnum.SUCCESS.getErrorMsg(),ErrorEnum.SUCCESS.getCode(),result);
-//        }catch (Exception e){
-//            e.printStackTrace();
-//            return new LockResult(false,ErrorEnum.SYSTEM_ERROR.getErrorMsg(),ErrorEnum.SYSTEM_ERROR.getCode(),null);
-//        }
-//    }
-
 }

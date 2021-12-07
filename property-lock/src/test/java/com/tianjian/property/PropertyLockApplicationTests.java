@@ -5,6 +5,7 @@ import com.tianjian.property.bean.Property;
 import com.tianjian.property.bean.Role;
 import com.tianjian.property.bean.vo.DoorVo;
 import com.tianjian.property.management.service.*;
+import com.tianjian.property.management.service.impl.HttpService;
 import com.tianjian.property.utils.PageResult;
 import com.tianjian.property.web.service.UserLoginService;
 import com.tianjian.property.web.service.ManageService;
@@ -25,7 +26,7 @@ import java.util.Map;
 
 @SpringBootTest
 @Controller
-class PropertyLockApplicationTests {
+class PropertyLockApplicationTests extends HttpService{
     @Autowired
     private RedisTemplate redisTemplate;
     @Autowired
@@ -102,6 +103,13 @@ class PropertyLockApplicationTests {
         role.setName("鲁班");
         PageResult<Role> result = permissionService.selectRole(role, 1, 1);
         System.out.println(result.getRows().get(0).getName());
+    }
+    @Test
+    void test12() throws Exception {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("userId",14725);
+        map.put("branchId","0~4294967295");
+        Object o = staffPostResult("", map);
     }
     @Test
     void test11() throws Exception {

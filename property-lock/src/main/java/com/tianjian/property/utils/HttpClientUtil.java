@@ -373,7 +373,8 @@ public class HttpClientUtil {
         try {
             // 创建Http Post请求
             HttpPost httpPost = new HttpPost(url);
-            httpPost.setHeader("Content-Type","application/x-www-form-urlencoded");
+            httpPost.setHeader("Content-Type","application/json");
+            httpPost.setHeader("Authorization","Credential 6920871229YVJZFUJ");
             // 创建请求内容
             StringEntity entity = new StringEntity(json, ContentType.APPLICATION_JSON);
             httpPost.setEntity(entity);

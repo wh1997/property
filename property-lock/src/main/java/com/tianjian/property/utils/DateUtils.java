@@ -91,4 +91,10 @@ public class DateUtils {
             return false;
         }
     }
+    //设置时间格式，将该时间格式的时间转换为时间戳
+    public static String dateToStamp(Long timestamp) throws Exception {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DEFAULT_DATE_FORMAT);
+        Date date = new Date(timestamp);
+        return simpleDateFormat.format(date);
+    }
 }

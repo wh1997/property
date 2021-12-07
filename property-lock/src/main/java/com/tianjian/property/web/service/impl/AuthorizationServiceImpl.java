@@ -11,7 +11,9 @@ import com.tianjian.property.dao.LockAuthorizationDao;
 import com.tianjian.property.dao.LockUserDao;
 import com.tianjian.property.dao.UserDao;
 import com.tianjian.property.utils.DateUtils;
+import com.tianjian.property.utils.LockResult;
 import com.tianjian.property.utils.PageResult;
+import com.tianjian.property.utils.error.ErrorEnum;
 import com.tianjian.property.web.service.AuthorizationService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,9 +41,9 @@ public class AuthorizationServiceImpl implements AuthorizationService {
     @Autowired
     private LockUserDao lockUserDao;
     @Override
-    public PageResult<User> selectUser(Integer pageNum, Integer pageSize, List<Integer> propertyList) {
+    public PageResult<User> selectUser(Integer pageNum, Integer pageSize, List<Integer> propertyList,String name,String phone) {
         PageHelper.startPage(pageNum,pageSize);
-        List<User> user = userDao.selectUser(propertyList);
+        List<User> user = userDao.selectUser(propertyList,name,phone);
         PageInfo<User> userPageInfo = new PageInfo<>(user);
         List<User> userList = userPageInfo.getList();
         int pages = userPageInfo.getPages();
@@ -96,9 +98,20 @@ public class AuthorizationServiceImpl implements AuthorizationService {
         return lockAuthorizationDao.insertSelective(lockAuthorization);
     }
     @Override
-    @Transactional
-    public int deleteRight(Integer aId) {
-        return lockAuthorizationDao.updateStatus(aId);
+    @Transactional(rollbackFor=Exception.class)
+    public LockResult deleteRight(Integer aId,Integer doorId) {
+        int i = lockAuthorizationDao.updateStatus(aId);
+        List<LockAuthorization> list= lockAuthorizationDao.selectByDoorId(doorId);
+        if (list==null||list.size()==0){
+            int o = doorDao.updateDoorStatus(doorId, 1);
+            if (i>0 && o>0 ){
+                return new LockResult(true, "操作成功", ErrorEnum.SUCCESS.getCode(), null);
+            }else {
+                return new LockResult(false, "操作失败", ErrorEnum.OPERATION_ERROR.getCode(), null);
+            }
+        }else {
+            return new LockResult(true, "操作成功", ErrorEnum.SUCCESS.getCode(), null);
+        }
     }
 
     @Override
@@ -121,8 +134,6 @@ public class AuthorizationServiceImpl implements AuthorizationService {
         List<LockUser> lockUsers = lockUserDao.selectRepetition(lockUser);
         LockUser lockUser1 = lockUsers.get(0);
         Integer lockUserId = lockUser1.getLockUserId();
-        System.out.println(lockUser1);
-        System.out.println(lockUserId);
         if (lockUserId!=900){
             lockUser.setAddPerson(appUID);
             return lockUserDao.deleteLockuser(lockUser);
@@ -140,5 +151,18 @@ public class AuthorizationServiceImpl implements AuthorizationService {
     @Override
     public List<Map> selectLockuser(LockUser lockUser) {
         return lockUserDao.lockUserDao(lockUser);
+    }
+
+    @Override
+    public PageResult selectDoorToUser(Integer doorId, Integer pageNum, Integer pageSize) {
+        PageHelper.startPage(pageNum,pageSize);
+        List<Map> list = lockAuthorizationDao.selectDoorToUser(doorId);
+        PageInfo<Map> rightPageInfo = new PageInfo<>(list);
+        List<Map> Doorlist = rightPageInfo.getList();
+        int pages = rightPageInfo.getPages();
+        //总共多少条
+        long total = rightPageInfo.getTotal();
+        PageResult<Map> PageResult = new PageResult<>(pageSize,pageNum,Doorlist,total,pages);
+        return PageResult;
     }
 }

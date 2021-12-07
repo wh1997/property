@@ -28,17 +28,7 @@ public class PhoneLoginController {
             String code = WechatVo.getCode();
             String iv = WechatVo.getIv();
             String encryptedData = WechatVo.getEncryptedData();
-            HashMap<String, Object> map = phoneLoginService.wechatLogin(encryptedData, iv, code);
-            if(400==(Integer) map.get("code")){
-                return new LockResult(false,(String) map.get("errorMessage"),(Integer)map.get("code"),"");
-            }else if (403==(Integer) map.get("code")){
-                return new LockResult(false,(String) map.get("errorMessage"),(Integer)map.get("code"),"");
-            }else {
-                //删除多余的返回值
-                map.keySet().remove("code");
-                map.keySet().remove("errorMessage");
-                return new LockResult(true,"登录成功",ErrorEnum.SUCCESS.getCode(),map);
-            }
+            return phoneLoginService.wechatLogin(encryptedData, iv, code);
         }catch (Exception e){
             e.printStackTrace();
             return new LockResult(false, ErrorEnum.OPERATION_ERROR.getErrorMsg(),ErrorEnum.OPERATION_ERROR.getCode(),null);

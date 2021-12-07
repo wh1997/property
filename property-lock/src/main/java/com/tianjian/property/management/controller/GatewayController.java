@@ -61,16 +61,11 @@ public class GatewayController {
     public LockResult deleteGateway(@RequestBody Map map){
         try {
             String gatewayId = (String) map.get("gatewayId");
-            int resultMap=gatewayService.deleteGateway(gatewayId);
-            if(resultMap>0){
-                return new LockResult(true, ErrorEnum.SUCCESS.getErrorMsg(),ErrorEnum.SUCCESS.getCode(),resultMap);
-            }
-            return new LockResult(false,"删除失败",ErrorEnum.OPERATION_ERROR.getCode(),"");
+            return gatewayService.deleteGateway(gatewayId);
         }catch (Exception e){
             e.printStackTrace();
             return new LockResult(false, ErrorEnum.SYSTEM_ERROR.getErrorMsg(),ErrorEnum.SYSTEM_ERROR.getCode(),null);
         }
-
     }
 
     @PostMapping("/lock/gateway")

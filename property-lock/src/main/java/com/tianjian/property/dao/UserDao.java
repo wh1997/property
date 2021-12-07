@@ -146,8 +146,10 @@ public interface UserDao extends BaseDao<User> {
             "<foreach collection=\"lists\" item=\"list\" index=\"index\" open=\"(\" close=\")\" separator=\",\"> " +
             "#{list} " +
             "</foreach>" +
+            "<if test='phone != null'> AND u.phone like CONCAT('%',#{phone},'%') </if>" +
+            "<if test='name != null'> AND u.name  like CONCAT('%',#{name},'%')</if>" +
             "</script>"})
-    List<User> selectUser(@Param("lists") List<Integer> lists);
+    List<User> selectUser(@Param("lists") List<Integer> lists,@Param("name")String name,@Param("phone")String phone);
     @Update({"<script>" +
             "UPDATE `tj_user` SET role = 1 " +
             " WHERE user_id= #{userId} "+

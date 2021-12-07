@@ -219,12 +219,7 @@ public class ManageController {
     public LockResult deleteGateway(@RequestHeader String token ,@RequestBody Map map) {
         try {
             String gatewayId = (String) map.get("gatewayId");
-            int resultMap=gatewayService.deleteGateway(gatewayId);
-            if (resultMap>0){
-                return new LockResult(true,  "删除成功", ErrorEnum.SUCCESS.getCode(), "");
-            }else {
-                return new LockResult(false,  "删除失败", ErrorEnum.OPERATION_ERROR.getCode(), "");
-            }
+            return gatewayService.deleteGateway(gatewayId);
         } catch (Exception e){
             e.printStackTrace();
             return new LockResult(false,  ErrorEnum.COMMON_ERROR.getErrorMsg(), ErrorEnum.COMMON_ERROR.getCode(), "");

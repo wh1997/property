@@ -185,28 +185,30 @@ public interface DoorDao extends BaseDao<Door> {
             "</script>"})
     Map<String,Object> selectDoor(Integer doorid);
     @Select({"<script>" +
-            " SELECT id, property_id ,property_name ,num_id,num_name,building_id,building_name,floor_no ,room_no,door_name,status ,unit_no ,unit_name, door_type " +
-            " FROM tj_door WHERE 1=1 " +
+            " SELECT d.id, d.property_id ,d.property_name ,d.num_id,d.num_name,d.building_id,d.building_name,d.floor_no ,d.room_no,d.door_name,d.status ,d.unit_no ,d.unit_name, d.door_type ,l.facility_type" +
+            " FROM tj_door d" +
+            " LEFT JOIN  (select * FROM  tj_lock WHERE lock_status=0) l ON  d.id=l.door_id"+
+            " WHERE 1=1" +
             "<if test='door != null'> " +
-            "<if test='door.id != null'> AND id = #{door.id}</if>" +
-            "<if test='door.numId != null'> AND num_id = #{door.numId}</if>" +
-            "<if test='door.buildingId != null'> AND building_id = #{door.buildingId}</if>" +
-            "<if test='door.unitNo != null'> AND unit_no = #{door.unitNo}</if>" +
-            "<if test='door.floorNo != null'> AND floor_no = #{door.floorNo}</if>" +
-            "<if test='door.roomNo != null'> AND room_no = #{door.roomNo}</if>" +
-            "<if test='door.doorType != null'> AND door_type =  #{door.doorType}</if>" +
-            "<if test='door.status != null'> AND status = #{door.status}</if>" +
-            "<if test='door.addTime != null'> AND add_time = #{door.addTime}</if>" +
-            "<if test='door.updateTime != null'> AND update_time = #{door.updateTime}</if>" +
-            "<if test='door.createPerson != null'> AND create_person = #{door.createPerson}</if>" +
-            "<if test='door.remark != null'> AND remark = #{door.remark}</if>" +
-            "<if test='door.propertyName != null'> AND property_name  like CONCAT('%',#{door.propertyName},'%')</if>" +
-            "<if test='door.numName != null'> AND num_name like CONCAT('%',#{door.numName},'%') </if>" +
-            "<if test='door.buildingName != null'> AND building_name like CONCAT('%',#{door.buildingName},'%') </if>" +
-            "<if test='door.unitName != null'> AND unit_name like CONCAT('%',#{door.unitName},'%') </if>" +
-            "<if test='door.doorName != null'> AND door_name like CONCAT('%',#{door.doorName},'%')</if>" +
+            "<if test='door.id != null'> AND d.id = #{door.id}</if>" +
+            "<if test='door.numId != null'> AND d.num_id = #{door.numId}</if>" +
+            "<if test='door.buildingId != null'> AND d.building_id = #{door.buildingId}</if>" +
+            "<if test='door.unitNo != null'> AND d.unit_no = #{door.unitNo}</if>" +
+            "<if test='door.floorNo != null'> AND d.floor_no = #{door.floorNo}</if>" +
+            "<if test='door.roomNo != null'> AND d.room_no = #{door.roomNo}</if>" +
+            "<if test='door.doorType != null'> AND d.door_type =  #{door.doorType}</if>" +
+            "<if test='door.status != null'> AND d.status = #{door.status}</if>" +
+            "<if test='door.addTime != null'> AND d.add_time = #{door.addTime}</if>" +
+            "<if test='door.updateTime != null'> AND d.update_time = #{door.updateTime}</if>" +
+            "<if test='door.createPerson != null'> AND d.create_person = #{door.createPerson}</if>" +
+            "<if test='door.remark != null'> AND d.remark = #{door.remark}</if>" +
+            "<if test='door.propertyName != null'> AND d.property_name  like CONCAT('%',#{door.propertyName},'%')</if>" +
+            "<if test='door.numName != null'> AND d.num_name like CONCAT('%',#{door.numName},'%') </if>" +
+            "<if test='door.buildingName != null'> d.AND building_name like CONCAT('%',#{door.buildingName},'%') </if>" +
+            "<if test='door.unitName != null'> AND d.unit_name like CONCAT('%',#{door.unitName},'%') </if>" +
+            "<if test='door.doorName != null'> AND d.door_name like CONCAT('%',#{door.doorName},'%')</if>" +
             "</if>" +
-            " AND property_id IN"+
+            " AND d.property_id IN"+
             "<foreach collection=\"lists\" item=\"list\" index=\"index\" open=\"(\" close=\")\" separator=\",\"> " +
             "#{list} " +
             "</foreach>" +

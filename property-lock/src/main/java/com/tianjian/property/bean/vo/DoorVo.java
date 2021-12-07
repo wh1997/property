@@ -24,26 +24,10 @@ public class DoorVo {
     //单元名称
     private String unitName;
     private Integer doorType;
+    private Integer facilityType;
 
     public DoorVo() {
         super();
-    }
-
-    public DoorVo(Integer id, Integer propertyId, String propertyName, Integer numId, String numName, Integer buildingId, String buildingName, Integer floorNo, String roomNo, String doorName, Integer status, Integer unitNo, String unitName, Integer doorType) {
-        this.id = id;
-        this.propertyId = propertyId;
-        this.propertyName = propertyName;
-        this.numId = numId;
-        this.numName = numName;
-        this.buildingId = buildingId;
-        this.buildingName = buildingName;
-        this.floorNo = floorNo;
-        this.roomNo = roomNo;
-        this.doorName = doorName;
-        this.status = status;
-        this.unitNo = unitNo;
-        this.unitName = unitName;
-        this.doorType = doorType;
     }
 
     public Integer getId() {
@@ -158,6 +142,14 @@ public class DoorVo {
         this.doorType = doorType;
     }
 
+    public Integer getFacilityType() {
+        return facilityType;
+    }
+
+    public void setFacilityType(Integer lockGatewayId) {
+        this.facilityType = lockGatewayId;
+    }
+
     @Override
     public String toString() {
         return "DoorVo{" +
@@ -175,6 +167,7 @@ public class DoorVo {
                 ", unitNo=" + unitNo +
                 ", unitName='" + unitName + '\'' +
                 ", doorType=" + doorType +
+                ", lockGatewayId=" + facilityType +
                 '}';
     }
 }

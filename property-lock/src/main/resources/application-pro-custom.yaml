@@ -51,6 +51,10 @@ apartment :
   configuration : hxjSetParam
   #读取门锁系统参数
   information : hxjSynLockInfo
+  #添加密码
+  PasswordKey : hxjAddPasswordKey
+  #删除钥匙
+  DelKey : hxjDelKey
 baiwei :
   url : http://client.api.melifego.cn:80
   #百为微信登录获取参数url

@@ -33,13 +33,18 @@ public class MonitorController {
     private RoomDoorService roomDoorService;
     @PostMapping("/select/Property")
     public LockResult selecProperty(@RequestHeader String token ,@RequestBody(required = false) Map map) throws Exception {
-        Integer appUID = TokenUtil.getAppUID(token);
-        Integer status = (Integer) map.get("status");
-        List<Map> list = selectRoleService.selecProperty(appUID,status);
-        if (list==null){
-            return new LockResult(false,"没有小区查询权限,请添加权限", ErrorEnum.RIGHT.getCode(), "");
+        try {
+            Integer appUID = TokenUtil.getAppUID(token);
+            Integer status = (Integer) map.get("status");
+            List<Map> list = selectRoleService.selecProperty(appUID,status);
+            if (list==null){
+                return new LockResult(false,"没有小区查询权限,请添加权限", ErrorEnum.RIGHT.getCode(), "");
+            }
+            return new LockResult(true,"查询成功", ErrorEnum.SUCCESS.getCode(), list);
+        }catch (Exception e){
+            e.printStackTrace();
+            return new LockResult(false,ErrorEnum.OPERATION_ERROR.getErrorMsg(), ErrorEnum.RIGHT.getCode(), "");
         }
-        return new LockResult(true,"查询成功", ErrorEnum.SUCCESS.getCode(), list);
     }
     
     /** 

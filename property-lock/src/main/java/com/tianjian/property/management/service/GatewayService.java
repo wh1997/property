@@ -2,6 +2,7 @@ package com.tianjian.property.management.service;
 
 
 import com.tianjian.property.bean.Lock;
+import com.tianjian.property.utils.LockResult;
 
 import java.util.List;
 import java.util.Map;
@@ -12,7 +13,7 @@ public interface GatewayService {
     //接口公共类
     Map  bindinggateway (String method, Map<String,Object> data);
     //删除网关公共类
-    int  deleteGateway (String gatewayId);
+    LockResult deleteGateway (String gatewayId);
     //绑定网关
     Map gatewayBind(Integer project,String gatewaySeq) throws InterruptedException;
     //门锁绑定网关

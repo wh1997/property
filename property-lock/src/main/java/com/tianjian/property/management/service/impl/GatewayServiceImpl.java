@@ -7,6 +7,9 @@ import com.tianjian.property.dao.GatewayDao;
 import com.tianjian.property.dao.LockBaseInfoDao;
 import com.tianjian.property.dao.LockDao;
 import com.tianjian.property.management.service.GatewayService;
+import com.tianjian.property.utils.LockResult;
+import com.tianjian.property.utils.error.ErrorEnum;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +27,7 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 @Service
-//EH缓存注解
-@CacheConfig(cacheNames = "myCache")
+@Slf4j
 public class GatewayServiceImpl extends HttpService implements GatewayService  {
     private static final Logger logger = LoggerFactory.getLogger(PhoneLoginServiceImpl.class);
     //门锁参数
@@ -69,7 +71,6 @@ public class GatewayServiceImpl extends HttpService implements GatewayService  {
     @Autowired
     private RedisTemplate redisTemplate;
     //绑定网关
-    @Cacheable("myCache")
     public  String getApartment(){
         String token = (String) redisTemplate.opsForValue().get("tokenId");
         if (token!=null){
@@ -105,16 +106,22 @@ public class GatewayServiceImpl extends HttpService implements GatewayService  {
 
     @Override
     @Transactional
-    public int deleteGateway(String gatewayId) {
+    public LockResult deleteGateway(String gatewayId) {
         HashMap<String, Object> datamap = new HashMap<>();
         datamap.put("gatewayId",gatewayId);
         Map resutl = bindinggateway(DelGateway, datamap);
         int resultCode = (int) resutl.get("resultCode");
         if (resultCode==0){
-            int update = gatewayDao.updateByGatewayId(gatewayId);
-            return update;
+            int i = gatewayDao.updateByGatewayId(gatewayId);
+            int o = lockDao.updateByGatewayId(gatewayId);
+            if (i>0&&o>0){
+                return new LockResult(true, ErrorEnum.SUCCESS.getErrorMsg(),ErrorEnum.SUCCESS.getCode(),"");
+            }else {
+                log.warn("修改网关状态失败");
+                return new LockResult(false,"删除失败",ErrorEnum.OPERATION_ERROR.getCode(),"");
+            }
         }else {
-            return 0;
+            return new LockResult(false,"删除失败",ErrorEnum.OPERATION_ERROR.getCode(),"");
         }
     }
 

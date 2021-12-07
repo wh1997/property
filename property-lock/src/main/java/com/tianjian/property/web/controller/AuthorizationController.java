@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @description:   门禁授权
+ * @description:   住户管理
  * @author: ManolinCoder
  * @time: 2021/11/4
  */
@@ -42,12 +42,14 @@ public class AuthorizationController {
         try {
             Integer pageNum = (Integer) map.get("pageNum");
             Integer pageSize = (Integer) map.get("pageSize");
+            String name = (String) map.get("name");
+            String phone = (String) map.get("phone");
             Integer appUID = TokenUtil.getAppUID(token);
             List<Integer> propertyList = selectRoleService.selectRole(appUID);
             if (propertyList==null){
                 return new LockResult(false,"没有权限,请添加权限", ErrorEnum.RIGHT.getCode(), "");
             }
-            PageResult<User> pageResult= authorizationService.selectUser(pageNum,pageSize,propertyList);
+            PageResult<User> pageResult= authorizationService.selectUser(pageNum,pageSize,propertyList,name,phone);
             if (pageResult.getRows()!=null){
                 return new LockResult(true,  ErrorEnum.SUCCESS.getErrorMsg(), ErrorEnum.SUCCESS.getCode(), pageResult);
             }else {
@@ -162,18 +164,9 @@ public class AuthorizationController {
      */
     @PostMapping("/delete/right")
     public LockResult deleteRight(@RequestHeader String token ,@RequestBody Map map) {
-        try {
             Integer aId = (Integer) map.get("aId");
-            int i =authorizationService.deleteRight(aId);
-            if (i>0){
-                return new LockResult(true, "操作成功", ErrorEnum.SUCCESS.getCode(), null);
-            }else{
-                return new LockResult(false, "操作失败", ErrorEnum.SUCCESS.getCode(), null);
-            }
-        } catch (Exception e){
-            e.printStackTrace();
-            return new LockResult(false,  ErrorEnum.COMMON_ERROR.getErrorMsg(), ErrorEnum.COMMON_ERROR.getCode(), "");
-        }
+            Integer doorId = (Integer) map.get("dId");
+            return authorizationService.deleteRight(aId,doorId);
     }
     /**
      * @Description: 添加门锁用户id
@@ -258,7 +251,30 @@ public class AuthorizationController {
             if (result!=null){
                 return new LockResult(true, "查询成功", ErrorEnum.SUCCESS.getCode(), result);
             }else{
-                return new LockResult(true, "查询成功，没有数据", ErrorEnum.SUCCESS.getCode(), "");
+                return new LockResult(false, "查询成功，没有数据", ErrorEnum.SUCCESS.getCode(), "");
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+            return new LockResult(false,  ErrorEnum.COMMON_ERROR.getErrorMsg(), ErrorEnum.COMMON_ERROR.getCode(), "");
+        }
+    }
+    /**
+     * @Description: 查询门里的所以用户
+     * @Param:
+     * @return:
+     * @Date: 2021/11/8
+     */
+    @PostMapping("/select/door/user")
+    public LockResult selectDoorToUser(@RequestHeader String token ,@RequestBody Map map) {
+        try {
+            Integer doorId = (Integer) map.get("doorId");
+            Integer pageNum = (Integer) map.get("pageNum");
+            Integer pageSize = (Integer) map.get("pageSize");
+            PageResult pageResult = authorizationService.selectDoorToUser(doorId, pageNum, pageSize);
+            if (pageResult.getRows().size()>0){
+                return new LockResult(true, "查询成功", ErrorEnum.SUCCESS.getCode(), pageResult);
+            }else{
+                return new LockResult(false, "查询成功，没有数据", ErrorEnum.SUCCESS.getCode(), "");
             }
         } catch (Exception e){
             e.printStackTrace();
