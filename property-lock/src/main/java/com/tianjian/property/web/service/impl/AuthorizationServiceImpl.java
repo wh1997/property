@@ -6,6 +6,7 @@ import com.tianjian.property.bean.Door;
 import com.tianjian.property.bean.LockAuthorization;
 import com.tianjian.property.bean.LockUser;
 import com.tianjian.property.bean.User;
+import com.tianjian.property.bean.vo.AuthorizationVo;
 import com.tianjian.property.dao.DoorDao;
 import com.tianjian.property.dao.LockAuthorizationDao;
 import com.tianjian.property.dao.LockUserDao;
@@ -66,15 +67,15 @@ public class AuthorizationServiceImpl implements AuthorizationService {
     }
 
     @Override
-    public PageResult<Map<String, Object>> selectRight(Integer userId, Integer pageNum, Integer pageSize) throws Exception {
+    public PageResult<AuthorizationVo> selectRight(Integer userId, Integer pageNum, Integer pageSize) throws Exception {
         PageHelper.startPage(pageNum,pageSize);
-        List<Map<String, Object>> maps = userDao.selectRight(userId);
-        PageInfo<Map<String, Object>> rightPageInfo = new PageInfo<>(maps);
-        List<Map<String, Object>> Doorlist = rightPageInfo.getList();
+        List<AuthorizationVo> maps = userDao.selectRight(userId);
+        PageInfo<AuthorizationVo> rightPageInfo = new PageInfo<>(maps);
+        List<AuthorizationVo> Doorlist = rightPageInfo.getList();
         int pages = rightPageInfo.getPages();
         //总共多少条
         long total = rightPageInfo.getTotal();
-        PageResult<Map<String, Object>> PageResult = new PageResult<>(pageSize,pageNum,Doorlist,total,pages);
+        PageResult<AuthorizationVo> PageResult = new PageResult<>(pageSize,pageNum,Doorlist,total,pages);
         return PageResult;
     }
     @Override

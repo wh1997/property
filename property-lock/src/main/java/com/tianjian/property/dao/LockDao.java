@@ -70,4 +70,18 @@ public interface LockDao extends BaseDao<Lock> {
     int updateStatus(Integer lock);
     @Update({"UPDATE tj_lock SET `lock_gateway_id`=-1  WHERE id = #{gatewayId}"})
     int updateByGatewayId(String gatewayId);
+    @Select({"<script>" +
+            " select * FROM tj_lock l " +
+            " WHERE lock_status=0 AND door_id= #{doorid} AND lock_facility_id= #{id}" +
+            "</script>"})
+    Lock selectLock(Integer doorid, Integer id);
+    @Select({"<script>" +
+            " SELECT b.lock_id lockId " +
+            " FROM `tj_lock` l " +
+            " INNER JOIN tj_lockbaseinfo b " +
+            " ON l.lock_facility_id=b.id " +
+            " WHERE l.lock_status = 0 AND b.`status` = 0 " +
+            " AND l.door_id = #{doorId} " +
+            "</script>"})
+    String selsetlockId(Integer doorId);
 }

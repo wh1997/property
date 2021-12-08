@@ -26,5 +26,5 @@ public interface OpenLockService {
 
     LockResult selectPassword(Integer doorId);
 
-    LockResult deletePassword(Integer appUID, Integer doorId, String lockId, String keyContent) throws Exception;
+    LockResult deletePassword(Integer appUID, Integer doorId,Integer lockKeyId) throws Exception;
 }

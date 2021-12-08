@@ -33,6 +33,11 @@ public class UseropenLock implements Serializable {
      */
     @Column(name = "`keyContent`")
     private String keyContent;
+    /**
+     * 钥匙编号
+     */
+    @Column(name = "`lockKey_id`")
+    private Integer lockKeyId;
 
     /**
      * 有效起始时间
@@ -120,6 +125,14 @@ public class UseropenLock implements Serializable {
         this.keyContent = key;
     }
 
+    public Integer getLockKeyId() {
+        return lockKeyId;
+    }
+
+    public void setLockKeyId(Integer lockKeyId) {
+        this.lockKeyId = lockKeyId;
+    }
+
     public Long getValidstartTime() {
         return validstartTime;
     }
@@ -182,10 +195,11 @@ public class UseropenLock implements Serializable {
                 "id=" + id +
                 ", doorId=" + doorId +
                 ", lockId='" + lockId + '\'' +
-                ", userId=" + lockUserId +
-                ", key='" + keyContent + '\'' +
-                ", validstartTime='" + validstartTime + '\'' +
-                ", validendTime='" + validendTime + '\'' +
+                ", lockUserId=" + lockUserId +
+                ", keyContent='" + keyContent + '\'' +
+                ", lockKeyId='" + lockKeyId + '\'' +
+                ", validstartTime=" + validstartTime +
+                ", validendTime=" + validendTime +
                 ", addTime='" + addTime + '\'' +
                 ", updateTime='" + updateTime + '\'' +
                 ", addPerson=" + addPerson +

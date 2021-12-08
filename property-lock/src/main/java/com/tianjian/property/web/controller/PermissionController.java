@@ -275,7 +275,7 @@ public class PermissionController {
         try {
             Integer appUID = TokenUtil.getAppUID(token);
             List<Integer> lists = selectRoleService.selectRoleId(appUID);
-            if (lists==null){
+            if (lists.size()==0){
                 return new LockResult(false,"没有权限,请添加权限", ErrorEnum.RIGHT.getCode(), "");
             }
             List<Module> result=permissionService.selectLimitModule(lists);

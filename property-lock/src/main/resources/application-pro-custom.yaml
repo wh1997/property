@@ -1,8 +1,11 @@
 #智能门锁参数配置
 apartment :
   appKey: 6782ebbf-6338-41a9-afc9-84c9b370f2be
+#  appKey: 4fe327a5-1bce-450c-8b07-2230e80b905c
   appSecret: imGkL7SAho831PLbsdf3cEzSiGyPbLM1qhryfzsx1OeeH+BdIcohfewtcxG569Ed
+#  appSecret: eD4huOH9CUlj/1Ezvdb5tS7wQlQHeeCJfE33JWQr5JzW80msEFyOHsYiwIm4zIi5
   url: http://t.server.hxjiot.com
+#  url: http://server.hxjiot.com
   #  获取token的业务能力
   methodlogin: platformLogin
   #添加蓝牙锁业务能力

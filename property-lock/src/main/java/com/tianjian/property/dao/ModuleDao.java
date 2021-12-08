@@ -43,7 +43,7 @@ public interface ModuleDao extends BaseDao<Module>  {
             " <foreach collection=\"lists\" item=\"list\" index=\"index\" open=\"(\" close=\")\" separator=\",\"> " +
             " #{list} " +
             " </foreach>" +
-            " GROUP BY a.id " +
+            " GROUP BY m.id " +
             "</script>"})
     List<Module> selectLimitModule(@Param("lists")List lists);
 }

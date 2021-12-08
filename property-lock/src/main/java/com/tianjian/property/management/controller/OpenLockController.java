@@ -118,9 +118,8 @@ public class OpenLockController {
         try {
             Integer appUID = TokenUtil.getAppUID(token);
             Integer doorId = (Integer) map.get("doorId");
-            String lockId = (String) map.get("lockId");
-            String keyContent = (String) map.get("keyContent");
-            return openLockService.deletePassword(appUID,doorId,lockId,keyContent);
+            Integer lockKeyId = (Integer) map.get("lockKeyId");
+            return openLockService.deletePassword(appUID,doorId,lockKeyId);
         }catch (Exception e){
             e.printStackTrace();
             return new LockResult(false,ErrorEnum.SYSTEM_ERROR.getErrorMsg(),ErrorEnum.SYSTEM_ERROR.getCode(),null);

@@ -107,7 +107,7 @@ class PropertyLockApplicationTests extends HttpService{
     @Test
     void test12() throws Exception {
         HashMap<String, Object> map = new HashMap<>();
-        map.put("userId",14725);
+        map.put("userId",100069);
         map.put("branchId","0~4294967295");
         Object o = staffPostResult("", map);
     }

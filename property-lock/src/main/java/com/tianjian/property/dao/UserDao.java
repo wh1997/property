@@ -1,6 +1,7 @@
 package com.tianjian.property.dao;
 
 import com.tianjian.property.bean.User;
+import com.tianjian.property.bean.vo.AuthorizationVo;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
@@ -77,7 +78,7 @@ public interface UserDao extends BaseDao<User> {
             " WHERE " +
             "  d.`status`!=3 AND a.user_status = 0  AND u.user_id = #{userId} "+
             "</script>"})
-    List<Map<String,Object>> selectRight(@Param("userId")Integer userId);
+    List<AuthorizationVo> selectRight(@Param("userId")Integer userId);
     @Select({"<script>" +
             "SELECT  " +
             " a.id aId,  " +
@@ -128,6 +129,10 @@ public interface UserDao extends BaseDao<User> {
             "</if>" +
             "</script>"})
     List<Map> selectStaff( @Param("user") User user);
+    @Update({"<script>" +
+            "UPDATE `tj_user` SET role = 2 " +
+            " WHERE user_id= #{userId} "+
+            "</script>"})
     int deleteByUserId(Integer userId);
     @Select({"<script>" +
             "SELECT " +

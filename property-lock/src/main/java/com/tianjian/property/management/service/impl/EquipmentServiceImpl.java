@@ -46,7 +46,7 @@ private String  addBluetooth;
         //查询该门是否添加了锁
         Lock locks = lockDao.selectByDoorid(doorid);
         if (locks!=null){
-            return new LockResult(false,"重复添加",200,"");
+            return new LockResult(false,"重复添加",ErrorEnum.OPERATION_ERROR.getCode(),"");
         }
         String aesKey = (String) lockAuthCode.get("aesKey");
         List<Map> authCodeList = (List<Map>) lockAuthCode.get("authCodeList");

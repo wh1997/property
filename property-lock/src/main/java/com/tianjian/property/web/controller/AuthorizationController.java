@@ -4,6 +4,7 @@ import com.tianjian.property.bean.Door;
 import com.tianjian.property.bean.LockAuthorization;
 import com.tianjian.property.bean.LockUser;
 import com.tianjian.property.bean.User;
+import com.tianjian.property.bean.vo.AuthorizationVo;
 import com.tianjian.property.utils.BeanChangeUtils;
 import com.tianjian.property.utils.LockResult;
 import com.tianjian.property.utils.PageResult;
@@ -100,6 +101,10 @@ public class AuthorizationController {
         try {
             Integer appUID = TokenUtil.getAppUID(token);
             LockAuthorization lockAuthorization = BeanChangeUtils.mapToBean(map, LockAuthorization.class);
+            Integer userId = lockAuthorization.getUserId();
+            if (userId.equals(appUID)){
+                return new LockResult(false, "不能给自己授权", ErrorEnum.OPERATION_ERROR.getCode(),null);
+            }
             lockAuthorization.setAddPerson(appUID);
             int i = authorizationService.addRight(lockAuthorization);
             if (i > 0) {
@@ -124,7 +129,7 @@ public class AuthorizationController {
             Integer pageNum = (Integer) map.get("pageNum");
             Integer pageSize = (Integer) map.get("pageSize");
             Integer userId = (Integer) map.get("userId");
-            PageResult<Map<String,Object>> resultMap=authorizationService.selectRight(userId,pageNum,pageSize);
+            PageResult<AuthorizationVo> resultMap=authorizationService.selectRight(userId,pageNum,pageSize);
             if (resultMap==null){
                 return new LockResult(true, "查询成功,请添加开锁权限", ErrorEnum.SUCCESS.getCode(), "");
             }

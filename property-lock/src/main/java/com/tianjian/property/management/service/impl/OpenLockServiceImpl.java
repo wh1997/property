@@ -3,12 +3,14 @@ package com.tianjian.property.management.service.impl;
 import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.tianjian.property.bean.Lock;
 import com.tianjian.property.bean.LockLog;
 import com.tianjian.property.bean.Module;
 import com.tianjian.property.bean.UseropenLock;
 import com.tianjian.property.bean.vo.LockLogVo;
 import com.tianjian.property.bean.vo.PasswordLock;
 import com.tianjian.property.dao.DoorDao;
+import com.tianjian.property.dao.LockDao;
 import com.tianjian.property.dao.LockLogDao;
 import com.tianjian.property.dao.UseropenLockDao;
 import com.tianjian.property.management.service.GatewayService;
@@ -39,9 +41,9 @@ public class OpenLockServiceImpl implements OpenLockService  {
     @Autowired
     private DoorDao doorDao;
     @Autowired
-    private LockLogDao lockLogDao;
+    private LockDao lockDao;
     @Autowired
-    private SelectRoleService selectRoleService;
+    private LockLogDao lockLogDao;
     @Autowired
     private UseropenLockDao useropenLockDao;
     @Value("${apartment.theRemoteUnlock}")
@@ -139,6 +141,10 @@ public class OpenLockServiceImpl implements OpenLockService  {
         if (validStartTime==null || validEndTime==null){
             return new LockResult(false, "请添加起始时间和有效时间",ErrorEnum.OPERATION_ERROR.getCode(),"");
         }
+        UseropenLock selectUseropenLock =useropenLockDao.selectPassword(doorId);
+        if (selectUseropenLock!=null){
+            useropenLockDao.updateStatus(doorId,appUID);
+        }
         String password = AESUtil.encryptKey(tokenid, keyContent);
         Map newMap = JSON.parseObject(JSON.toJSONString(map), Map.class);
         newMap.keySet().remove("keyContent");
@@ -148,21 +154,9 @@ public class OpenLockServiceImpl implements OpenLockService  {
         Map result = gatewayService.bindinggateway(passwordKey,newMap);
         Integer resultCode = (Integer) result.get("resultCode");
         String reason = (String) result.get("reason");
+        Map data = (Map) result.get("data");
+        Integer lockKeyId = (Integer) data.get("lockKeyId");
         if (resultCode==0){
-            UseropenLock selectUseropenLock =useropenLockDao.selectPassword(doorId);
-            if (selectUseropenLock!=null){
-             String lockId1 = selectUseropenLock.getLockId();
-             Integer lockUserId = selectUseropenLock.getLockUserId();
-             String key = selectUseropenLock.getKeyContent();
-             Map delMap=  new HashMap();
-             delMap.put("lockId",lockId1);
-             delMap.put("delLockUserId",lockUserId);
-             delMap.put("deleteType",4);
-             delMap.put("keyType",5);
-             delMap.put("keyContent",key);
-             Map delResult = gatewayService.bindinggateway(DelKey,delMap);
-             useropenLockDao.updateStatus(doorId);
-            }
             UseropenLock useropenLock = new UseropenLock();
             useropenLock.setDoorId(doorId);
             useropenLock.setLockId(lockId);
@@ -172,6 +166,7 @@ public class OpenLockServiceImpl implements OpenLockService  {
             useropenLock.setStatus(0);
             useropenLock.setValidstartTime(validStartTime);
             useropenLock.setValidendTime(validEndTime);
+            useropenLock.setLockKeyId(lockKeyId);
             int i = useropenLockDao.insertUseropenLock(useropenLock);
             Integer id = useropenLock.getId();
             useropenLock.setId(id);
@@ -197,27 +192,24 @@ public class OpenLockServiceImpl implements OpenLockService  {
     }
 
     @Override
-    public LockResult deletePassword(Integer appUID, Integer doorId, String lockId, String keyContent) throws Exception {
-        String tokenid = gatewayService.getApartment();
-        String key = AESUtil.encryptKey(tokenid, keyContent);
+    public LockResult deletePassword(Integer appUID, Integer doorId, Integer lockKeyId) throws Exception {
+        String lockId = lockDao.selsetlockId(doorId);
         HashMap<String, Object> map = new HashMap<>();
         map.put("lockId",lockId);
         map.put("delLockUserId",900);
-        map.put("deleteType",4);
-        map.put("keyType",4);
-        map.put("keyContent",key);
+        map.put("deleteType",2);
+        map.put("lockKeyId",lockKeyId);
+        map.put("keyType",2);
         Map result = gatewayService.bindinggateway(DelKey,map);
         Integer resultCode = (Integer) result.get("resultCode");
         String reason = (String) result.get("reason");
         if (resultCode==0){
-            int i = useropenLockDao.updateStatus(doorId);
-           //useropenLockDao.deletePassword(doorId,lockId,keyContent);
+            int i = useropenLockDao.updateStatus(doorId,appUID);
             if (i>0){
                 return new LockResult(true, "删除成功",ErrorEnum.SUCCESS.getCode(),"");
             }else {
                 return new LockResult(false, "删除失败",ErrorEnum.SYSTEM_ERROR.getCode(),"");
             }
-
         }else {
             return new LockResult(false, reason,ErrorEnum.SYSTEM_ERROR.getCode(),"");
         }

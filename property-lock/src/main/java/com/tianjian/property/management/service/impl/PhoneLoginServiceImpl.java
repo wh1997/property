@@ -48,9 +48,6 @@ public class PhoneLoginServiceImpl extends HttpService implements PhoneLoginServ
         HashMap<String, String> map = new HashMap<>();
         map.put("Identity",phone);
         map.put("Token",token);
-//        Gson gson = new Gson();
-//        String json = gson.toJson(map);
-//        Integer Propertyid=0;
         //判断用户是否存在 如果是204则表示用户已存在如果是404则表示用户不存在需要注册
         Integer status = HttpUtils.doGetExists(url + "/Security/Users/Exists/*:"+phone);
         if (404==status){
@@ -82,14 +79,12 @@ public class PhoneLoginServiceImpl extends HttpService implements PhoneLoginServ
             //roleMap.put("Property_id",0);
         }else{
             roleMap.put("role",roletype.get("role"));
-            //roleMap.put("Property_id",roletype.get("property_id"));
         }
         String userToken = TokenUtil.createToken(userId);
         redisTemplate.opsForValue().set(LockConstants.USER_TOKEN+userToken,hashMap,1, TimeUnit.DAYS);
         logger.info("用户的token为"+userToken);
         HashMap<String, Object> datemap = new HashMap<>();
         datemap.put("role",roleMap.get("role"));
-        //datemap.put("Property_id",roleMap.get("Property_id"));
         datemap.put("token",userToken);
         datemap.put("datemap",hashMap);
         resultMap.put("code",200);
