@@ -6,6 +6,7 @@ import com.tianjian.property.bean.Gateway;
 import com.tianjian.property.bean.LockBaseInfo;
 import com.tianjian.property.bean.vo.Param;
 import com.tianjian.property.management.service.GatewayService;
+import com.tianjian.property.management.service.LockBaseInfoService;
 import com.tianjian.property.utils.BeanChangeUtils;
 import com.tianjian.property.utils.LockResult;
 import com.tianjian.property.utils.PageResult;
@@ -31,6 +32,8 @@ public class ManageController {
     @Autowired
     private ManageService manageService;
     @Autowired
+    private LockBaseInfoService lockBaseInfoService;
+    @Autowired
     private SelectRoleService selectRoleService;
     @Autowired
     private GatewayService gatewayService;
@@ -42,12 +45,20 @@ public class ManageController {
     */
     @PostMapping("/bluetooth/delete")
     public LockResult deleteBluetooth(@RequestHeader String token ,@RequestBody Map map)  {
-        Integer id = (Integer) map.get("id");
-        int i=  manageService.deleteBluetooth(id);
-        if (i>0){
-            return new LockResult(true,"删除成功", ErrorEnum.SUCCESS.getCode(), "");
+        try {
+            //门锁设备id
+            Integer id = (Integer) map.get("id");
+            //要修改的状态
+            Integer status= (Integer) map.get("status");
+            //锁id
+            Integer lock= (Integer) map.get("lock");
+            //门锁id(厂家生成的id)
+            String lockId= (String) map.get("lockId");
+            LockResult result = lockBaseInfoService.updateStatus(lockId, lock, id, status);
+            return result;
+        }catch (Exception e){
+            return new LockResult(false,"删除失败", ErrorEnum.OPERATION_ERROR.getCode(), "");
         }
-        return new LockResult(false,"删除失败", ErrorEnum.OPERATION_ERROR.getCode(), "");
     }
     /**
     * @Description: 修改蓝牙门锁

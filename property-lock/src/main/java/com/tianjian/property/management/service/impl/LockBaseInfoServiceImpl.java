@@ -47,14 +47,13 @@ public class LockBaseInfoServiceImpl implements LockBaseInfoService {
     @Override
     @Transactional(rollbackFor=Exception.class)
     public LockResult updateStatus(String lockId, Integer lock, Integer id, Integer status) {
-        //先删除蓝牙门锁绑定的网关
-        Map map = gatewayService.LockUnBindingGateway(lockId, lock, id);
-        Integer resultCode = (Integer) map.get("resultCode");
-        if(resultCode==0){
-            Lock lock1 = lockDao.selectByLockFacilityId(lock);
-            Integer doorId = lock1.getDoorId();
-            Integer lockFacilityId = lock1.getLockFacilityId();
-            Integer id1 = lock1.getId();
+        Lock lock1 = lockDao.selectByLockFacilityId(lock);
+        Integer doorId = lock1.getDoorId();
+        Integer lockFacilityId = lock1.getLockFacilityId();
+        Integer id1 = lock1.getId();
+        Integer lockGatewayId = lock1.getLockGatewayId();
+        //判断是否绑定网关
+        if (lockGatewayId==-1){
             //修改门的状态为无锁
             int i = doorDao.updateDoorStatus(doorId,3);
             //修改门锁网关绑定
@@ -66,8 +65,25 @@ public class LockBaseInfoServiceImpl implements LockBaseInfoService {
             }else {
                 return new LockResult(false, ErrorEnum.OPERATION_ERROR.getErrorMsg(),ErrorEnum.OPERATION_ERROR.getCode(),"");
             }
+        }else {
+            //先删除蓝牙门锁绑定的网关
+            Map map = gatewayService.LockUnBindingGateway(lockId, lock, id);
+            Integer resultCode = (Integer) map.get("resultCode");
+            if(resultCode==0){
+                //修改门的状态为无锁
+                int i = doorDao.updateDoorStatus(doorId,3);
+                //修改门锁网关绑定
+                int o = lockDao.updateStatus(id1);
+                //修改锁的状态为废弃
+                int p = lockBaseInfoDao.updateStatus(lockFacilityId,2);
+                if (i>=0&&o>=0&&p>=0){
+                    return new LockResult(true, ErrorEnum.SUCCESS.getErrorMsg(),ErrorEnum.SUCCESS.getCode(),"");
+                }else {
+                    return new LockResult(false, ErrorEnum.OPERATION_ERROR.getErrorMsg(),ErrorEnum.OPERATION_ERROR.getCode(),"");
+                }
+            }
+            return new LockResult(false, ErrorEnum.OPERATION_ERROR.getErrorMsg(),ErrorEnum.OPERATION_ERROR.getCode(),"");
         }
-        return new LockResult(false, ErrorEnum.OPERATION_ERROR.getErrorMsg(),ErrorEnum.OPERATION_ERROR.getCode(),"");
     }
 
     @Override

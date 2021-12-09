@@ -51,6 +51,7 @@ public class ManageServiceImpl implements ManageService {
 
     @Override
     public int deleteBluetooth(Integer id) {
+
         return lockBaseInfoDao.updateStatus(id,2);
     }
 

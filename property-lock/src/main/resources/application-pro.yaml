@@ -12,7 +12,7 @@ spring:
     type: com.alibaba.druid.pool.DruidDataSource
   #redis配置
   redis:
-    host: 127.0.0.1
+    host: 39.99.248.253
     port: 6379
     database: 10
     #password:
@@ -33,12 +33,12 @@ eureka:
   client:
     service-url:
       # Eureka服务器的地址，类型为HashMap，缺省的Key为 defaultZone；缺省的Value为 http://localhost:8761/eureka
-      defaultZone: http://127.0.0.1:11007/eureka
+      defaultZone: http://39.99.248.253:12000/eureka
   instance:
     # 客户端在注册时使用自己的IP而不是主机名，缺省：false
     prefer-ip-address: true
     # 应用实例IP
-    ip-address: 127.0.0.1
+    ip-address: 120.76.178.26
     # 实例ID
     instance-id: ${eureka.instance.ip-address}.${server.port}
     # 服务续约（心跳）频率，单位：秒，缺省30
